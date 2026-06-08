@@ -1,122 +1,125 @@
-# Java 虚拟机
+#Java virtual machine
 <!-- GFM-TOC -->
-* [Java 虚拟机](#java-虚拟机)
-    * [一、运行时数据区域](#一运行时数据区域)
-        * [程序计数器](#程序计数器)
-        * [Java 虚拟机栈](#java-虚拟机栈)
-        * [本地方法栈](#本地方法栈)
-        * [堆](#堆)
-        * [方法区](#方法区)
-        * [运行时常量池](#运行时常量池)
-        * [直接内存](#直接内存)
-    * [二、垃圾收集](#二垃圾收集)
-        * [判断一个对象是否可被回收](#判断一个对象是否可被回收)
-        * [引用类型](#引用类型)
-        * [垃圾收集算法](#垃圾收集算法)
-        * [垃圾收集器](#垃圾收集器)
-    * [三、内存分配与回收策略](#三内存分配与回收策略)
-        * [Minor GC 和 Full GC](#minor-gc-和-full-gc)
-        * [内存分配策略](#内存分配策略)
-        * [Full GC 的触发条件](#full-gc-的触发条件)
-    * [四、类加载机制](#四类加载机制)
-        * [类的生命周期](#类的生命周期)
-        * [类加载过程](#类加载过程)
-        * [类初始化时机](#类初始化时机)
-        * [类与类加载器](#类与类加载器)
-        * [类加载器分类](#类加载器分类)
-        * [双亲委派模型](#双亲委派模型)
-        * [自定义类加载器实现](#自定义类加载器实现)
-    * [参考资料](#参考资料)
+* [Java Virtual Machine](#java-Virtual Machine)
+    * [1. Runtime data area](#一runtime data area)
+        * [Program Counter](#program counter)
+        * [Java virtual machine stack](#java-virtual machine stack)
+        * [Local method stack](#local method stack)
+        * [Heap](#Heap)
+        * [Method area](#method area)
+        * [Runtime Constant Pool](#Runtime Constant Pool)
+        * [Direct memory](#direct memory)
+    * [2. Garbage Collection](#二garbage collection)
+        * [Judge whether an object can be recycled](#Judge whether an object can be recycled)
+        * [Reference type](#reference type)
+        * [Garbage Collection Algorithm](#garbage collection algorithm)
+        * [Garbage Collector](#garbage collector)
+    * [3. Memory allocation and recycling strategy](#三Memory allocation and recycling strategy)
+        * [Minor GC and Full GC](#minor-gc-and-full-gc)
+        * [Memory allocation strategy](#memory allocation strategy)
+        * [Full GC trigger conditions](#full-gc-trigger conditions)
+    * [Four. Class loading mechanism](#Four classes loading mechanism)
+        * [Class life cycle](#Class life cycle)
+        * [Class loading process](#class loading process)
+        * [Class initialization timing](#Class initialization timing)
+        * [Class and class loader](#class and class loader)
+        * [Class loader classification](#class loader classification)
+        * [Parental delegation model](#parental delegationmodel)
+        * [Custom class loader implementation](#Custom class loader implementation)
+    * [References](#references)
 <!-- GFM-TOC -->
 
 
-本文大部分内容参考   **周志明《深入理解 Java 虚拟机》**  ，想要深入学习的话请看原书。
+Most of the content of this article refers to **Zhou Zhiming's "In-depth Understanding of Java Virtual Machine"**. If you want to study in depth, please read the original book.
 
-## 一、运行时数据区域
+## 1. Runtime data area
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/5778d113-8e13-4c53-b5bf-801e58080b97.png" width="400px"> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/5778d113-8e13-4c53-b5bf-80
+1e58080b97.png" width="400px"> </div><br>
 
-### 程序计数器
+### Program counter
 
-记录正在执行的虚拟机字节码指令的地址（如果正在执行的是本地方法则为空）。
+Record the address of the virtual machine bytecode instruction being executed (null if a native method is being executed).
 
-### Java 虚拟机栈
+### Java virtual machine stack
 
-每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。从方法调用直至执行完成的过程，对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
+When each Java method is executed, a stack frame is created to store information such as local variable tables, operand stacks, and constant pool references. The process from method invocation to completion of execution corresponds to the process of pushing and popping a stack frame into the Java virtual machine stack.
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/8442519f-0b4d-48f4-8229-56f984363c69.png" width="400px"> </div><br>
 
-可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小，在 JDK 1.4 中默认为 256K，而在 JDK 1.5+ 默认为 1M：
+You can specify the Java virtual machine stack memory size of each thread through the -Xss virtual machine parameter. The default is 256K in JDK 1.4, and the default is 1M in JDK 1.5+:
 
 ```java
 java -Xss2M HackTheJava
 ```
 
-该区域可能抛出以下异常：
+This area may throw the following exceptions:
 
-- 当线程请求的栈深度超过最大值，会抛出 StackOverflowError 异常；
-- 栈进行动态扩展时如果无法申请到足够内存，会抛出 OutOfMemoryError 异常。
+- When the stack depth requested by the thread exceeds the maximum value, a StackOverflowError exception will be thrown;
+- If sufficient memory cannot be applied for when the stack is dynamically expanded, an OutOfMemoryError exception will be thrown.
 
-### 本地方法栈
+### Local method stack
 
-本地方法栈与 Java 虚拟机栈类似，它们之间的区别只不过是本地方法栈为本地方法服务。
+The local method stack is similar to the Java virtual machine stack. The only difference between them is that the local method stack serves local methods.
 
-本地方法一般是用其它语言（C、C++ 或汇编语言等）编写的，并且被编译为基于本机硬件和操作系统的程序，对待这些方法需要特别处理。
+Native methods are generally written in other languages (C, C++ or assembly language, etc.) and compiled into programs based on the native hardware and operating system. These methods require special treatment.
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/66a6899d-c6b0-4a47-8569-9d08f0baf86c.png" width="300px"> </div><br>
 
-### 堆
+### Heap
 
-所有对象都在这里分配内存，是垃圾收集的主要区域（"GC 堆"）。
+This is where all objects are allocated memory and is the main area for garbage collection (the "GC heap").
 
-现代的垃圾收集器基本都是采用分代收集算法，其主要的思想是针对不同类型的对象采取不同的垃圾回收算法。可以将堆分成两块：
+Modern garbage collectors basically use generational collection algorithms. The main idea is to adopt different garbage collection algorithms for different types of objects. The heap can be divided into two pieces:
 
-- 新生代（Young Generation）
-- 老年代（Old Generation）
+- Young Generation
+-Old Gene
+ratio)
 
-堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。
+The heap does not require contiguous memory, and its memory can be dynamically increased. Failure to increase will throw an OutOfMemoryError exception.
 
-可以通过 -Xms 和 -Xmx 这两个虚拟机参数来指定一个程序的堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
+You can specify the heap memory size of a program through the two virtual machine parameters -Xms and -Xmx. The first parameter sets the initial value, and the second parameter sets the maximum value.
 
 ```java
 java -Xms1M -Xmx2M HackTheJava
 ```
 
-### 方法区
+### Method area
 
-用于存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。
+Used to store loaded class information, constants, static variables, code compiled by the just-in-time compiler and other data.
 
-和堆一样不需要连续的内存，并且可以动态扩展，动态扩展失败一样会抛出 OutOfMemoryError 异常。
+Like the heap, it does not require continuous memory and can be dynamically expanded. If dynamic expansion fails, an OutOfMemoryError exception will be thrown.
 
-对这块区域进行垃圾回收的主要目标是对常量池的回收和对类的卸载，但是一般比较难实现。
+The main goal of garbage collection in this area is to recycle the constant pool and uninstall classes, but it is generally difficult to achieve.
 
-HotSpot 虚拟机把它当成永久代来进行垃圾回收。但很难确定永久代的大小，因为它受到很多因素影响，并且每次 Full GC 之后永久代的大小都会改变，所以经常会抛出 OutOfMemoryError 异常。为了更容易管理方法区，从 JDK 1.8 开始，移除永久代，并把方法区移至元空间，它位于本地内存中，而不是虚拟机内存中。
+The HotSpot virtual machine treats it as a permanent generation for garbage collection. But it is difficult to determine the size of the permanent generation because it is affected by many factors and the size of the permanent generation will change after every Full GC, so OutOfMemoryError exceptions are often thrown. To make it easier to manage the method area, starting with JDK 1.8, the permanent generation is removed and the method area is moved to the metaspace, which is located in local memory instead of virtual machine memory.
 
-方法区是一个 JVM 规范，永久代与元空间都是其一种实现方式。在 JDK 1.8 之后，原来永久代的数据被分到了堆和元空间中。元空间存储类的元信息，静态变量和常量池等放入堆中。
+The method area is a JVM specification, and the permanent generation and metaspace are both its implementation methods. After JDK 1.8, the original permanent generation data was divided into the heap and metaspace. Metaspace stores metainformation of classes, static variables, constant pools, etc. into the heap.
 
-### 运行时常量池
+### Runtime constant pool
 
-运行时常量池是方法区的一部分。
+The runtime constant pool is part of the method area.
 
-Class 文件中的常量池（编译器生成的字面量和符号引用）会在类加载后被放入这个区域。
+The constant pool (literal and symbolic references generated by the compiler) in the Class file will be placed in this area after the class is loaded.
 
-除了在编译期生成的常量，还允许动态生成，例如 String 类的 intern()。
+In addition to constants generated at compile time, dynamic generation is also allowed, such as intern() of the String class.
 
-### 直接内存
+### Direct memory
 
-在 JDK 1.4 中新引入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在堆内存和堆外内存来回拷贝数据。
+The NIO class was newly introduced in JDK 1.4, which can use the Native function library to directly allocate off-heap memory, and then operate through the DirectByteBuffer object in the Java heap as a reference to this memory. This can significantly improve performance in some scenarios because it avoids copying data back and forth between heap memory and off-heap memory.
 
-## 二、垃圾收集
+## 2. Garbage collection
 
-垃圾收集主要是针对堆和方法区进行。程序计数器、虚拟机栈和本地方法栈这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后就会消失，因此不需要对这三个区域进行垃圾回收。
+Garbage collection is mainly performed on the heap and method area. The three areas of the program counter, virtual machine stack and local method stack are private to the thread and only exist during the life cycle of the thread. They will disappear after the thread ends, so there is no need to perform garbage collection on these three areas.
 
-### 判断一个对象是否可被回收
+### Determine whether an object can be recycled
 
-#### 1. 引用计数算法
+#### 1. Reference counting algorithm
 
-为对象添加一个引用计数器，当对象增加一个引用时计数器加 1，引用失效时计数器减 1。引用计数为 0 的对象可被回收。
+Add a reference counter to the object. When the object adds a reference, the counter increases by 1. When the reference expires, the counter increases by 1.
+Decrement the counter by 1. Objects with a reference count of 0 can be recycled.
 
-在两个对象出现循环引用的情况下，此时引用计数器永远不为 0，导致无法对它们进行回收。正是因为循环引用的存在，因此 Java 虚拟机不使用引用计数算法。
+In the case of a circular reference between two objects, the reference counter will never be 0, causing them to be unable to be recycled. It is precisely because of the existence of circular references that the Java virtual machine does not use a reference counting algorithm.
 
 ```java
 public class Test {
@@ -135,75 +138,76 @@ public class Test {
 }
 ```
 
-在上述代码中，a 与 b 引用的对象实例互相持有了对象的引用，因此当我们把对 a 对象与 b 对象的引用去除之后，由于两个对象还存在互相之间的引用，导致两个 Test 对象无法被回收。
+In the above code, the object instances referenced by a and b hold object references to each other. Therefore, after we remove the references to the a object and the b object, the two Test objects cannot be recycled because the two objects still have references to each other.
 
-#### 2. 可达性分析算法
+#### 2. Reachability analysis algorithm
 
-以 GC Roots 为起始点进行搜索，可达的对象都是存活的，不可达的对象可被回收。
+Using GC Roots as the starting point for searching, reachable objects are alive, and unreachable objects can be recycled.
 
-Java 虚拟机使用该算法来判断对象是否可被回收，GC Roots 一般包含以下内容：
+The Java virtual machine uses this algorithm to determine whether an object can be recycled. GC Roots generally include the following:
 
-- 虚拟机栈中局部变量表中引用的对象
-- 本地方法栈中 JNI 中引用的对象
-- 方法区中类静态属性引用的对象
-- 方法区中的常量引用的对象
+- Objects referenced in the local variable table in the virtual machine stack
+- Objects referenced in JNI in the native method stack
+- Objects referenced by class static properties in the method area
+- Objects referenced by constants in the method area
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/83d909d2-3858-4fe1-8ff4-16471db0b180.png" width="350px"> </div><br>
 
 
-#### 3. 方法区的回收
+#### 3. Recycling of method area
 
-因为方法区主要存放永久代对象，而永久代对象的回收率比新生代低很多，所以在方法区上进行回收性价比不高。
+Because the method area mainly stores permanent generation objects, and the recycling rate of permanent generation objects is much lower than that of the new generation, recycling in the method area is not cost-effective.
 
-主要是对常量池的回收和对类的卸载。
+Mainly the recycling of the constant pool and the unloading of classes.
 
-为了避免内存溢出，在大量使用反射和动态代理的场景都需要虚拟机具备类卸载功能。
+In order to avoid memory overflow, virtual machines need to have class offloading capabilities in scenarios where reflection and dynamic proxies are used extensively.
 
-类的卸载条件很多，需要满足以下三个条件，并且满足了条件也不一定会被卸载：
+There are many conditions for uninstalling a class, and the following three conditions need to be met, and if the conditions are met, they may not be uninstalled:
 
-- 该类所有的实例都已经被回收，此时堆中不存在该类的任何实例。
-- 加载该类的 ClassLoader 已经被回收。
-- 该类对应的 Class 对象没有在任何地方被引用，也就无法在任何地方通过反射访问该类方法。
+- All instances of this class have been returned
+Collect, there is no instance of this class in the heap at this time.
+- The ClassLoader that loaded this class has been recycled.
+- The Class object corresponding to this class is not referenced anywhere, so the class method cannot be accessed through reflection anywhere.
 
 #### 4. finalize()
 
-类似 C++ 的析构函数，用于关闭外部资源。但是 try-finally 等方式可以做得更好，并且该方法运行代价很高，不确定性大，无法保证各个对象的调用顺序，因此最好不要使用。
+C++-like destructor for closing external resources. However, try-finally and other methods can do better, and this method is very expensive to run, has high uncertainty, and cannot guarantee the calling order of each object, so it is best not to use it.
 
-当一个对象可被回收时，如果需要执行该对象的 finalize() 方法，那么就有可能在该方法中让对象重新被引用，从而实现自救。自救只能进行一次，如果回收的对象之前调用了 finalize() 方法自救，后面回收时不会再调用该方法。
+When an object can be recycled, if the finalize() method of the object needs to be executed, it is possible to re-reference the object in this method to achieve self-rescue. Self-rescue can only be performed once. If the recycled object has previously called the finalize() method to save itself, this method will not be called again when it is recycled later.
 
-### 引用类型
+### Reference type
 
-无论是通过引用计数算法判断对象的引用数量，还是通过可达性分析算法判断对象是否可达，判定对象是否可被回收都与引用有关。
+Whether it is to determine the number of references to an object through a reference counting algorithm or to determine whether an object is reachable through a reachability analysis algorithm, determining whether an object can be recycled is related to references.
 
-Java 提供了四种强度不同的引用类型。
+Java provides four reference types with different strengths.
 
-#### 1. 强引用
+#### 1. Strong reference
 
-被强引用关联的对象不会被回收。
+Objects associated with strong references will not be recycled.
 
-使用 new 一个新对象的方式来创建强引用。
+Use new to create a new object to create a strong reference.
 
 ```java
 Object obj = new Object();
 ```
 
-#### 2. 软引用
+#### 2. Soft reference
 
-被软引用关联的对象只有在内存不够的情况下才会被回收。
+Objects associated with soft references will only be recycled when there is insufficient memory.
 
-使用 SoftReference 类来创建软引用。
+Use the SoftReference class to create soft references.
 
 ```java
 Object obj = new Object();
 SoftReference<Object> sf = new SoftReference<Object>(obj);
-obj = null;  // 使对象只被软引用关联
+obj = null; // Make the object only associated with soft references
 ```
 
-#### 3. 弱引用
+#### 3. Weak reference
 
-被弱引用关联的对象一定会被回收，也就是说它只能存活到下一次垃圾回收发生之前。
+The object associated with a weak reference will definitely be recycled, which means that it can only survive until the next garbage collection occurs.
 
-使用 WeakReference 类来创建弱引用。
+Use the WeakReference class to create weak references.
 
 ```java
 Object obj = new Object();
@@ -211,13 +215,12 @@ WeakReference<Object> wf = new WeakReference<Object>(obj);
 obj = null;
 ```
 
-#### 4. 虚引用
+#### 4. Virtual reference
 
-又称为幽灵引用或者幻影引用，一个对象是否有虚引用的存在，不会对其生存时间造成影响，也无法通过虚引用得到一个对象。
+Also known as ghost reference or phantom reference, whether an object has a virtual reference will not affect its survival time, and an object cannot be obtained through a virtual reference.
 
-为一个对象设置虚引用的唯一目的是能在这个对象被回收时收到一个系统通知。
-
-使用 PhantomReference 来创建虚引用。
+The only purpose of setting a virtual reference to an object is to receive a system notification when the object is recycled.
+Use PhantomReference to create phantom references.
 
 ```java
 Object obj = new Object();
@@ -225,321 +228,328 @@ PhantomReference<Object> pf = new PhantomReference<Object>(obj, null);
 obj = null;
 ```
 
-### 垃圾收集算法
+### Garbage collection algorithm
 
-#### 1. 标记 - 清除
+#### 1. Mark - Clear
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/005b481b-502b-4e3f-985d-d043c2b330aa.png" width="400px"> </div><br>
 
-在标记阶段，程序会检查每个对象是否为活动对象，如果是活动对象，则程序会在对象头部打上标记。
+In the marking phase, the program checks whether each object is a live object. If it is a live object, the program puts a mark on the head of the object.
 
-在清除阶段，会进行对象回收并取消标志位，另外，还会判断回收后的分块与前一个空闲分块是否连续，若连续，会合并这两个分块。回收对象就是把对象作为分块，连接到被称为 “空闲链表” 的单向链表，之后进行分配时只需要遍历这个空闲链表，就可以找到分块。
+In the clearing phase, the object will be recycled and the flag bit will be cancelled. In addition, it will also be judged whether the recycled block is continuous with the previous free block. If so, the two blocks will be merged. Recycling an object is to treat the object as a block and connect it to a one-way linked list called the "free linked list". When allocating later, you only need to traverse this free linked list to find the block.
 
-在分配时，程序会搜索空闲链表寻找空间大于等于新对象大小 size 的块 block。如果它找到的块等于 size，会直接返回这个分块；如果找到的块大于 size，会将块分割成大小为 size 与 (block - size) 的两部分，返回大小为 size 的分块，并把大小为 (block - size) 的块返回给空闲链表。
+When allocating, the program will search the free linked list to find a block with space greater than or equal to the size of the new object. If the block it finds is equal to size, it will directly return the block; if the block it finds is larger than size, it will split the block into two parts of size and (block - size), return a block of size, and return a block of size (block - size) to the free list.
 
-不足：
+Disadvantages:
 
-- 标记和清除过程效率都不高；
-- 会产生大量不连续的内存碎片，导致无法给大对象分配内存。
+- The marking and clearing processes are inefficient;
+- A large number of discontinuous memory fragments will be generated, resulting in the inability to allocate memory for large objects.
 
-#### 2. 标记 - 整理
+#### 2. Mark - Organize
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/ccd773a5-ad38-4022-895c-7ac318f31437.png" width="400px"> </div><br>
 
-让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
+Let all living objects move to one end, and then directly clean up the memory outside the end boundary.
 
-优点:
+Advantages:
 
-- 不会产生内存碎片
+- No memory fragmentation
 
-不足:
+Disadvantages:
 
-- 需要移动大量对象，处理效率比较低。
+- A large number of objects need to be moved, and the processing efficiency is relatively low.
 
-#### 3. 复制
+#### 3. Copy
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/b2b77b9e-958c-4016-8ae5-9c6edd83871e.png" width="400px"> </div><br>
+<div align=
+"center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/b2b77b9e-958c-4016-8ae5-9c6edd83871e.png" width="400px"> </div><br>
 
-将内存划分为大小相等的两块，每次只使用其中一块，当这一块内存用完了就将还存活的对象复制到另一块上面，然后再把使用过的内存空间进行一次清理。
+Divide the memory into two blocks of equal size, and only use one block at a time. When this block of memory is used up, copy the surviving objects to the other block, and then clean up the used memory space.
 
-主要不足是只使用了内存的一半。
+The main drawback is that only half of the memory is used.
 
-现在的商业虚拟机都采用这种收集算法回收新生代，但是并不是划分为大小相等的两块，而是一块较大的 Eden 空间和两块较小的 Survivor 空间，每次使用 Eden 和其中一块 Survivor。在回收时，将 Eden 和 Survivor 中还存活着的对象全部复制到另一块 Survivor 上，最后清理 Eden 和使用过的那一块 Survivor。
+Today's commercial virtual machines all use this collection algorithm to recycle the new generation, but it is not divided into two equal-sized blocks, but one larger Eden space and two smaller Survivor spaces. Each time Eden and one of the Survivor spaces are used. During recycling, copy all surviving objects in Eden and Survivor to another Survivor, and finally clean up Eden and the used Survivor.
 
-HotSpot 虚拟机的 Eden 和 Survivor 大小比例默认为 8:1，保证了内存的利用率达到 90%。如果每次回收有多于 10% 的对象存活，那么一块 Survivor 就不够用了，此时需要依赖于老年代进行空间分配担保，也就是借用老年代的空间存储放不下的对象。
+The default Eden and Survivor size ratio of the HotSpot virtual machine is 8:1, ensuring that the memory utilization reaches 90%. If more than 10% of the objects survive each recycling, then one Survivor is not enough. At this time, you need to rely on the old generation for space allocation guarantee, that is, borrowing the space of the old generation to store objects that cannot be accommodated.
 
-#### 4. 分代收集
+#### 4. Generational collection
 
-现在的商业虚拟机采用分代收集算法，它根据对象存活周期将内存划分为几块，不同块采用适当的收集算法。
+Today's commercial virtual machines use a generational collection algorithm, which divides the memory into several blocks according to the object survival cycle, and uses appropriate collection algorithms for different blocks.
 
-一般将堆分为新生代和老年代。
+The heap is generally divided into the new generation and the old generation.
 
-- 新生代使用：复制算法
-- 老年代使用：标记 - 清除 或者 标记 - 整理 算法
+- New generation use: replication algorithm
+- Old generation uses: mark-clear or mark-organize algorithm
 
-### 垃圾收集器
+### Garbage Collector
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/c625baa0-dde6-449e-93df-c3a67f2f430f.jpg" width=""/> </div><br>
 
-以上是 HotSpot 虚拟机中的 7 个垃圾收集器，连线表示垃圾收集器可以配合使用。
+The above are the 7 garbage collectors in the HotSpot virtual machine. The connections indicate that the garbage collectors can be used together.
 
-- 单线程与多线程：单线程指的是垃圾收集器只使用一个线程，而多线程使用多个线程；
-- 串行与并行：串行指的是垃圾收集器与用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序；并行指的是垃圾收集器和用户程序同时执行。除了 CMS 和 G1 之外，其它垃圾收集器都是以串行的方式执行。
+-Single-threaded and multi-threaded: Single-threaded means that the garbage collector only uses one thread, while multi-threaded uses multiple threads;
+- Serial and parallel: Serial means that the garbage collector and the user program are executed alternately, which means that the user program needs to be paused when performing garbage collection; parallel means that the garbage collector and the user program are executed at the same time. Apart from
+Except for CMS and G1, other garbage collectors are executed in a serial manner.
 
-#### 1. Serial 收集器
+#### 1. Serial collector
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/22fda4ae-4dd5-489d-ab10-9ebfdad22ae0.jpg" width=""/> </div><br>
 
-Serial 翻译为串行，也就是说它以串行的方式执行。
+Serial translates to serial, which means it executes in a serial manner.
 
-它是单线程的收集器，只会使用一个线程进行垃圾收集工作。
+It is a single-threaded collector and only uses one thread for garbage collection.
 
-它的优点是简单高效，在单个 CPU 环境下，由于没有线程交互的开销，因此拥有最高的单线程收集效率。
+Its advantage is that it is simple and efficient. In a single CPU environment, since there is no overhead of thread interaction, it has the highest single-thread collection efficiency.
 
-它是 Client 场景下的默认新生代收集器，因为在该场景下内存一般来说不会很大。它收集一两百兆垃圾的停顿时间可以控制在一百多毫秒以内，只要不是太频繁，这点停顿时间是可以接受的。
+It is the default new generation collector in the Client scenario, because the memory in this scenario is generally not very large. The pause time for collecting one to two hundred megabytes of garbage can be controlled within more than a hundred milliseconds. As long as it is not too frequent, this pause time is acceptable.
 
-#### 2. ParNew 收集器
+#### 2. ParNew collector
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/81538cd5-1bcf-4e31-86e5-e198df1e013b.jpg" width=""/> </div><br>
 
-它是 Serial 收集器的多线程版本。
+It is a multi-threaded version of the Serial collector.
 
-它是 Server 场景下默认的新生代收集器，除了性能原因外，主要是因为除了 Serial 收集器，只有它能与 CMS 收集器配合使用。
+It is the default new generation collector in the Server scenario. In addition to performance reasons, it is mainly because apart from the Serial collector, it is the only one that can be used with the CMS collector.
 
-#### 3. Parallel Scavenge 收集器
+#### 3. Parallel Scavenge Collector
 
-与 ParNew 一样是多线程收集器。
+Like ParNew, it is a multi-threaded collector.
 
-其它收集器目标是尽可能缩短垃圾收集时用户线程的停顿时间，而它的目标是达到一个可控制的吞吐量，因此它被称为“吞吐量优先”收集器。这里的吞吐量指 CPU 用于运行用户程序的时间占总时间的比值。
+The goal of other collectors is to shorten the pause time of user threads during garbage collection as much as possible, while its goal is to achieve a controllable throughput, so it is called a "throughput-first" collector. Throughput here refers to the ratio of the time the CPU spends running user programs to the total time.
 
-停顿时间越短就越适合需要与用户交互的程序，良好的响应速度能提升用户体验。而高吞吐量则可以高效率地利用 CPU 时间，尽快完成程序的运算任务，适合在后台运算而不需要太多交互的任务。
+The shorter the pause time, the more suitable it is for programs that need to interact with users. Good response speed can improve the user experience. High throughput can efficiently utilize CPU time and complete the program's computing tasks as quickly as possible. It is suitable for tasks that are performed in the background and do not require too much interaction.
 
-缩短停顿时间是以牺牲吞吐量和新生代空间来换取的：新生代空间变小，垃圾回收变得频繁，导致吞吐量下降。
+Shortening the pause time comes at the expense of throughput and new generation space: the new generation space becomes smaller and garbage collection becomes more frequent, resulting in a decrease in throughput.
 
-可以通过一个开关参数打开 GC 自适应的调节策略（GC Ergonomics），就不需要手工指定新生代的大小（-Xmn）、Eden 和 Survivor 区的比例、晋升老年代对象年龄等细节参数了。虚拟机会根据当前系统的运行情况收集性能监控信息，动态调整这些参数以提供最合适的停顿时间或者最大的吞吐量。
+The GC adaptive adjustment strategy (GC Ergonomic
+s), there is no need to manually specify detailed parameters such as the size of the new generation (-Xmn), the ratio of Eden and Survivor areas, and the age of objects promoted to the old generation. The virtual machine collects performance monitoring information based on the current operating conditions of the system and dynamically adjusts these parameters to provide the most appropriate pause time or maximum throughput.
 
-#### 4. Serial Old 收集器
+#### 4. Serial Old collector
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/08f32fd3-f736-4a67-81ca-295b2a7972f2.jpg" width=""/> </div><br>
 
-是 Serial 收集器的老年代版本，也是给 Client 场景下的虚拟机使用。如果用在 Server 场景下，它有两大用途：
+It is the old generation version of the Serial collector and is also used by virtual machines in Client scenarios. If used in a Server scenario, it has two major uses:
 
-- 在 JDK 1.5 以及之前版本（Parallel Old 诞生以前）中与 Parallel Scavenge 收集器搭配使用。
-- 作为 CMS 收集器的后备预案，在并发收集发生 Concurrent Mode Failure 时使用。
+- Used with the Parallel Scavenge collector in JDK 1.5 and earlier (before Parallel Old).
+- As a backup plan for the CMS collector, it is used when Concurrent Mode Failure occurs in concurrent collection.
 
-#### 5. Parallel Old 收集器
+#### 5. Parallel Old collector
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/278fe431-af88-4a95-a895-9c3b80117de3.jpg" width=""/> </div><br>
 
-是 Parallel Scavenge 收集器的老年代版本。
+Is the old generation version of the Parallel Scavenge collector.
 
-在注重吞吐量以及 CPU 资源敏感的场合，都可以优先考虑 Parallel Scavenge 加 Parallel Old 收集器。
+In situations where throughput is important and CPU resources are sensitive, Parallel Scavenge plus Parallel Old collector can be given priority.
 
-#### 6. CMS 收集器
+#### 6. CMS Collector
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/62e77997-6957-4b68-8d12-bfd609bb2c68.jpg" width=""/> </div><br>
 
-CMS（Concurrent Mark Sweep），Mark Sweep 指的是标记 - 清除算法。
+CMS (Concurrent Mark Sweep), Mark Sweep refers to the mark-sweep algorithm.
 
-分为以下四个流程：
+It is divided into the following four processes:
 
-- 初始标记：仅仅只是标记一下 GC Roots 能直接关联到的对象，速度很快，需要停顿。
-- 并发标记：进行 GC Roots Tracing 的过程，它在整个回收过程中耗时最长，不需要停顿。
-- 重新标记：为了修正并发标记期间因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，需要停顿。
-- 并发清除：不需要停顿。
+- initial
+Marking: Just marking objects that GC Roots can directly associate with, it is very fast and requires a pause.
+- Concurrent marking: The process of GC Roots Tracing, which takes the longest time in the entire recycling process and does not require pauses.
+- Re-marking: In order to correct the mark records of that part of the object that has changed due to the continued operation of the user program during concurrent marking, a pause is required.
+- Concurrent cleanup: no pauses required.
 
-在整个过程中耗时最长的并发标记和并发清除过程中，收集器线程都可以与用户线程一起工作，不需要进行停顿。
+During the concurrent marking and concurrent cleaning processes, which are the longest in the entire process, the collector thread can work together with the user thread without pausing.
 
-具有以下缺点：
+Has the following disadvantages:
 
-- 吞吐量低：低停顿时间是以牺牲吞吐量为代价的，导致 CPU 利用率不够高。
-- 无法处理浮动垃圾，可能出现 Concurrent Mode Failure。浮动垃圾是指并发清除阶段由于用户线程继续运行而产生的垃圾，这部分垃圾只能到下一次 GC 时才能进行回收。由于浮动垃圾的存在，因此需要预留出一部分内存，意味着 CMS 收集不能像其它收集器那样等待老年代快满的时候再回收。如果预留的内存不够存放浮动垃圾，就会出现 Concurrent Mode Failure，这时虚拟机将临时启用 Serial Old 来替代 CMS。
-- 标记 - 清除算法导致的空间碎片，往往出现老年代空间剩余，但无法找到足够大连续空间来分配当前对象，不得不提前触发一次 Full GC。
+- Low throughput: Low pause time comes at the expense of throughput, resulting in insufficient CPU utilization.
+- Unable to handle floating garbage, Concurrent Mode Failure may occur. Floating garbage refers to the garbage generated by the user thread continuing to run during the concurrent cleanup phase. This part of garbage can only be recycled during the next GC. Due to the existence of floating garbage, a portion of memory needs to be reserved, which means that CMS collection cannot wait until the old generation is almost full before recycling like other collectors. If the reserved memory is not enough to store floating garbage, Concurrent Mode Failure will occur, and the virtual machine will temporarily enable Serial Old to replace CMS.
+- Space fragmentation caused by the mark-clear algorithm often results in remaining space in the old generation, but it is unable to find a large enough continuous space to allocate the current object, and has to trigger a Full GC in advance.
 
-#### 7. G1 收集器
+#### 7. G1 Collector
 
-G1（Garbage-First），它是一款面向服务端应用的垃圾收集器，在多 CPU 和大内存的场景下有很好的性能。HotSpot 开发团队赋予它的使命是未来可以替换掉 CMS 收集器。
+G1 (Garbage-First), which is a garbage collector for server-side applications, has good performance in multi-CPU and large-memory scenarios. The HotSpot development team has given it the mission of replacing the CMS collector in the future.
 
-堆被分为新生代和老年代，其它收集器进行收集的范围都是整个新生代或者老年代，而 G1 可以直接对新生代和老年代一起回收。
+The heap is divided into the new generation and the old generation. Other collectors collect the entire new generation or the old generation, while G1 can directly collect the new generation and the old generation together.
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/4cf711a8-7ab2-4152-b85c-d5c226733807.png" width="600"/> </div><br>
 
-G1 把堆划分成多个大小相等的独立区域（Region），新生代和老年代不再物理隔离。
+G1 divides the heap into multiple independent regions (Regions) of equal size, and the new generation and the old generation are no longer physically isolated.
 
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png" width="600"/> </div><br>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-gu
+angzhou.myqcloud.com/9bbddeeb-e939-41f0-8e8e-2b1a0aa7e0a7.png" width="600"/> </div><br>
 
-通过引入 Region 的概念，从而将原来的一整块内存空间划分成多个的小空间，使得每个小空间可以单独进行垃圾回收。这种划分方法带来了很大的灵活性，使得可预测的停顿时间模型成为可能。通过记录每个 Region 垃圾回收时间以及回收所获得的空间（这两个值是通过过去回收的经验获得），并维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的 Region。
+By introducing the concept of Region, the original entire memory space is divided into multiple small spaces, so that each small space can be garbage collected independently. This partitioning method brings a lot of flexibility, making predictable pause time models possible. By recording the garbage collection time of each Region and the space obtained by recycling (these two values ​​are obtained through past recycling experience), and maintaining a priority list, each time based on the allowed collection time, the Region with the greatest value is recycled first.
 
-每个 Region 都有一个 Remembered Set，用来记录该 Region 对象的引用对象所在的 Region。通过使用 Remembered Set，在做可达性分析的时候就可以避免全堆扫描。
+Each Region has a Remembered Set, which is used to record the Region where the reference object of the Region object is located. By using Remembered Set, you can avoid a full heap scan when doing reachability analysis.
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f99ee771-c56f-47fb-9148-c0036695b5fe.jpg" width=""/> </div><br>
 
-如果不计算维护 Remembered Set 的操作，G1 收集器的运作大致可划分为以下几个步骤：
+If you do not count the operation of maintaining the Remembered Set, the operation of the G1 collector can be roughly divided into the following steps:
 
-- 初始标记
-- 并发标记
-- 最终标记：为了修正在并发标记期间因用户程序继续运作而导致标记产生变动的那一部分标记记录，虚拟机将这段时间对象变化记录在线程的 Remembered Set Logs 里面，最终标记阶段需要把 Remembered Set Logs 的数据合并到 Remembered Set 中。这阶段需要停顿线程，但是可并行执行。
-- 筛选回收：首先对各个 Region 中的回收价值和成本进行排序，根据用户所期望的 GC 停顿时间来制定回收计划。此阶段其实也可以做到与用户程序一起并发执行，但是因为只回收一部分 Region，时间是用户可控制的，而且停顿用户线程将大幅度提高收集效率。
+- initial mark
+- Concurrent marking
+- Final marking: In order to correct the part of the mark record that changes due to the continued operation of the user program during concurrent marking, the virtual machine records the object changes during this period in the thread's Remembered Set Logs. The final marking stage needs to merge the data of the Remembered Set Logs into the Remembered Set. This phase requires the thread to be paused, but can be executed in parallel.
+- Screening recycling: First sort the recycling value and cost in each Region, and develop a recycling plan based on the GC pause time expected by the user. This stage can actually be executed concurrently with the user program, but because only a part of the Region is recycled, the time is controllable by the user, and pausing the user thread will greatly improve the collection efficiency.
 
-具备如下特点：
+It has the following characteristics:
 
-- 空间整合：整体来看是基于“标记 - 整理”算法实现的收集器，从局部（两个 Region 之间）上来看是基于“复制”算法实现的，这意味着运行期间不会产生内存空间碎片。
-- 可预测的停顿：能让使用者明确指定在一个长度为 M 毫秒的时间片段内，消耗在 GC 上的时间不得超过 N 毫秒。
+- Space integration: Overall, the collector is implemented based on the "mark-sort" algorithm. From a local perspective (between two regions), it is implemented based on the "copy" algorithm, which means that no memory space fragmentation will be generated during operation.
+- Predictable pause: allows the user to explicitly specify a pause of length
+Within a time frame of M milliseconds, no more than N milliseconds may be spent on the GC.
 
-## 三、内存分配与回收策略
+## 3. Memory allocation and recycling strategy
 
-### Minor GC 和 Full GC
+### Minor GC and Full GC
 
-- Minor GC：回收新生代，因为新生代对象存活时间很短，因此 Minor GC 会频繁执行，执行的速度一般也会比较快。
+- Minor GC: Recycle the new generation. Because the survival time of the new generation objects is very short, Minor GC will be executed frequently and the execution speed will generally be faster.
 
-- Full GC：回收老年代和新生代，老年代对象其存活时间长，因此 Full GC 很少执行，执行速度会比 Minor GC 慢很多。
+- Full GC: Recycle the old generation and the new generation. Old generation objects have a long survival time, so Full GC is rarely executed and the execution speed will be much slower than Minor GC.
 
-### 内存分配策略
+### Memory allocation strategy
 
-#### 1. 对象优先在 Eden 分配
+#### 1. Objects are allocated in Eden first
 
-大多数情况下，对象在新生代 Eden 上分配，当 Eden 空间不够时，发起 Minor GC。
+In most cases, objects are allocated on the new generation Eden. When Eden space is insufficient, Minor GC is initiated.
 
-#### 2. 大对象直接进入老年代
+#### 2. Large objects enter the old generation directly
 
-大对象是指需要连续内存空间的对象，最典型的大对象是那种很长的字符串以及数组。
+Large objects refer to objects that require continuous memory space. The most typical large objects are very long strings and arrays.
 
-经常出现大对象会提前触发垃圾收集以获取足够的连续空间分配给大对象。
+Often large objects trigger garbage collection early to obtain enough contiguous space to allocate to large objects.
 
--XX:PretenureSizeThreshold，大于此值的对象直接在老年代分配，避免在 Eden 和 Survivor 之间的大量内存复制。
+-XX:PretenureSizeThreshold, objects larger than this value are allocated directly in the old generation to avoid large memory copies between Eden and Survivor.
 
-#### 3. 长期存活的对象进入老年代
+#### 3. Long-term surviving objects enter the old generation
 
-为对象定义年龄计数器，对象在 Eden 出生并经过 Minor GC 依然存活，将移动到 Survivor 中，年龄就增加 1 岁，增加到一定年龄则移动到老年代中。
+Define an age counter for the object. If the object is born in Eden and still survives the Minor GC, it will be moved to the Survivor, and its age will be increased by 1 year. When it reaches a certain age, it will be moved to the old generation.
 
--XX:MaxTenuringThreshold 用来定义年龄的阈值。
+-XX:MaxTenuringThreshold is used to define the age threshold.
 
-#### 4. 动态对象年龄判定
+#### 4. Dynamic object age determination
 
-虚拟机并不是永远要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor 中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无需等到 MaxTenuringThreshold 中要求的年龄。
+The virtual machine does not always require that the age of an object must reach MaxTenuringThreshold before it can be promoted to the old generation. If the sum of the sizes of all objects of the same age in the Survivor is greater than half of the Survivor space, objects whose age is greater than or equal to this age can directly enter the old generation without waiting until the age required in MaxTenuringThreshold.
 
-#### 5. 空间分配担保
+#### 5. Space allocation guarantee
 
-在发生 Minor GC 之前，虚拟机先检查老年代最大可用的连续空间是否大于新生代所有对象总空间，如果条件成立的话，那么 Minor GC 可以确认是安全的。
+Before Minor GC occurs, the virtual machine first checks whether the maximum available continuous space in the old generation is greater than the total space of all objects in the new generation. If the condition is true, then Minor GC can be confirmed to be safe.
 
-如果不成立的话虚拟机会查看 HandlePromotionFailure 的值是否允许担保失败，如果允许那么就会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试着进行一次 Minor GC；如果小于，或者 HandlePromotionFailure 的值不允许冒险，那么就要进行一次 Full GC。
+If not, the virtual machine will check whether the value of HandlePromotionFailure allows guarantee failure. If it is allowed, it will continue to check whether the maximum available continuous space in the old generation is greater than the average size of objects promoted to the old generation. If it is greater, it will try to perform a Minor GC; if it is less, or Han
+The value of dlePromotionFailure does not allow risks, so a Full GC will be performed.
 
-### Full GC 的触发条件
+### Trigger conditions for Full GC
 
-对于 Minor GC，其触发条件非常简单，当 Eden 空间满时，就将触发一次 Minor GC。而 Full GC 则相对复杂，有以下条件：
+For Minor GC, the triggering condition is very simple. When the Eden space is full, a Minor GC will be triggered. Full GC is relatively complex and has the following conditions:
 
-#### 1. 调用 System.gc()
+#### 1. Call System.gc()
 
-只是建议虚拟机执行 Full GC，但是虚拟机不一定真正去执行。不建议使用这种方式，而是让虚拟机管理内存。
+It is only recommended that the virtual machine execute Full GC, but the virtual machine may not actually execute it. It is not recommended to use this method, instead let the virtual machine manage the memory.
 
-#### 2. 老年代空间不足
+#### 2. Insufficient space in the old generation
 
-老年代空间不足的常见场景为前文所讲的大对象直接进入老年代、长期存活的对象进入老年代等。
+Common scenarios where there is insufficient space in the old generation include large objects directly entering the old generation as mentioned above, long-term surviving objects entering the old generation, etc.
 
-为了避免以上原因引起的 Full GC，应当尽量不要创建过大的对象以及数组。除此之外，可以通过 -Xmn 虚拟机参数调大新生代的大小，让对象尽量在新生代被回收掉，不进入老年代。还可以通过 -XX:MaxTenuringThreshold 调大对象进入老年代的年龄，让对象在新生代多存活一段时间。
+In order to avoid Full GC caused by the above reasons, you should try not to create overly large objects and arrays. In addition, you can use the -Xmn virtual machine parameter to increase the size of the new generation so that objects can be recycled in the new generation and not enter the old generation. You can also use -XX:MaxTenuringThreshold to increase the age at which an object enters the old generation, allowing the object to survive in the new generation for a longer period of time.
 
-#### 3. 空间分配担保失败
+#### 3. Space allocation guarantee failed
 
-使用复制算法的 Minor GC 需要老年代的内存空间作担保，如果担保失败会执行一次 Full GC。具体内容请参考上面的第 5 小节。
+Minor GC using the copy algorithm requires the memory space of the old generation for guarantee. If the guarantee fails, a Full GC will be executed. Please refer to Section 5 above for details.
 
-#### 4. JDK 1.7 及以前的永久代空间不足
+#### 4. Insufficient permanent generation space in JDK 1.7 and earlier
 
-在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 Class 的信息、常量、静态变量等数据。
+In JDK 1.7 and before, the method area in the HotSpot virtual machine is implemented using the permanent generation, which stores some Class information, constants, static variables and other data.
 
-当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么虚拟机会抛出 java.lang.OutOfMemoryError。
+When there are many classes to be loaded, reflected classes, and methods to be called in the system, the permanent generation may be full, and Full GC will be executed even if CMS GC is not configured. If it still cannot be recycled after Full GC, the virtual machine will throw java.lang.OutOfMemoryError.
 
-为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
+To avoid Full GC caused by the above reasons, the methods that can be adopted are to increase the permanent generation space or switch to using CMS GC.
 
 #### 5. Concurrent Mode Failure
 
-执行 CMS GC 的过程中同时有对象要放入老年代，而此时老年代空间不足（可能是 GC 过程中浮动垃圾过多导致暂时性的空间不足），便会报 Concurrent Mode Failure 错误，并触发 Full GC。
+During the execution of CMS GC, if there are objects that need to be placed into the old generation, and there is insufficient space in the old generation at this time (it may be that there is too much floating garbage during the GC process, causing a temporary lack of space), a Concurrent Mode Failure error will be reported and Full GC will be triggered.
 
-## 四、类加载机制
+## 4. Class loading mechanism
 
-类是在运行期间第一次使用时动态加载的，而不是一次性加载所有类。因为如果一次性加载，那么会占用很多的内存。
-
-### 类的生命周期
+Classes are dynamically loaded the first time they are used during runtime, rather than loading all classes at once. Because if you load it all at once, it will take up a lot of memory.
+### Class life cycle
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/335fe19c-4a76-45ab-9320-88c90d6a0d7e.png" width="600px"> </div><br>
 
-包括以下 7 个阶段：
+Includes the following 7 stages:
 
--   **加载（Loading）**  
--   **验证（Verification）**  
--   **准备（Preparation）**  
--   **解析（Resolution）**  
--   **初始化（Initialization）**  
-- 使用（Using）
-- 卸载（Unloading）
+- **Loading**
+- **Verification**
+- **Preparation**
+- **Resolution**
+- **Initialization**
+-Using
+- Unloading
 
-### 类加载过程
+### Class loading process
 
-包含了加载、验证、准备、解析和初始化这 5 个阶段。
+It includes five stages: loading, verification, preparation, parsing and initialization.
 
-#### 1. 加载
+#### 1. Load
 
-加载是类加载的一个阶段，注意不要混淆。
+Loading is a phase of class loading, be careful not to confuse it.
 
-加载过程完成以下三件事：
+The loading process does three things:
 
-- 通过类的完全限定名称获取定义该类的二进制字节流。
-- 将该字节流表示的静态存储结构转换为方法区的运行时存储结构。
-- 在内存中生成一个代表该类的 Class 对象，作为方法区中该类各种数据的访问入口。
+- Get the binary byte stream that defines a class by its fully qualified name.
+- Convert the static storage structure represented by the byte stream into the runtime storage structure of the method area.
+- Generate a Class object representing the class in memory, which serves as the access point for various data of the class in the method area.
 
 
-其中二进制字节流可以从以下方式中获取：
+The binary byte stream can be obtained in the following ways:
 
-- 从 ZIP 包读取，成为 JAR、EAR、WAR 格式的基础。
-- 从网络中获取，最典型的应用是 Applet。
-- 运行时计算生成，例如动态代理技术，在 java.lang.reflect.Proxy 使用 ProxyGenerator.generateProxyClass 的代理类的二进制字节流。
-- 由其他文件生成，例如由 JSP 文件生成对应的 Class 类。
+- Reading from ZIP packages becomes the basis for JAR, EAR, and WAR formats.
+- Obtained from the network, the most typical application is Applet.
+- Runtime calculation generation, such as dynamic proxy technology, in java.lang.reflect.Proxy uses ProxyGenerator.generateProxyClass's binary byte stream for the proxy class.
+- Generated from other files, such as the corresponding Class class generated from a JSP file.
 
-#### 2. 验证
+#### 2. Verification
 
-确保 Class 文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身的安全。
+Ensure that the information contained in the byte stream of the Class file meets the requirements of the current virtual machine and does not endanger the security of the virtual machine itself.
 
-#### 3. 准备
+#### 3. Preparation
 
-类变量是被 static 修饰的变量，准备阶段为类变量分配内存并设置初始值，使用的是方法区的内存。
+Class variables are variables modified by static. In the preparation phase, memory is allocated for class variables and initial values are set. The memory in the method area is used.
 
-实例变量不会在这阶段分配内存，它会在对象实例化时随着对象一起被分配在堆中。应该注意到，实例化不是类加载的一个过程，类加载发生在所有实例化操作之前，并且类加载只进行一次，实例化可以进行多次。
+Instance variables will not be allocated memory at this stage, they will be allocated in the heap along with the object when the object is instantiated. It should be noted that instantiation is not a process of class loading. Class loading occurs before all instantiation operations, and class loading is only performed once, and instantiation can be performed multiple times.
 
-初始值一般为 0 值，例如下面的类变量 value 被初始化为 0 而不是 123。
+The initial value is generally 0. For example, the following class variable value is initialized to 0 and
+Not 123.
 
 ```java
 public static int value = 123;
 ```
 
-如果类变量是常量，那么它将初始化为表达式所定义的值而不是 0。例如下面的常量 value 被初始化为 123 而不是 0。
+If the class variable is a constant, it is initialized to the value defined by the expression instead of 0. For example, the constant value below is initialized to 123 instead of 0.
 
 ```java
 public static final int value = 123;
 ```
 
-#### 4. 解析
+#### 4. Analysis
 
-将常量池的符号引用替换为直接引用的过程。
+The process of replacing a symbolic reference to a constant pool with a direct reference.
 
-其中解析过程在某些情况下可以在初始化阶段之后再开始，这是为了支持 Java 的动态绑定。
+The parsing process can start after the initialization phase in some cases, in order to support Java's dynamic binding.
 
-#### 5. 初始化
+#### 5. Initialization
 
 <div data="modify -->"></div>
-初始化阶段才真正开始执行类中定义的 Java 程序代码。初始化阶段是虚拟机执行类构造器 &lt;clinit\>() 方法的过程。在准备阶段，类变量已经赋过一次系统要求的初始值，而在初始化阶段，根据程序员通过程序制定的主观计划去初始化类变量和其它资源。
+The initialization phase actually begins to execute the Java program code defined in the class. The initialization phase is the process in which the virtual machine executes the class constructor &lt;clinit\>() method. In the preparation phase, class variables have been assigned an initial value required by the system, and in the initialization phase, class variables and other resources are initialized according to the subjective plan made by the programmer through the program.
 
-&lt;clinit\>() 是由编译器自动收集类中所有类变量的赋值动作和静态语句块中的语句合并产生的，编译器收集的顺序由语句在源文件中出现的顺序决定。特别注意的是，静态语句块只能访问到定义在它之前的类变量，定义在它之后的类变量只能赋值，不能访问。例如以下代码：
+&lt;clinit\>() is generated by the compiler automatically collecting the assignment actions of all class variables in the class and merging the statements in the static statement block. The order of the compiler collection is determined by the order in which the statements appear in the source file. Special note is that a static statement block can only access class variables defined before it, and class variables defined after it can only be assigned values ​​and cannot be accessed. For example the following code:
 
 ```java
 public class Test {
     static {
-        i = 0;                // 给变量赋值可以正常编译通过
-        System.out.print(i);  // 这句编译器会提示“非法向前引用”
+        i = 0; // Assigning values to variables can be compiled normally.
+        System.out.print(i); // This sentence will cause the compiler to prompt "illegal forward reference"
     }
     static int i = 1;
 }
 ```
 
-由于父类的 &lt;clinit\>() 方法先执行，也就意味着父类中定义的静态语句块的执行要优先于子类。例如以下代码：
+Since the &lt;clinit\>() method of the parent class is executed first, it means that the execution of the static statement block defined in the parent class takes precedence over the subclass. For example the following code:
 
 ```java
 static class Parent {
@@ -554,95 +564,99 @@ static class Sub extends Parent {
 }
 
 public static void main(String[] args) {
-     System.out.println(Sub.B);  // 2
+     System.
+out.println(Sub.B); // 2
 }
 ```
 
-接口中不可以使用静态语句块，但仍然有类变量初始化的赋值操作，因此接口与类一样都会生成 &lt;clinit\>() 方法。但接口与类不同的是，执行接口的 &lt;clinit\>() 方法不需要先执行父接口的 &lt;clinit\>() 方法。只有当父接口中定义的变量使用时，父接口才会初始化。另外，接口的实现类在初始化时也一样不会执行接口的 &lt;clinit\>() 方法。
+Static statement blocks cannot be used in interfaces, but there are still assignment operations for class variable initialization, so interfaces and classes will generate the &lt;clinit\>() method. But the difference between interfaces and classes is that executing the &lt;clinit\>() method of the interface does not require first executing the &lt;clinit\>() method of the parent interface. The parent interface is initialized only when variables defined in the parent interface are used. In addition, the implementation class of the interface will not execute the &lt;clinit\>() method of the interface during initialization.
 
-虚拟机会保证一个类的 &lt;clinit\>() 方法在多线程环境下被正确的加锁和同步，如果多个线程同时初始化一个类，只会有一个线程执行这个类的 &lt;clinit\>() 方法，其它线程都会阻塞等待，直到活动线程执行 &lt;clinit\>() 方法完毕。如果在一个类的 &lt;clinit\>() 方法中有耗时的操作，就可能造成多个线程阻塞，在实际过程中此种阻塞很隐蔽。
+The virtual machine ensures that the &lt;clinit\>() method of a class is correctly locked and synchronized in a multi-threaded environment. If multiple threads initialize a class at the same time, only one thread will execute the &lt;clinit\>() method of this class, and other threads will block and wait until the active thread completes the execution of the &lt;clinit\>() method. If there are time-consuming operations in the &lt;clinit\>() method of a class, it may cause multiple threads to be blocked. In the actual process, this blocking is very hidden.
 
-### 类初始化时机
+### Class initialization timing
 
-#### 1. 主动引用
+#### 1. Active reference
 
-虚拟机规范中并没有强制约束何时进行加载，但是规范严格规定了有且只有下列五种情况必须对类进行初始化（加载、验证、准备都会随之发生）：
+There is no mandatory restriction on when to load in the virtual machine specification, but the specification strictly stipulates that there are and only the following five situations when a class must be initialized (loading, verification, and preparation will all occur):
 
-- 遇到 new、getstatic、putstatic、invokestatic 这四条字节码指令时，如果类没有进行过初始化，则必须先触发其初始化。最常见的生成这 4 条指令的场景是：使用 new 关键字实例化对象的时候；读取或设置一个类的静态字段（被 final 修饰、已在编译期把结果放入常量池的静态字段除外）的时候；以及调用一个类的静态方法的时候。
+- When encountering the four bytecode instructions new, getstatic, putstatic, and invokestatic, if the class has not been initialized, its initialization must be triggered first. The most common scenarios where these four instructions are generated are: when using the new keyword to instantiate an object; when reading or setting static fields of a class (except static fields that are final modified and have the results put into the constant pool at compile time); and when calling static methods of a class.
 
-- 使用 java.lang.reflect 包的方法对类进行反射调用的时候，如果类没有进行初始化，则需要先触发其初始化。
+- When using the method of the java.lang.reflect package to make a reflective call to a class, if the class has not been initialized, its initialization needs to be triggered first.
 
-- 当初始化一个类的时候，如果发现其父类还没有进行过初始化，则需要先触发其父类的初始化。
+- When initializing a class, if it is found that its parent class has not been initialized, you need to trigger the initialization of its parent class first.
 
-- 当虚拟机启动时，用户需要指定一个要执行的主类（包含 main() 方法的那个类），虚拟机会先初始化这个主类；
+- When the virtual machine starts, the user needs to specify a main class to be executed (the class containing the main() method), and the virtual machine will initialize the main class first;
 
-- 当使用 JDK 1.7 的动态语言支持时，如果一个 java.lang.invoke.MethodHandle 实例最后的解析结果为 REF_getStatic, REF_putStatic, REF_invokeStatic 的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则需要先触发其初始化；
+- When using the dynamic language support of JDK 1.7, if the final parsing result of a java.lang.invoke.MethodHandle instance is a method handle of REF_getStatic, REF_putStatic, REF_invokeStatic, and the class corresponding to this method handle has not been initialized
+Initialization, you need to trigger its initialization first;
 
-#### 2. 被动引用
+#### 2. Passive reference
 
-以上 5 种场景中的行为称为对一个类进行主动引用。除此之外，所有引用类的方式都不会触发初始化，称为被动引用。被动引用的常见例子包括：
+The behavior in the above 5 scenarios is called actively referencing a class. In addition, all methods of referencing a class will not trigger initialization and are called passive references. Common examples of passive references include:
 
-- 通过子类引用父类的静态字段，不会导致子类初始化。
+- Referring to the static fields of the parent class through the subclass will not cause the subclass to be initialized.
 
 ```java
-System.out.println(SubClass.value);  // value 字段在 SuperClass 中定义
+System.out.println(SubClass.value); // value field is defined in SuperClass
 ```
 
-- 通过数组定义来引用类，不会触发此类的初始化。该过程会对数组类进行初始化，数组类是一个由虚拟机自动生成的、直接继承自 Object 的子类，其中包含了数组的属性和方法。
+- Referring to a class through an array definition will not trigger the initialization of this class. This process will initialize the array class, which is a subclass automatically generated by the virtual machine and directly inherited from Object, which contains the properties and methods of the array.
 
 ```java
 SuperClass[] sca = new SuperClass[10];
 ```
 
-- 常量在编译阶段会存入调用类的常量池中，本质上并没有直接引用到定义常量的类，因此不会触发定义常量的类的初始化。
+- Constants will be stored in the constant pool of the calling class during the compilation phase. In essence, they do not directly reference the class that defines the constant, so the initialization of the class that defines the constant will not be triggered.
 
 ```java
 System.out.println(ConstClass.HELLOWORLD);
 ```
 
-### 类与类加载器
+### Classes and class loaders
 
-两个类相等，需要类本身相等，并且使用同一个类加载器进行加载。这是因为每一个类加载器都拥有一个独立的类名称空间。
+For two classes to be equal, the classes themselves must be equal and loaded using the same class loader. This is because each class loader has an independent class namespace.
 
-这里的相等，包括类的 Class 对象的 equals() 方法、isAssignableFrom() 方法、isInstance() 方法的返回结果为 true，也包括使用 instanceof 关键字做对象所属关系判定结果为 true。
+The equality here includes the return result of the equals() method, isAssignableFrom() method, and isInstance() method of the Class object of the class as true, and also includes the use of the instanceof keyword to determine the object ownership relationship as true.
 
-### 类加载器分类
+### Class loader classification
 
-从 Java 虚拟机的角度来讲，只存在以下两种不同的类加载器：
+From the perspective of the Java virtual machine, there are only two different class loaders:
 
-- 启动类加载器（Bootstrap ClassLoader），使用 C++ 实现，是虚拟机自身的一部分；
+- Bootstrap ClassLoader, implemented in C++, is part of the virtual machine itself;
 
-- 所有其它类的加载器，使用 Java 实现，独立于虚拟机，继承自抽象类 java.lang.ClassLoader。
+- Loaders for all other classes, implemented in Java, independent of the virtual machine, inheriting from the abstract class java.lang.ClassLoader.
 
-从 Java 开发人员的角度看，类加载器可以划分得更细致一些：
+From a Java developer's perspective, class loaders can be divided into more granular categories:
 
-- 启动类加载器（Bootstrap ClassLoader）此类加载器负责将存放在 &lt;JRE_HOME\>\lib 目录中的，或者被 -Xbootclasspath 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 null 代替即可。
+- Bootstrap ClassLoader This type of loader is responsible for loading class libraries stored in the &lt;JRE_HOME\>\lib directory, or in the path specified by the -Xbootclasspath parameter, and recognized by the virtual machine (only recognized by the file name, such as rt.jar, class libraries with inconsistent names will not be loaded even if they are placed in the lib directory).
+in virtual machine memory. The startup class loader cannot be directly referenced by Java programs. When users write a custom class loader, if they need to delegate the loading request to the startup class loader, they can directly use null instead.
 
-- 扩展类加载器（Extension ClassLoader）这个类加载器是由 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将 &lt;JAVA_HOME\>/lib/ext 或者被 java.ext.dir 系统变量所指定路径中的所有类库加载到内存中，开发者可以直接使用扩展类加载器。
+- Extension ClassLoader This class loader is implemented by ExtClassLoader (sun.misc.Launcher$ExtClassLoader). It is responsible for loading all class libraries in <JAVA_HOME\>/lib/ext or the path specified by the java.ext.dir system variable into memory. Developers can directly use the extension class loader.
 
-- 应用程序类加载器（Application ClassLoader）这个类加载器是由 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。由于这个类加载器是 ClassLoader 中的 getSystemClassLoader() 方法的返回值，因此一般称为系统类加载器。它负责加载用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。
+- Application ClassLoader (Application ClassLoader) This class loader is implemented by AppClassLoader (sun.misc.Launcher$AppClassLoader). Since this class loader is the return value of the getSystemClassLoader() method in ClassLoader, it is generally called the system class loader. It is responsible for loading the class library specified on the user class path (ClassPath). Developers can use this class loader directly. If the application has not customized its own class loader, this is generally the default class loader in the program.
 
-### 双亲委派模型
+### Parental delegation model
 
-应用程序是由三种类加载器互相配合从而实现类加载，除此之外还可以加入自己定义的类加载器。
+The application uses three class loaders to cooperate with each other to implement class loading. In addition, you can also add your own defined class loader.
 
-下图展示了类加载器之间的层次关系，称为双亲委派模型（Parents Delegation Model）。该模型要求除了顶层的启动类加载器外，其它的类加载器都要有自己的父类加载器。这里的父子关系一般通过组合关系（Composition）来实现，而不是继承关系（Inheritance）。
+The following figure shows the hierarchical relationship between class loaders, called the Parents Delegation Model. This model requires that in addition to the top-level startup class loader, other class loaders must have their own parent class loader. The parent-child relationship here is generally realized through a composition relationship (Composition) rather than an inheritance relationship (Inheritance).
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/0dd2d40a-5b2b-4d45-b176-e75a4cd4bdbf.png" width="500px"> </div><br>
 
-#### 1. 工作过程
+#### 1. Working process
 
-一个类加载器首先将类加载请求转发到父类加载器，只有当父类加载器无法完成时才尝试自己加载。
+A class loader first forwards the class loading request to the parent class loader and only attempts to load it itself if the parent class loader cannot complete it.
 
-#### 2. 好处
+#### 2. Benefits
 
-使得 Java 类随着它的类加载器一起具有一种带有优先级的层次关系，从而使得基础类得到统一。
+This allows Java classes to have a hierarchical relationship with priority along with its class loader, thereby unifying the base classes.
 
-例如 java.lang.Object 存放在 rt.jar 中，如果编写另外一个 java.lang.Object 并放到 ClassPath 中，程序可以编译通过。由于双亲委派模型的存在，所以在 rt.jar 中的 Object 比在 ClassPath 中的 Object 优先级更高，这是因为 rt.jar 中的 Object 使用的是启动类加载器，而 ClassPath 中的 Object 使用的是应用程序类加载器。rt.jar 中的 Object 优先级更高，那么程序中所有的 Object 都是这个 Object。
+For example java.lang
+.Object is stored in rt.jar. If you write another java.lang.Object and put it in ClassPath, the program can be compiled and passed. Due to the existence of the parent delegation model, the Object in rt.jar has a higher priority than the Object in ClassPath. This is because the Object in rt.jar uses the startup class loader, while the Object in ClassPath uses the application class loader. The Object in rt.jar has a higher priority, so all Objects in the program are this Object.
 
-#### 3. 实现
+#### 3. Implementation
 
-以下是抽象类 java.lang.ClassLoader 的代码片段，其中的 loadClass() 方法运行过程如下：先检查类是否已经加载过，如果没有则让父类加载器去加载。当父类加载器加载失败时抛出 ClassNotFoundException，此时尝试自己去加载。
+The following is a code snippet of the abstract class java.lang.ClassLoader. The loadClass() method runs as follows: first check whether the class has been loaded, and if not, let the parent class loader load it. A ClassNotFoundException is thrown when the parent class loader fails to load. At this time, try to load it yourself.
 
 ```java
 public abstract class ClassLoader {
@@ -659,7 +673,8 @@ public abstract class ClassLoader {
             Class<?> c = findLoadedClass(name);
             if (c == null) {
                 try {
-                    if (parent != null) {
+                    if (parent != nul
+l) {
                         c = parent.loadClass(name, false);
                     } else {
                         c = findBootstrapClassOrNull(name);
@@ -688,11 +703,12 @@ public abstract class ClassLoader {
 }
 ```
 
-### 自定义类加载器实现
+### Custom class loader implementation
 
-以下代码中的 FileSystemClassLoader 是自定义类加载器，继承自 java.lang.ClassLoader，用于加载文件系统上的类。它首先根据类的全名在文件系统上查找类的字节代码文件（.class 文件），然后读取该文件内容，最后通过 defineClass() 方法来把这些字节代码转换成 java.lang.Class 类的实例。
+FileSystemClassLoader in the following code is a custom class loader, inherited from java.lang.ClassLoader, used to load classes on the file system. It first looks up the bytecode file (.class file) of the class on the file system based on the full name of the class, then reads the file content, and finally passes def
+ineClass() method to convert these byte codes into instances of the java.lang.Class class.
 
-java.lang.ClassLoader 的 loadClass() 实现了双亲委派模型的逻辑，自定义类加载器一般不去重写它，但是需要重写 findClass() 方法。
+The loadClass() of java.lang.ClassLoader implements the logic of the parent delegation model. Custom class loaders generally do not rewrite it, but they need to rewrite the findClass() method.
 
 ```java
 public class FileSystemClassLoader extends ClassLoader {
@@ -720,7 +736,7 @@ public class FileSystemClassLoader extends ClassLoader {
             int bufferSize = 4096;
             byte[] buffer = new byte[bufferSize];
             int bytesNumRead;
-            while ((bytesNumRead = ins.read(buffer)) != -1) {
+while ((bytesNumRead = ins.read(buffer)) != -1) {
                 baos.write(buffer, 0, bytesNumRead);
             }
             return baos.toByteArray();
@@ -744,12 +760,13 @@ public class FileSystemClassLoader extends ClassLoader {
 - [Jvm memory](https://www.slideshare.net/benewu/jvm-memory)
 [Getting Started with the G1 Garbage Collector](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html)
 - [JNI Part1: Java Native Interface Introduction and “Hello World” application](http://electrofriends.com/articles/jni/jni-part1-java-native-interface/)
-- [Memory Architecture Of JVM(Runtime Data Areas)](https://hackthejava.wordpress.com/2015/01/09/memory-architecture-by-jvmruntime-data-areas/)
+- [Memory Archite
+cture Of JVM(Runtime Data Areas)](https://hackthejava.wordpress.com/2015/01/09/memory-architecture-by-jvmruntime-data-areas/)
 - [JVM Run-Time Data Areas](https://www.programcreek.com/2013/04/jvm-run-time-data-areas/)
 - [Android on x86: Java Native Interface and the Android Native Development Kit](http://www.drdobbs.com/architecture-and-design/android-on-x86-java-native-interface-and/240166271)
-- [深入理解 JVM(2)——GC 算法与内存分配策略](https://crowhawk.github.io/2017/08/10/jvm_2/)
-- [深入理解 JVM(3)——7 种垃圾收集器](https://crowhawk.github.io/2017/08/15/jvm_3/)
+- [In-depth understanding of JVM(2) - GC algorithm and memory allocation strategy](https://crowhawk.github.io/2017/08/10/jvm_2/)
+- [In-depth understanding of JVM(3) - 7 types of garbage collectors](https://crowhawk.github.io/2017/08/15/jvm_3/)
 - [JVM Internals](http://blog.jamesdbloom.com/JVMInternals.html)
-- [深入探讨 Java 类加载器](https://www.ibm.com/developerworks/cn/java/j-lo-classloader/index.html#code6)
+- [Deep dive into Java class loaders](https://www.ibm.com/developerworks/cn/java/j-lo-classloader/index.html#code6)
 - [Guide to WeakHashMap in Java](http://www.baeldung.com/java-weakhashmap)
 - [Tomcat example source code file (ConcurrentCache.java)](https://alvinalexander.com/java/jwarehouse/apache-tomcat-6.0.16/java/org/apache/el/util/ConcurrentCache.java.shtml)
