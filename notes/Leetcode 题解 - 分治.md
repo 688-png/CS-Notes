@@ -1,16 +1,16 @@
-# Leetcode 题解 - 分治
+# Leetcode problem solution - divide and conquer
 <!-- GFM-TOC -->
-* [Leetcode 题解 - 分治](#leetcode-题解---分治)
-    * [1. 给表达式加括号](#1-给表达式加括号)
-    * [2. 不同的二叉搜索树](#2-不同的二叉搜索树)
+* [Leetcode Problem Solution - Divide and Conquer](#leetcode-Problem Solution---Divide and Conquer)
+    * [1. Add parentheses to the expression](#1-Add parentheses to the expression)
+    * [2. Different binary search trees](#2-Different binary search trees)
 <!-- GFM-TOC -->
 
 
-## 1. 给表达式加括号
+## 1. Add parentheses to the expression
 
 241\. Different Ways to Add Parentheses (Medium)
 
-[Leetcode](https://leetcode.com/problems/different-ways-to-add-parentheses/description/) / [力扣](https://leetcode-cn.com/problems/different-ways-to-add-parentheses/description/)
+[Leetcode](https://leetcode.com/problems/different-ways-to-add-parentheses/description/) / [Leetcode](https://leetcode-cn.com/problems/different-ways-to-add-parentheses/description/)
 
 ```html
 Input: "2-1-1".
@@ -18,7 +18,7 @@ Input: "2-1-1".
 ((2-1)-1) = 0
 (2-(1-1)) = 2
 
-Output : [0, 2]
+Output: [0, 2]
 ```
 
 ```java
@@ -53,13 +53,13 @@ public List<Integer> diffWaysToCompute(String input) {
 }
 ```
 
-## 2. 不同的二叉搜索树
+## 2. Different binary search trees
 
 95\. Unique Binary Search Trees II (Medium)
 
-[Leetcode](https://leetcode.com/problems/unique-binary-search-trees-ii/description/) / [力扣](https://leetcode-cn.com/problems/unique-binary-search-trees-ii/description/)
+[Leetcode](https://leetcode.com/problems/unique-binary-search-trees-ii/description/) / [Leetcode](https://leetcode-cn.com/problems/unique-binary-search-trees-ii/description/)
 
-给定一个数字 n，要求生成所有值为 1...n 的二叉搜索树。
+Given a number n, it is required to generate a binary search tree with all values 1...n.
 
 ```html
 Input: 3
@@ -74,11 +74,11 @@ Output:
 Explanation:
 The above output corresponds to the 5 unique BST's shown below:
 
-   1         3     3      2      1
-    \       /     /      / \      \
-     3     2     1      1   3      2
-    /     /       \                 \
-   2     1         2                 3
+   1 3 3 2 1
+    \ / / / \ \
+     3 2 1 1 3 2
+    / / \ \
+   2 1 2 3
 ```
 
 ```java
@@ -102,7 +102,7 @@ private List<TreeNode> generateSubtrees(int s, int e) {
             for (TreeNode right : rightSubtrees) {
                 TreeNode root = new TreeNode(i);
                 root.left = left;
-                root.right = right;
+root.right = right;
                 res.add(root);
             }
         }

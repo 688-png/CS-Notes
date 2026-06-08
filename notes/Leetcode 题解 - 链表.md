@@ -1,61 +1,62 @@
-# Leetcode 题解 - 链表
+# Leetcode problem solution - linked list
 <!-- GFM-TOC -->
-* [Leetcode 题解 - 链表](#leetcode-题解---链表)
-    * [1. 找出两个链表的交点](#1-找出两个链表的交点)
-    * [2. 链表反转](#2-链表反转)
-    * [3. 归并两个有序的链表](#3-归并两个有序的链表)
-    * [4. 从有序链表中删除重复节点](#4-从有序链表中删除重复节点)
-    * [5. 删除链表的倒数第 n 个节点](#5-删除链表的倒数第-n-个节点)
-    * [6. 交换链表中的相邻结点](#6-交换链表中的相邻结点)
-    * [7. 链表求和](#7-链表求和)
-    * [8. 回文链表](#8-回文链表)
-    * [9. 分隔链表](#9-分隔链表)
-    * [10. 链表元素按奇偶聚集](#10-链表元素按奇偶聚集)
+* [Leetcode problem solution - linked list](#leetcode-problem solution---linked list)
+    * [1. Find the intersection point of two linked lists] (#1-Find the intersection point of two linked lists)
+    * [2. Linked list reversal](#2-Linked list reversal)
+    * [3. Merge two ordered linked lists] (#3-Merge two ordered linked lists)
+    * [4. Delete duplicate nodes from ordered linked list] (#4-Delete duplicate nodes from ordered linked list)
+    * [5. Delete the nth node from the bottom of the linked list] (#5-Delete the nth node from the bottom of the linked list)
+    * [6. Exchange adjacent nodes in the linked list] (#6-Exchange adjacent nodes in the linked list)
+    * [7. Linked list sum](#7-Linked list sum)
+    * [8. Palindrome linked list](#8-Palindrome linked list)
+    * [9. Separated linked list](#9-Separated linked list)
+    * [10. Linked list elements are aggregated by odd and even] (#10-Linked list elements are aggregated by odd and even)
 <!-- GFM-TOC -->
 
 
-链表是空节点，或者有一个值和一个指向下一个链表的指针，因此很多链表问题可以用递归来处理。
+A linked list is either an empty node or has a value and a pointer to the next linked list, so many linked list problems can be solved using recursion.
 
-##  1. 找出两个链表的交点
+## 1. Find the intersection point of two linked lists
 
 160\. Intersection of Two Linked Lists (Easy)
 
-[Leetcode](https://leetcode.com/problems/intersection-of-two-linked-lists/description/) / [力扣](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/description/)
+[Leetcode](https://leetcode.com/problems/intersection-of-two-linked-lists/description/) / [Leetcode](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/description/)
 
-例如以下示例中 A 和 B 两个链表相交于 c1：
+For example, in the following example, two linked lists A and B intersect at c1:
 
 ```html
-A:          a1 → a2
+A: a1 → a2
                     ↘
                       c1 → c2 → c3
                     ↗
-B:    b1 → b2 → b3
+B: b1 → b2 → b3
 ```
 
-但是不会出现以下相交的情况，因为每个节点只有一个 next 指针，也就只能有一个后继节点，而以下示例中节点 c 有两个后继节点。
+However, the following intersection will not occur, because each node has only one next pointer, and therefore can only have one successor node. In the following example, node c has two successor nodes.
 
 ```html
-A:          a1 → a2       d1 → d2
-                    ↘  ↗
+A: a1 → a2 d1 → d2
+                    ↘ ↗
                       c
-                    ↗  ↘
-B:    b1 → b2 → b3        e1 → e2
+                    ↗ ↘
+B: b1 → b2 → b3 e1 → e2
 ```
 
 
 
-要求时间复杂度为 O(N)，空间复杂度为 O(1)。如果不存在交点则返回 null。
+The required time complexity is O(N) and the space complexity is O(1). Returns null if no intersection exists.
 
-设 A 的长度为 a + c，B 的长度为 b + c，其中 c 为尾部公共部分长度，可知 a + c + b = b + c + a。
+Suppose the length of A is a + c, and the length of B is b + c, where c is the length of the common part of the tail, it can be seen that a + c + b = b + c + a.
 
-当访问 A 链表的指针访问到链表尾部时，令它从链表 B 的头部开始访问链表 B；同样地，当访问 B 链表的指针访问到链表尾部时，令它从链表 A 的头部开始访问链表 A。这样就能控制访问 A 和 B 两个链表的指针能同时访问到交点。
+When the pointer accessing linked list A accesses the tail of linked list, let it access linked list B starting from the head of linked list B; similarly, when the pointer accessing linked list B accesses the tail of linked list, let it start accessing linked list A starting from the head of linked list A. In this way, the pointers accessing the two linked lists A and B can be controlled to access the intersection point at the same time.
 
-如果不存在交点，那么 a + b = b + a，以下实现代码中 l1 和 l2 会同时为 null，从而退出循环。
+If there is no intersection, then a + b = b + a, l1 and l2 in the following implementation code will be null at the same time, thus exiting the loop.
 
 ```java
 public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
     ListNode l1 = headA, l2 = headB;
-    while (l1 != l2) {
+    w
+hile (l1 != l2) {
         l1 = (l1 == null) ? headB : l1.next;
         l2 = (l2 == null) ? headA : l2.next;
     }
@@ -63,18 +64,18 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 }
 ```
 
-如果只是判断是否存在交点，那么就是另一个问题，即 [编程之美 3.6]() 的问题。有两种解法：
+If it is just to determine whether there is an intersection, then it is another problem, that is, the problem of [The Beauty of Programming 3.6](). There are two solutions:
 
-- 把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；
-- 或者直接比较两个链表的最后一个节点是否相同。
+- Connect the end of the first linked list to the beginning of the second linked list to see if there is a cycle in the second linked list;
+- Or directly compare whether the last nodes of the two linked lists are the same.
 
-##  2. 链表反转
+## 2. Reverse linked list
 
 206\. Reverse Linked List (Easy)
 
-[Leetcode](https://leetcode.com/problems/reverse-linked-list/description/) / [力扣](https://leetcode-cn.com/problems/reverse-linked-list/description/)
+[Leetcode](https://leetcode.com/problems/reverse-linked-list/description/) / [Leetcode](https://leetcode-cn.com/problems/reverse-linked-list/description/)
 
-递归
+recursion
 
 ```java
 public ListNode reverseList(ListNode head) {
@@ -89,7 +90,7 @@ public ListNode reverseList(ListNode head) {
 }
 ```
 
-头插法
+Head insertion method
 
 ```java
 public ListNode reverseList(ListNode head) {
@@ -104,11 +105,11 @@ public ListNode reverseList(ListNode head) {
 }
 ```
 
-##  3. 归并两个有序的链表
+## 3. Merge two ordered linked lists
 
 21\. Merge Two Sorted Lists (Easy)
 
-[Leetcode](https://leetcode.com/problems/merge-two-sorted-lists/description/) / [力扣](https://leetcode-cn.com/problems/merge-two-sorted-lists/description/)
+[Leetcode](https://leetcode.com/problems/merge-two-sorted-lists/description/) / [Leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/description/)
 
 ```java
 public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
@@ -119,7 +120,7 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         return l1;
     } else {
         l2.next = mergeTwoLists(l1, l2.next);
-        return l2;
+return l2;
     }
 }
 ```
@@ -161,7 +162,8 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
         fast = fast.next;
     }
     if (fast == null) return head.next;
-    ListNode slow = head;
+    List
+Node slow = head;
     while (fast.next != null) {
         fast = fast.next;
         slow = slow.next;
@@ -171,17 +173,17 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 }
 ```
 
-##  6. 交换链表中的相邻结点
+## 6. Exchange adjacent nodes in the linked list
 
 24\. Swap Nodes in Pairs (Medium)
 
-[Leetcode](https://leetcode.com/problems/swap-nodes-in-pairs/description/) / [力扣](https://leetcode-cn.com/problems/swap-nodes-in-pairs/description/)
+[Leetcode](https://leetcode.com/problems/swap-nodes-in-pairs/description/) / [Leetcode](https://leetcode-cn.com/problems/swap-nodes-in-pairs/description/)
 
 ```html
 Given 1->2->3->4, you should return the list as 2->1->4->3.
 ```
 
-题目要求：不能修改结点的 val 值，O(1) 空间复杂度。
+Question requirements: The val value of the node cannot be modified, O(1) space complexity.
 
 ```java
 public ListNode swapPairs(ListNode head) {
@@ -201,18 +203,18 @@ public ListNode swapPairs(ListNode head) {
 }
 ```
 
-##  7. 链表求和
+## 7. Linked list sum
 
 445\. Add Two Numbers II (Medium)
 
-[Leetcode](https://leetcode.com/problems/add-two-numbers-ii/description/) / [力扣](https://leetcode-cn.com/problems/add-two-numbers-ii/description/)
+[Leetcode](https://leetcode.com/problems/add-two-numbers-ii/description/) / [Leetcode](https://leetcode-cn.com/problems/add-two-numbers-ii/description/)
 
 ```html
 Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
 Output: 7 -> 8 -> 0 -> 7
 ```
 
-题目要求：不能修改原始链表。
+Question requirement: The original linked list cannot be modified.
 
 ```java
 public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
@@ -234,7 +236,7 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 
 private Stack<Integer> buildStack(ListNode l) {
     Stack<Integer> stack = new Stack<>();
-    while (l != null) {
+while (l != null) {
         stack.push(l.val);
         l = l.next;
     }
@@ -242,15 +244,15 @@ private Stack<Integer> buildStack(ListNode l) {
 }
 ```
 
-##  8. 回文链表
+## 8. Palindrome linked list
 
 234\. Palindrome Linked List (Easy)
 
-[Leetcode](https://leetcode.com/problems/palindrome-linked-list/description/) / [力扣](https://leetcode-cn.com/problems/palindrome-linked-list/description/)
+[Leetcode](https://leetcode.com/problems/palindrome-linked-list/description/) / [Leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/description/)
 
-题目要求：以 O(1) 的空间复杂度来求解。
+Question requirement: Solve it with a space complexity of O(1).
 
-切成两半，把后半段反转，然后比较两半是否相等。
+Cut it in half, turn the second half over and compare the two halves to see if they are equal.
 
 ```java
 public boolean isPalindrome(ListNode head) {
@@ -260,8 +262,8 @@ public boolean isPalindrome(ListNode head) {
         slow = slow.next;
         fast = fast.next.next;
     }
-    if (fast != null) slow = slow.next;  // 偶数节点，让 slow 指向下一个节点
-    cut(head, slow);                     // 切成两个链表
+    if (fast != null) slow = slow.next; // Even node, let slow point to the next node
+    cut(head, slow); // Cut into two linked lists
     return isEqual(head, reverse(slow));
 }
 
@@ -274,7 +276,8 @@ private void cut(ListNode head, ListNode cutNode) {
 
 private ListNode reverse(ListNode head) {
     ListNode newHead = null;
-    while (head != null) {
+    while (
+head != null) {
         ListNode nextNode = head.next;
         head.next = newHead;
         newHead = head;
@@ -293,11 +296,11 @@ private boolean isEqual(ListNode l1, ListNode l2) {
 }
 ```
 
-##  9. 分隔链表
+## 9. Separate linked list
 
 725\. Split Linked List in Parts(Medium)
 
-[Leetcode](https://leetcode.com/problems/split-linked-list-in-parts/description/) / [力扣](https://leetcode-cn.com/problems/split-linked-list-in-parts/description/)
+[Leetcode](https://leetcode.com/problems/split-linked-list-in-parts/description/) / [Leetcode](https://leetcode-cn.com/problems/split-linked-list-in-parts/description/)
 
 ```html
 Input:
@@ -307,7 +310,7 @@ Explanation:
 The input has been split into consecutive parts with size difference at most 1, and earlier parts are a larger size than the later parts.
 ```
 
-题目描述：把链表分隔成 k 部分，每部分的长度都应该尽可能相同，排在前面的长度应该大于等于后面的。
+Title description: Divide the linked list into k parts. The length of each part should be as equal as possible, and the length of the front part should be greater than or equal to the length of the back part.
 
 ```java
 public ListNode[] splitListToParts(ListNode root, int k) {
@@ -335,11 +338,11 @@ public ListNode[] splitListToParts(ListNode root, int k) {
 }
 ```
 
-##  10. 链表元素按奇偶聚集
+## 10. Linked list elements are gathered according to odd and even numbers
 
 328\. Odd Even Linked List (Medium)
 
-[Leetcode](https://leetcode.com/problems/odd-even-linked-list/description/) / [力扣](https://leetcode-cn.com/problems/odd-even-linked-list/description/)
+[Leetcode](https://leetcode.com/problems/odd-even-linked-list/description/) / [Leetcode](https://leetcode-cn.com/problems/odd-even-linked-list/description/)
 
 ```html
 Example:
@@ -354,7 +357,7 @@ public ListNode oddEvenList(ListNode head) {
     }
     ListNode odd = head, even = head.next, evenHead = even;
     while (even != null && even.next != null) {
-        odd.next = odd.next.next;
+odd.next = odd.next.next;
         odd = odd.next;
         even.next = even.next.next;
         even = even.next;

@@ -1,54 +1,55 @@
-# Leetcode 题解 - 树
+# Leetcode problem solution - tree
 <!-- GFM-TOC -->
-* [Leetcode 题解 - 树](#leetcode-题解---树)
-    * [递归](#递归)
-        * [1. 树的高度](#1-树的高度)
-        * [2. 平衡树](#2-平衡树)
-        * [3. 两节点的最长路径](#3-两节点的最长路径)
-        * [4. 翻转树](#4-翻转树)
-        * [5. 归并两棵树](#5-归并两棵树)
-        * [6. 判断路径和是否等于一个数](#6-判断路径和是否等于一个数)
-        * [7. 统计路径和等于一个数的路径数量](#7-统计路径和等于一个数的路径数量)
-        * [8. 子树](#8-子树)
-        * [9. 树的对称](#9-树的对称)
-        * [10. 最小路径](#10-最小路径)
-        * [11. 统计左叶子节点的和](#11-统计左叶子节点的和)
-        * [12. 相同节点值的最大路径长度](#12-相同节点值的最大路径长度)
-        * [13. 间隔遍历](#13-间隔遍历)
-        * [14. 找出二叉树中第二小的节点](#14-找出二叉树中第二小的节点)
-    * [层次遍历](#层次遍历)
-        * [1. 一棵树每层节点的平均数](#1-一棵树每层节点的平均数)
-        * [2. 得到左下角的节点](#2-得到左下角的节点)
-    * [前中后序遍历](#前中后序遍历)
-        * [1. 非递归实现二叉树的前序遍历](#1-非递归实现二叉树的前序遍历)
-        * [2. 非递归实现二叉树的后序遍历](#2-非递归实现二叉树的后序遍历)
-        * [3. 非递归实现二叉树的中序遍历](#3-非递归实现二叉树的中序遍历)
+* [Leetcode problem solution-tree](#leetcode-problem solution---tree)
+    * [Recursion](#recursion)
+        * [1. Tree height](#1-tree height)
+        * [2. Balanced Tree](#2-Balanced Tree)
+        * [3. The longest path between two nodes](#3-The longest path between two nodes)
+        * [4. Flip Tree](#4-Flip Tree)
+        * [5. Merge two trees](#5-Merge two trees)
+        * [6. Determine whether the path sum is equal to a number] (#6-Judge whether the path sum is equal to a number)
+        * [7. Count the number of paths whose sum is equal to a number] (#7-count the number of paths whose sum is equal to a number)
+        * [8. subtree](#8-subtree)
+        * [9. Symmetry of tree](#9-Symmetry of tree)
+        * [10. Minimum path](#10-Minimum path)
+        * [11. Count the sum of left leaf nodes] (#11-Count the sum of left leaf nodes)
+        * [12. Maximum path length for the same node value] (#12-Maximum path length for the same node value)
+        * [13. Interval traversal](#13-Interval traversal)
+        * [14. Find the second smallest node in the binary tree] (#14-Find the second smallest node in the binary tree)
+    * [Level Traversal](#Level Traversal)
+        * [1. The average number of nodes at each level of a tree] (#1-The average number of nodes at each level of a tree)
+        * [2. Get the node in the lower left corner] (#2-Get the node in the lower left corner)
+    * [Traversal in front, middle and back order](#Traversal in front, middle and back order)
+        * [1. Non-recursive implementation of pre-order traversal of binary trees] (#1- Non-recursive implementation of pre-order traversal of binary trees)
+        * [2. Non-recursive implementation of post-order traversal of binary trees] (#2-Non-recursive implementation of post-order traversal of binary trees)
+        * [3. Non-recursive implementation of in-order traversal of binary trees] (#3-Non-recursive implementation of in-order traversal of binary trees)
     * [BST](#bst)
-        * [1. 修剪二叉查找树](#1-修剪二叉查找树)
-        * [2. 寻找二叉查找树的第 k 个元素](#2-寻找二叉查找树的第-k-个元素)
-        * [3. 把二叉查找树每个节点的值都加上比它大的节点的值](#3-把二叉查找树每个节点的值都加上比它大的节点的值)
-        * [4. 二叉查找树的最近公共祖先](#4-二叉查找树的最近公共祖先)
-        * [5. 二叉树的最近公共祖先](#5-二叉树的最近公共祖先)
-        * [6. 从有序数组中构造二叉查找树](#6-从有序数组中构造二叉查找树)
-        * [7. 根据有序链表构造平衡的二叉查找树](#7-根据有序链表构造平衡的二叉查找树)
-        * [8. 在二叉查找树中寻找两个节点，使它们的和为一个给定值](#8-在二叉查找树中寻找两个节点，使它们的和为一个给定值)
-        * [9. 在二叉查找树中查找两个节点之差的最小绝对值](#9-在二叉查找树中查找两个节点之差的最小绝对值)
-        * [10. 寻找二叉查找树中出现次数最多的值](#10-寻找二叉查找树中出现次数最多的值)
+        * [1. Prune binary search tree](#1-Prune binary search tree)
+        * [2. Find the k-th element of the binary search tree] (#2-Find the -k-th element of the binary search tree)
+        * [3. Add the value of each node of the binary search tree to the value of the node larger than it] (#3-Add the value of each node of the binary search tree to the value of the node larger than it)
+        * [4. The most recent common ancestor of the binary search tree] (#4-The most recent common ancestor of the binary search tree)
+        * [5. The most recent common ancestor of the binary tree] (#5-The most recent common ancestor of the binary tree)
+        * [6. Construct a binary search tree from an ordered array] (#6-Construct a binary search tree from an ordered array)
+        * [7. Construct a balanced binary search tree based on an ordered linked list] (#7-Construct a balanced binary search tree based on an ordered linked list)
+        * [8. Find two nodes i
+n the binary search tree so that their sum is a given value] (#8-Find two nodes in the binary search tree so that their sum is a given value)
+        * [9. Find the minimum absolute value of the difference between two nodes in a binary search tree] (#9-Find the minimum absolute value of the difference between two nodes in a binary search tree)
+        * [10. Find the value with the most occurrences in the binary search tree] (#10-Find the value with the most occurrences in the binary search tree)
     * [Trie](#trie)
-        * [1. 实现一个 Trie](#1-实现一个-trie)
-        * [2. 实现一个 Trie，用来求前缀和](#2-实现一个-trie，用来求前缀和)
+        * [1. Implement a Trie](#1-Realize a-trie)
+        * [2. Implement a Trie, used to find the prefix sum] (#2-Implement a -trie, used to find the prefix sum)
 <!-- GFM-TOC -->
 
 
-## 递归
+## Recursion
 
-一棵树要么是空树，要么有两个指针，每个指针指向一棵树。树是一种递归结构，很多树的问题可以使用递归来处理。
+A tree is either an empty tree or has two pointers, each pointing to a tree. Tree is a recursive structure, and many tree problems can be solved using recursion.
 
-### 1. 树的高度
+### 1. The height of the tree
 
 104\. Maximum Depth of Binary Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/maximum-depth-of-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/description/)
+[Leetcode](https://leetcode.com/problems/maximum-depth-of-binary-tree/description/) / [Leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/description/)
 
 ```java
 public int maxDepth(TreeNode root) {
@@ -57,21 +58,21 @@ public int maxDepth(TreeNode root) {
 }
 ```
 
-### 2. 平衡树
+### 2. Balanced tree
 
 110\. Balanced Binary Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/balanced-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/balanced-binary-tree/description/)
+[Leetcode](https://leetcode.com/problems/balanced-binary-tree/description/) / [Leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/description/)
 
 ```html
     3
-   / \
-  9  20
-    /  \
-   15   7
+   /\
+  9 20
+    /\
+   15 7
 ```
 
-平衡树左右子树高度差都小于等于 1
+The height difference between the left and right subtrees of a balanced tree is less than or equal to 1
 
 ```java
 private boolean result = true;
@@ -90,20 +91,20 @@ public int maxDepth(TreeNode root) {
 }
 ```
 
-### 3. 两节点的最长路径
+### 3. The longest path between two nodes
 
 543\. Diameter of Binary Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/diameter-of-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/diameter-of-binary-tree/description/)
+[Leetcode](https://leetcode.com/problems/diameter-of-binary-tree/description/) / [Leetcode](https://leetcode-cn.com/problems/diameter-of-binary-tree/description/)
 
 ```html
 Input:
 
          1
-        / \
-       2  3
-      / \
-     4   5
+        /\
+       2 3
+      /\
+     4 5
 
 Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].
 ```
@@ -111,7 +112,8 @@ Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].
 ```java
 private int max = 0;
 
-public int diameterOfBinaryTree(TreeNode root) {
+public int diameterOfBinaryTree(
+TreeNode root) {
     depth(root);
     return max;
 }
@@ -125,43 +127,44 @@ private int depth(TreeNode root) {
 }
 ```
 
-### 4. 翻转树
+### 4. Flip the tree
 
 226\. Invert Binary Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/invert-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/invert-binary-tree/description/)
+[Leetcode](https://leetcode.com/problems/invert-binary-tree/description/) / [Leetcode](https://leetcode-cn.com/problems/invert-binary-tree/description/)
 
 ```java
-public TreeNode invertTree(TreeNode root) {
+public TreeNode invertTree(TreeNode root)
+{
     if (root == null) return null;
-    TreeNode left = root.left;  // 后面的操作会改变 left 指针，因此先保存下来
+    TreeNode left = root.left; // Subsequent operations will change the left pointer, so save it first
     root.left = invertTree(root.right);
     root.right = invertTree(left);
     return root;
 }
 ```
 
-### 5. 归并两棵树
+### 5. Merge two trees
 
 617\. Merge Two Binary Trees (Easy)
 
-[Leetcode](https://leetcode.com/problems/merge-two-binary-trees/description/) / [力扣](https://leetcode-cn.com/problems/merge-two-binary-trees/description/)
+[Leetcode](https://leetcode.com/problems/merge-two-binary-trees/description/) / [Leetcode](https://leetcode-cn.com/problems/merge-two-binary-trees/description/)
 
 ```html
 Input:
-       Tree 1                     Tree 2
-          1                         2
-         / \                       / \
-        3   2                     1   3
-       /                           \   \
-      5                             4   7
+       Tree 1 Tree 2
+          1 2
+         / \ / \
+        3 2 1 3
+       / \ \
+      5 4 7
 
 Output:
          3
-        / \
-       4   5
-      / \   \
-     5   4   7
+        /\
+       4 5
+      / \ \
+     5 4 7
 ```
 
 ```java
@@ -176,27 +179,27 @@ public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
 }
 ```
 
-### 6. 判断路径和是否等于一个数
+### 6. Determine whether the path sum is equal to a number
 
 Leetcdoe : 112. Path Sum (Easy)
 
-[Leetcode](https://leetcode.com/problems/path-sum/description/) / [力扣](https://leetcode-cn.com/problems/path-sum/description/)
+[Leetcode](https://leetcode.com/problems/path-sum/description/) / [Leetcode](https://leetcode-cn.com/problems/path-sum/description/)
 
 ```html
 Given the below binary tree and sum = 22,
 
               5
-             / \
-            4   8
-           /   / \
-          11  13  4
-         /  \      \
-        7    2      1
+             /\
+            4 8
+           / / \
+          11 13 4
+         / \ \
+        7 2 1
 
-return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+return true, as there exists a root-to-leaf path 5->4->11->2 which sum is 22.
 ```
 
-路径和定义为从 root 到 leaf 的所有节点的和。
+The path sum is defined as the sum of all nodes from root to leaf.
 
 ```java
 public boolean hasPathSum(TreeNode root, int sum) {
@@ -206,36 +209,37 @@ public boolean hasPathSum(TreeNode root, int sum) {
 }
 ```
 
-### 7. 统计路径和等于一个数的路径数量
+### 7. Count the number of paths whose sum is equal to a number
 
 437\. Path Sum III (Easy)
 
-[Leetcode](https://leetcode.com/problems/path-sum-iii/description/) / [力扣](https://leetcode-cn.com/problems/path-sum-iii/description/)
+[Leetcode](https://leetcode.com/problems/path-sum-iii/description/) / [Leetcode](https://leetcode-cn.com/problems/path-sum-iii/description/)
 
 ```html
 root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8
 
       10
-     /  \
-    5   -3
-   / \    \
-  3   2   11
- / \   \
-3  -2   1
+     /\
+    5-3
+   / \ \
+  3 2 11
+ / \ \
+3-2 1
 
 Return 3. The paths that sum to 8 are:
 
-1.  5 -> 3
-2.  5 -> 2 -> 1
+1. 5 -> 3
+2. 5 -> 2 -> 1
 3. -3 -> 11
 ```
 
-路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须连续。
+The path does not necessarily start with root or end with leaf, but it must be continuous.
 
 ```java
 public int pathSum(TreeNode root, int sum) {
     if (root == null) return 0;
-    int ret = pathSumStartWithRoot(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);
+    int ret = pathSumStartWithRoot(root, sum) + pathSum(root.left, sum) + pathSum(root.right
+, sum);
     return ret;
 }
 
@@ -252,7 +256,8 @@ private int pathSumStartWithRoot(TreeNode root, int sum) {
 
 572\. Subtree of Another Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/subtree-of-another-tree/description/) / [力扣](https://leetcode-cn.com/problems/subtree-of-another-tree/description/)
+[Leetcode](https://leetcode.com/problems/subtree-of-another-tree/description/) / [力扣](https://leetcode-cn.com/problems/subtree-of-another-tree/desc
+ription/)
 
 ```html
 Given tree s:
@@ -370,7 +375,8 @@ public int sumOfLeftLeaves(TreeNode root) {
     return sumOfLeftLeaves(root.left) + sumOfLeftLeaves(root.right);
 }
 
-private boolean isLeaf(TreeNode node){
+private bool
+ean isLeaf(TreeNode node){
     if (node == null) return false;
     return node.left == null && node.right == null;
 }
@@ -395,7 +401,8 @@ Output : 2
 ```java
 private int path = 0;
 
-public int longestUnivaluePath(TreeNode root) {
+public int longestUnivaluePath(TreeNode root)
+{
     dfs(root);
     return path;
 }
@@ -486,7 +493,8 @@ public int findSecondMinimumValue(TreeNode root) {
 [Leetcode](https://leetcode.com/problems/average-of-levels-in-binary-tree/description/) / [力扣](https://leetcode-cn.com/problems/average-of-levels-in-binary-tree/description/)
 
 ```java
-public List<Double> averageOfLevels(TreeNode root) {
+public List<Doubl
+e> averageOfLevels(TreeNode root) {
     List<Double> ret = new ArrayList<>();
     if (root == null) return ret;
     Queue<TreeNode> queue = new LinkedList<>();
@@ -499,27 +507,27 @@ public List<Double> averageOfLevels(TreeNode root) {
             sum += node.val;
             if (node.left != null) queue.add(node.left);
             if (node.right != null) queue.add(node.right);
-        }
+}
         ret.add(sum / cnt);
     }
     return ret;
 }
 ```
 
-### 2. 得到左下角的节点
+### 2. Get the node in the lower left corner
 
 513\. Find Bottom Left Tree Value (Easy)
 
-[Leetcode](https://leetcode.com/problems/find-bottom-left-tree-value/description/) / [力扣](https://leetcode-cn.com/problems/find-bottom-left-tree-value/description/)
+[Leetcode](https://leetcode.com/problems/find-bottom-left-tree-value/description/) / [Leetcode](https://leetcode-cn.com/problems/find-bottom-left-tree-value/description/)
 
 ```html
 Input:
 
         1
-       / \
-      2   3
-     /   / \
-    4   5   6
+       /\
+      2 3
+     / / \
+    4 5 6
        /
       7
 
@@ -540,26 +548,26 @@ public int findBottomLeftValue(TreeNode root) {
 }
 ```
 
-## 前中后序遍历
+## Pre-middle and post-order traversal
 
 ```html
     1
-   / \
-  2   3
- / \   \
-4   5   6
+   /\
+  2 3
+ / \ \
+4 5 6
 ```
 
-- 层次遍历顺序：[1 2 3 4 5 6]
-- 前序遍历顺序：[1 2 4 5 3 6]
-- 中序遍历顺序：[4 2 5 1 3 6]
-- 后序遍历顺序：[4 5 2 6 3 1]
+- Level traversal order: [1 2 3 4 5 6]
+- Preorder traversal order: [1 2 4 5 3 6]
+- In-order traversal order: [4 2 5 1 3 6]
+- Postorder traversal order: [4 5 2 6 3 1]
 
-层次遍历使用 BFS 实现，利用的就是 BFS 一层一层遍历的特性；而前序、中序、后序遍历利用了 DFS 实现。
+Hierarchical traversal is implemented using BFS, taking advantage of the layer-by-layer traversal characteristics of BFS; while pre-order, mid-order, and post-order traversal are implemented using DFS.
 
-前序、中序、后序遍只是在对节点访问的顺序有一点不同，其它都相同。
+Pre-order, mid-order, and post-order passes only have a little difference in the order of node access, and everything else is the same.
 
-① 前序
+① Preface
 
 ```java
 void dfs(TreeNode root) {
@@ -569,7 +577,7 @@ void dfs(TreeNode root) {
 }
 ```
 
-② 中序
+② Mid-order
 
 ```java
 void dfs(TreeNode root) {
@@ -579,7 +587,7 @@ void dfs(TreeNode root) {
 }
 ```
 
-③ 后序
+③ Post sequence
 
 ```java
 void dfs(TreeNode root) {
@@ -589,11 +597,11 @@ void dfs(TreeNode root) {
 }
 ```
 
-### 1. 非递归实现二叉树的前序遍历
+### 1. Non-recursive implementation of pre-order traversal of binary trees
 
 144\. Binary Tree Preorder Traversal (Medium)
 
-[Leetcode](https://leetcode.com/problems/binary-tree-preorder-traversal/description/) / [力扣](https://leetcode-cn.com/problems/binary-tree-preorder-traversal/description/)
+[Leetcode](https://leetcode.com/problems/binary-tree-preorder-traversal/description/) / [Leetcode](https://leetcode-cn.com/problems/binary-tree-preorder-traversal/description/)
 
 ```java
 public List<Integer> preorderTraversal(TreeNode root) {
@@ -604,27 +612,28 @@ public List<Integer> preorderTraversal(TreeNode root) {
         TreeNode node = stack.pop();
         if (node == null) continue;
         ret.add(node.val);
-        stack.push(node.right);  // 先右后左，保证左子树先遍历
+        stack.push(node.right); // First right and then left, ensuring that the left subtree is traversed first
         stack.push(node.left);
     }
     return ret;
 }
 ```
 
-### 2. 非递归实现二叉树的后序遍历
+### 2. Non-recursive implementation of post-order traversal of a binary tree
 
 145\. Binary Tree Postorder Traversal (Medium)
 
-[Leetcode](https://leetcode.com/problems/binary-tree-postorder-traversal/description/) / [力扣](https://leetcode-cn.com/problems/binary-tree-postorder-traversal/description/)
+[Leetcode](https://leetcode.com/problems/binary-tree-postorder-traversal/description/) / [Leetcode](https://leetcode-cn.com/problems/binary-tree-postorder-traversal/description/)
 
-前序遍历为 root -\> left -\> right，后序遍历为 left -\> right -\> root。可以修改前序遍历成为 root -\> right -\> left，那么这个顺序就和后序遍历正好相反。
+Preorder traversal is root -\> left -\> right, and postorder traversal is left -\> right -\> root. You can modify the pre-order traversal to become root -\> right -\> left, then this order is exactly the opposite of the post-order traversal.
 
 ```java
 public List<Integer> postorderTraversal(TreeNode root) {
     List<Integer> ret = new ArrayList<>();
     Stack<TreeNode> stack = new Stack<>();
     stack.push(root);
-    while (!stack.isEmpty()) {
+    while (!stack.isEmpty())
+{
         TreeNode node = stack.pop();
         if (node == null) continue;
         ret.add(node.val);
@@ -636,11 +645,12 @@ public List<Integer> postorderTraversal(TreeNode root) {
 }
 ```
 
-### 3. 非递归实现二叉树的中序遍历
+### 3. Non-recursive implementation of in-order traversal of a binary tree
 
 94\. Binary Tree Inorder Traversal (Medium)
 
-[Leetcode](https://leetcode.com/problems/binary-tree-inorder-traversal/description/) / [力扣](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/description/)
+[Leetcode](https://leetcode.com/problems/binary-tree-inorder-traversal/description/) / [Leetcode](https://leetcode-cn.com/problems/binary-tree-inorde
+r-traversal/description/)
 
 ```java
 public List<Integer> inorderTraversal(TreeNode root) {
@@ -661,30 +671,30 @@ public List<Integer> inorderTraversal(TreeNode root) {
 }
 ```
 
-## BST
+##BST
 
-二叉查找树（BST）：根节点大于等于左子树所有节点，小于等于右子树所有节点。
+Binary Search Tree (BST): The root node is greater than or equal to all nodes of the left subtree and less than or equal to all nodes of the right subtree.
 
-二叉查找树中序遍历有序。
+In-order traversal of a binary search tree is ordered.
 
-### 1. 修剪二叉查找树
+### 1. Prune binary search tree
 
 669\. Trim a Binary Search Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/trim-a-binary-search-tree/description/) / [力扣](https://leetcode-cn.com/problems/trim-a-binary-search-tree/description/)
+[Leetcode](https://leetcode.com/problems/trim-a-binary-search-tree/description/) / [Leetcode](https://leetcode-cn.com/problems/trim-a-binary-search-tree/description/)
 
 ```html
 Input:
 
     3
-   / \
-  0   4
+   /\
+  0 4
    \
     2
    /
   1
 
-  L = 1
+  L=1
   R = 3
 
 Output:
@@ -696,7 +706,7 @@ Output:
  1
 ```
 
-题目描述：只保留值在 L \~ R 之间的节点
+Problem description: Only keep nodes with values between L \~ R
 
 ```java
 public TreeNode trimBST(TreeNode root, int L, int R) {
@@ -709,14 +719,14 @@ public TreeNode trimBST(TreeNode root, int L, int R) {
 }
 ```
 
-### 2. 寻找二叉查找树的第 k 个元素
+### 2. Find the k-th element of the binary search tree
 
 230\. Kth Smallest Element in a BST (Medium)
 
-[Leetcode](https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/) / [力扣](https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/description/)
+[Leetcode](https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/) / [Leetcode](https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/description/)
 
 
-中序遍历解法：
+In-order traversal solution:
 
 ```java
 private int cnt = 0;
@@ -739,7 +749,7 @@ private void inOrder(TreeNode node, int k) {
 }
 ```
 
-递归解法：
+Recursive solution:
 
 ```java
 public int kthSmallest(TreeNode root, int k) {
@@ -755,23 +765,24 @@ private int count(TreeNode node) {
 }
 ```
 
-### 3. 把二叉查找树每个节点的值都加上比它大的节点的值
+### 3. Add the value of each node in the binary search tree to the value of the node larger than it
 
 Convert BST to Greater Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/convert-bst-to-greater-tree/description/) / [力扣](https://leetcode-cn.com/problems/convert-bst-to-greater-tree/description/)
+[Leetcode](https://leetcode.com/problems/convert-bst-to-greater-tree/description/) / [Leetcode](https://leetcode-cn.com/problems/convert-bst-to-greater-tree/description/)
 
 ```html
 Input: The root of a Binary Search Tree like this:
 
               5
-            /   \
-           2     13
+            /\
+           2 1
+3
 
 Output: The root of a Greater Tree like this:
 
              18
-            /   \
+/   \
           20     13
 ```
 
@@ -870,9 +881,11 @@ private TreeNode toBST(int[] nums, int sIdx, int eIdx){
 
 ### 7. 根据有序链表构造平衡的二叉查找树
 
-109\. Convert Sorted List to Binary Search Tree (Medium)
+109\. Conver
+t Sorted List to Binary Search Tree (Medium)
 
-[Leetcode](https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/) / [力扣](https://leetcode-cn.com/problems/convert-sorted-list-to-binary-search-tree/description/)
+[Leetcode](https://leetcode.co
+m/problems/convert-sorted-list-to-binary-search-tree/description/) / [力扣](https://leetcode-cn.com/problems/convert-sorted-list-to-binary-search-tree/description/)
 
 ```html
 Given the sorted linked list: [-10,-3,0,5,9],
@@ -1001,7 +1014,8 @@ private void inOrder(TreeNode node) {
 
 501\. Find Mode in Binary Search Tree (Easy)
 
-[Leetcode](https://leetcode.com/problems/find-mode-in-binary-search-tree/description/) / [力扣](https://leetcode-cn.com/problems/find-mode-in-binary-search-tree/description/)
+[Leetcode](https://leetcode.com/problems/find-mode-in-binary-search-tree/description/) / [力扣](https://leetcode-cn.com/problems/find-mode-in-binary-sear
+ch-tree/description/)
 
 ```html
    1
@@ -1010,57 +1024,57 @@ private void inOrder(TreeNode node) {
     /
    2
 
-return [2].
+return [ 2 ] .
 ```
 
-答案可能不止一个，也就是有多个值出现的次数一样多。
+If you want to do this one, you have a lot of interesting things to do.
 
 ```java
-private int curCnt = 1;
+private int curCnt = 1 ;
 private int maxCnt = 1;
 private TreeNode preNode = null;
 
-public int[] findMode(TreeNode root) {
-    List<Integer> maxCntNums = new ArrayList<>();
-    inOrder(root, maxCntNums);
+public int [ ] findMode ( TreeNode root ) { ;
+    List < Integer > maxCntNums = new ArrayList < > ( ) ;
+    inOrder ( root , maxCntNums ) ;
     int[] ret = new int[maxCntNums.size()];
-    int idx = 0;
-    for (int num : maxCntNums) {
-        ret[idx++] = num;
-    }
-    return ret;
-}
+    int idx = 0 ;
+    for ( int num : maxCntNums ) {
+        ret [ idx ++ ] = num ;
+    } }
+    return ret ;
+} }
 
 private void inOrder(TreeNode node, List<Integer> nums) {
-    if (node == null) return;
-    inOrder(node.left, nums);
-    if (preNode != null) {
-        if (preNode.val == node.val) curCnt++;
+    if ( node == null ) return ;
+    inOrder ( node . left , nums ) ;
+    if ( preNode ! = null ) {
+        if ( preNode . val == node . val ) curCnt ++ ;
         else curCnt = 1;
-    }
-    if (curCnt > maxCnt) {
+    } }
+    if ( curCnt > maxCnt ) {
         maxCnt = curCnt;
-        nums.clear();
-        nums.add(node.val);
-    } else if (curCnt == maxCnt) {
-        nums.add(node.val);
-    }
+        nums . clear ( ) ;
+        nums . add ( node . val ) ;
+    } else if ( curCnt == maxCnt ) {
+        nums . add ( node . val ) ;
+    } }
     preNode = node;
-    inOrder(node.right, nums);
-}
+    inOrder ( node . right , nums ) ;
+} }
 ```
 
 ## Trie
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/5c638d59-d4ae-4ba4-ad44-80bdc30f38dd.jpg"/> </div><br>
 
-Trie，又称前缀树或字典树，用于判断字符串是否存在或者是否具有某种字符串前缀。
+Trie, a town in the southern part of the country, offers a sightseeing tour.
 
-### 1. 实现一个 Trie
+### 1. Manufacturer Trie
 
-208\. Implement Trie (Prefix Tree) (Medium)
+208\. Implement Sorting (Prefix Tree) (Medium)
 
-[Leetcode](https://leetcode.com/problems/implement-trie-prefix-tree/description/) / [力扣](https://leetcode-cn.com/problems/implement-trie-prefix-tree/description/)
+[ Leetcode
 
 ```java
 class Trie {
@@ -1068,66 +1082,68 @@ class Trie {
     private class Node {
         Node[] childs = new Node[26];
         boolean isLeaf;
-    }
+    } }
 
     private Node root = new Node();
 
     public Trie() {
-    }
+    } }
 
-    public void insert(String word) {
-        insert(word, root);
-    }
+    public void insert ( String word ) { ;
+        insert ( word , root ) ;
+    } }
 
     private void insert(String word, Node node) {
-        if (node == null) return;
-        if (word.length() == 0) {
+        if ( node == null ) return ;
+        if ( word . length ( ) == 0 ) {
             node.isLeaf = true;
-            return;
-        }
+            return ;
+        } }
         int index = indexForChar(word.charAt(0));
-        if (node.childs[index] == null) {
-            node.childs[index] = new Node();
-        }
-        insert(word.substring(1), node.childs[index]);
-    }
+        if ( node . children [ index ] == null ) {
+            node.children[index] = new Node();
+        } }
+        insert(word.substring(1), node.children[index]);
+    } }
 
-    public boolean search(String word) {
-        return search(word, root);
-    }
+    public boolean search ( String word ) { ;
+        return search ( word , root ) ;
+    } }
 
-    private boolean search(String word, Node node) {
-        if (node == null) return false;
-        if (word.length() == 0) return node.isLeaf;
+    private boolean search ( String word , Node node ) { ;
+        if ( node == null ) return false ;
+        if ( word . length ( ) == 0 ) return node . isLeaf ;
         int index = indexForChar(word.charAt(0));
-        return search(word.substring(1), node.childs[index]);
-    }
+        return search ( word . substring ( 1 ) , node . children [ index ] ) ;
+    } }
 
-    public boolean startsWith(String prefix) {
-        return startWith(prefix, root);
-    }
+    public boolean startsWith ( String prefix ) { ;
+        return startWith ( prefix , root ) ;
+    } }
 
     private boolean startWith(String prefix, Node node) {
-        if (node == null) return false;
-        if (prefix.length() == 0) return true;
+        if ( node == null ) return false ;
+        if ( prefix . length ( ) == 0 ) return true ;
         int index = indexForChar(prefix.charAt(0));
-        return startWith(prefix.substring(1), node.childs[index]);
-    }
+        return startWith ( prefix . substring ( 1 ) , node . children [ index ] ) ;
+    } }
 
     private int indexForChar(char c) {
-        return c - 'a';
-    }
-}
+        return c -- 'a';
+    } }
+} }
 ```
 
-### 2. 实现一个 Trie，用来求前缀和
+### 2. The town of Trie, the town hall
 
 677\. Map Sum Pairs (Medium)
 
-[Leetcode](https://leetcode.com/problems/map-sum-pairs/description/) / [力扣](https://leetcode-cn.com/problems/map-sum-pairs/description/)
+[Leetcode](https://leetcode.com/problems/map-sum-pairs/descript
+ion/)
 
 ```html
-Input: insert("apple", 3), Output: Null
+Input: insert("apple", 3), Output:
+Null
 Input: sum("ap"), Output: 3
 Input: insert("app", 2), Output: Null
 Input: sum("ap"), Output: 5
@@ -1186,4 +1202,3 @@ class MapSum {
     }
 }
 ```
-

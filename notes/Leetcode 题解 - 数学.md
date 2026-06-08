@@ -1,61 +1,62 @@
-# Leetcode 题解 - 数学
+# Leetcode Problem Solutions - Mathematics
 <!-- GFM-TOC -->
-* [Leetcode 题解 - 数学](#leetcode-题解---数学)
-    * [素数分解](#素数分解)
-    * [整除](#整除)
-    * [最大公约数最小公倍数](#最大公约数最小公倍数)
-        * [1. 生成素数序列](#1-生成素数序列)
-        * [2. 最大公约数](#2-最大公约数)
-        * [3. 使用位操作和减法求解最大公约数](#3-使用位操作和减法求解最大公约数)
-    * [进制转换](#进制转换)
-        * [1. 7 进制](#1-7-进制)
-        * [2. 16 进制](#2-16-进制)
-        * [3. 26 进制](#3-26-进制)
-    * [阶乘](#阶乘)
-        * [1. 统计阶乘尾部有多少个 0](#1-统计阶乘尾部有多少个-0)
-    * [字符串加法减法](#字符串加法减法)
-        * [1. 二进制加法](#1-二进制加法)
-        * [2. 字符串加法](#2-字符串加法)
-    * [相遇问题](#相遇问题)
-        * [1. 改变数组元素使所有的数组元素都相等](#1-改变数组元素使所有的数组元素都相等)
-    * [多数投票问题](#多数投票问题)
-        * [1. 数组中出现次数多于 n / 2 的元素](#1-数组中出现次数多于-n--2-的元素)
-    * [其它](#其它)
-        * [1. 平方数](#1-平方数)
-        * [2. 3 的 n 次方](#2-3-的-n-次方)
-        * [3. 乘积数组](#3-乘积数组)
-        * [4. 找出数组中的乘积最大的三个数](#4-找出数组中的乘积最大的三个数)
+* [Leetcode Problem Solution - Mathematics](#leetcode-Problem Solution---Mathematics)
+    * [Prime number decomposition](#prime number decomposition)
+    * [divisible](#divisible)
+    * [Greatest common divisor least common multiple](#greatest common divisor least common multiple)
+        * [1. Generate prime number sequence](#1-Generate prime number sequence)
+        * [2. Greatest common divisor](#2-Greatest common divisor)
+        * [3. Use bitwise operations and subtraction to find the greatest common divisor] (#3-Use bitwise operations and subtraction to find the greatest common divisor)
+    * [Hex conversion](#Hex conversion)
+        * [1. 7-base](#1-7-base)
+        * [2.16-base](#2-16-base)
+        * [3. 26-base](#3-26-base)
+    * [factorial](#factorial)
+        * [1. Count the number of 0s in the tail of the factorial] (#1-Count the number of 0s in the tail of the factorial)
+    * [String addition and subtraction](#String addition and subtraction)
+        * [1. Binary addition](#1-Binary addition)
+        * [2. String addition](#2-String addition)
+    * [EncounterProblem](#EncounterProblem)
+        * [1. Change array elements to make all array elements equal] (#1-Change array elements to make all array elements equal)
+    *[majority voting question](#majority voting question)
+        * [1. Elements that appear more than n / 2 in the array] (#1-elements that appear more than -n--2- in the array)
+    * [Other](#OTHER)
+        * [1. Square number](#1-square number)
+        * [2. 3 to the nth power] (#2-3- to the n-th power)
+        * [3. Product array](#3-Product array)
+        * [4. Find the three numbers with the largest product in the array] (#4-Find the three numbers with the largest product in the array)
 <!-- GFM-TOC -->
 
 
-## 素数分解
+## Prime number decomposition
 
-每一个数都可以分解成素数的乘积，例如 84 = 2<sup>2</sup> \* 3<sup>1</sup> \* 5<sup>0</sup> \* 7<sup>1</sup> \* 11<sup>0</sup> \* 13<sup>0</sup> \* 17<sup>0</sup> \* …
+Every number can be decomposed into the product of prime numbers, for example 84 = 2<sup>2</sup> \* 3<sup>1</sup> \* 5<sup>0</sup> \* 7<sup>1</sup> \* 11<sup>0</sup> \* 13<sup>0</sup> \* 17<sup>0</sup> \* …
 
-## 整除
+## Divisible
 
-令 x = 2<sup>m0</sup> \* 3<sup>m1</sup> \* 5<sup>m2</sup> \* 7<sup>m3</sup> \* 11<sup>m4</sup> \* …
+Let x = 2<sup>m0</sup> \* 3<sup>m1</sup> \* 5<sup>m2</sup> \* 7<sup>m3</sup> \* 11<sup>m4</sup> \* …
 
-令 y = 2<sup>n0</sup> \* 3<sup>n1</sup> \* 5<sup>n2</sup> \* 7<sup>n3</sup> \* 11<sup>n4</sup> \* …
+Let y = 2<sup>n0</sup> \* 3<sup>n1</sup> \* 5<sup>n2</sup> \* 7<sup>n3</sup> \* 11<sup>n4</sup> \* …
 
-如果 x 整除 y（y mod x == 0），则对于所有 i，mi \<= ni。
+If x divides y (y mod x == 0), then mi \<= ni for all i.
 
-## 最大公约数最小公倍数
+## Greatest common divisor least common multiple
 
-x 和 y 的最大公约数为：gcd(x,y) =  2<sup>min(m0,n0)</sup> \* 3<sup>min(m1,n1)</sup> \* 5<sup>min(m2,n2)</sup> \* ...
+The greatest common divisor of x and y is: gcd(x,y) = 2<sup>min(m0,n0)</sup> \* 3<sup>min(m1,n1)</sup> \* 5<sup>min(m2,n2)</sup> \* ...
 
-x 和 y 的最小公倍数为：lcm(x,y) =  2<sup>max(m0,n0)</sup> \* 3<sup>max(m1,n1)</sup> \* 5<sup>max(m2,n2)</sup> \* ...
+The least common multiple of x and y is: lcm(x,y) = 2<sup>max(m0,n0)</sup> \* 3<sup>max(m1,n1)</sup> \* 5<sup>max(m2,n2)</sup> \* ...
 
-### 1. 生成素数序列
+### 1. Generate a sequence of prime numbers
 
 204\. Count Primes (Easy)
 
-[Leetcode](https://leetcode.com/problems/count-primes/description/) / [力扣](https://leetcode-cn.com/problems/count-primes/description/)
+[Leetcode](https://leetcode.com/problems/count-primes/description/) / [Leetcode](https://leetcode-cn.com/problems/count-primes/description/)
 
-埃拉托斯特尼筛法在每次找到一个素数时，将能被素数整除的数排除掉。
+The Sieve of Eratosthenes eliminates numbers that are divisible by a prime number every time it finds one.
 
 ```java
-public int countPrimes(int n) {
+public int
+countPrimes(int n) {
     boolean[] notPrimes = new boolean[n + 1];
     int count = 0;
     for (int i = 2; i < n; i++) {
@@ -63,7 +64,7 @@ public int countPrimes(int n) {
             continue;
         }
         count++;
-        // 从 i * i 开始，因为如果 k < i，那么 k * i 在之前就已经被去除过了
+        // Start with i * i, because if k < i, then k * i has been removed before
         for (long j = (long) (i) * i; j < n; j += i) {
             notPrimes[(int) j] = true;
         }
@@ -72,7 +73,7 @@ public int countPrimes(int n) {
 }
 ```
 
-### 2. 最大公约数
+### 2. Greatest common divisor
 
 ```java
 int gcd(int a, int b) {
@@ -80,7 +81,7 @@ int gcd(int a, int b) {
 }
 ```
 
-最小公倍数为两数的乘积除以最大公约数。
+The least common multiple is the product of two numbers divided by their greatest common divisor.
 
 ```java
 int lcm(int a, int b) {
@@ -88,18 +89,18 @@ int lcm(int a, int b) {
 }
 ```
 
-### 3. 使用位操作和减法求解最大公约数
+### 3. Use bit operations and subtraction to find the greatest common divisor
 
-[编程之美：2.7](#)
+[The beauty of programming: 2.7](#)
 
-对于 a 和 b 的最大公约数 f(a, b)，有：
+For the greatest common divisor f(a, b) of a and b, we have:
 
-- 如果 a 和 b 均为偶数，f(a, b) = 2\*f(a/2, b/2);
-- 如果 a 是偶数 b 是奇数，f(a, b) = f(a/2, b);
-- 如果 b 是偶数 a 是奇数，f(a, b) = f(a, b/2);
-- 如果 a 和 b 均为奇数，f(a, b) = f(b, a-b);
+- If a and b are both even numbers, f(a, b) = 2\*f(a/2, b/2);
+- If a is even and b is odd, f(a, b) = f(a/2, b);
+- If b is even and a is odd, f(a, b) = f(a, b/2);
+- If a and b are both odd, f(a, b) = f(b, a-b);
 
-乘 2 和除 2 都可以转换为移位操作。
+Both multiplication by 2 and division by 2 can be converted into shift operations.
 
 ```java
 public int gcd(int a, int b) {
@@ -122,13 +123,14 @@ public int gcd(int a, int b) {
 }
 ```
 
-## 进制转换
+## Base conversion
 
-### 1. 7 进制
+###
+1. 7 base
 
 504\. Base 7 (Easy)
 
-[Leetcode](https://leetcode.com/problems/base-7/description/) / [力扣](https://leetcode-cn.com/problems/base-7/description/)
+[Leetcode](https://leetcode.com/problems/base-7/description/) / [Leetcode](https://leetcode-cn.com/problems/base-7/description/)
 
 ```java
 public String convertToBase7(int num) {
@@ -149,7 +151,7 @@ public String convertToBase7(int num) {
 }
 ```
 
-Java 中 static String toString(int num, int radix) 可以将一个整数转换为 radix 进制表示的字符串。
+In Java, static String toString(int num, int radix) can convert an integer into a string represented by radix.
 
 ```java
 public String convertToBase7(int num) {
@@ -157,11 +159,11 @@ public String convertToBase7(int num) {
 }
 ```
 
-### 2. 16 进制
+### 2. Hexadecimal
 
 405\. Convert a Number to Hexadecimal (Easy)
 
-[Leetcode](https://leetcode.com/problems/convert-a-number-to-hexadecimal/description/) / [力扣](https://leetcode-cn.com/problems/convert-a-number-to-hexadecimal/description/)
+[Leetcode](https://leetcode.com/problems/convert-a-number-to-hexadecimal/description/) / [Leetcode](https://leetcode-cn.com/problems/convert-a-number-to-hexadecimal/description/)
 
 ```html
 Input:
@@ -177,7 +179,7 @@ Output:
 "ffffffff"
 ```
 
-负数要用它的补码形式。
+Negative numbers use their complement form.
 
 ```java
 public String toHex(int num) {
@@ -185,30 +187,31 @@ public String toHex(int num) {
     if (num == 0) return "0";
     StringBuilder sb = new StringBuilder();
     while (num != 0) {
-        sb.append(map[num & 0b1111]);
-        num >>>= 4; // 因为考虑的是补码形式，因此符号位就不能有特殊的意义，需要使用无符号右移，左边填 0
+        sb.append(
+map[num & 0b1111]);
+        num >>>= 4; // Because the two's complement form is considered, the sign bit cannot have a special meaning. You need to use unsigned right shift and fill in 0 on the left
     }
     return sb.reverse().toString();
 }
 ```
 
-### 3. 26 进制
+### 3. Hexadecimal
 
 168\. Excel Sheet Column Title (Easy)
 
-[Leetcode](https://leetcode.com/problems/excel-sheet-column-title/description/) / [力扣](https://leetcode-cn.com/problems/excel-sheet-column-title/description/)
+[Leetcode](https://leetcode.com/problems/excel-sheet-column-title/description/) / [Leetcode](https://leetcode-cn.com/problems/excel-sheet-column-title/description/)
 
 ```html
-1 -> A
-2 -> B
-3 -> C
+1->A
+2->B
+3->C
 ...
-26 -> Z
-27 -> AA
+26->Z
+27->AA
 28 -> AB
 ```
 
-因为是从 1 开始计算的，而不是从 0 开始，因此需要对 n 执行 -1 操作。
+Because the calculation starts at 1, not 0, you need to perform a -1 operation on n.
 
 ```java
 public String convertToTitle(int n) {
@@ -220,17 +223,17 @@ public String convertToTitle(int n) {
 }
 ```
 
-## 阶乘
+## Factorial
 
-### 1. 统计阶乘尾部有多少个 0
+### 1. Count how many 0’s there are in the tail of the factorial
 
 172\. Factorial Trailing Zeroes (Easy)
 
-[Leetcode](https://leetcode.com/problems/factorial-trailing-zeroes/description/) / [力扣](https://leetcode-cn.com/problems/factorial-trailing-zeroes/description/)
+[Leetcode](https://leetcode.com/problems/factorial-trailing-zeroes/description/) / [Leetcode](https://leetcode-cn.com/problems/factorial-trailing-zeroes/description/)
 
-尾部的 0 由 2 * 5 得来，2 的数量明显多于 5 的数量，因此只要统计有多少个 5 即可。
+The 0 at the end is derived from 2 * 5. The number of 2 is obviously more than the number of 5, so just count how many 5 there are.
 
-对于一个数 N，它所包含 5 的个数为：N/5 + N/5<sup>2</sup> + N/5<sup>3</sup> + ...，其中 N/5 表示不大于 N 的数中 5 的倍数贡献一个 5，N/5<sup>2</sup> 表示不大于 N 的数中 5<sup>2</sup> 的倍数再贡献一个 5 ...。
+For a number N, the number of 5s it contains is: N/5 + N/5<sup>2</sup> + N/5<sup>3</sup> + ..., where N/5 means that multiples of 5 in numbers not greater than N contribute one 5, and N/5<sup>2</sup> means that multiples of 5<sup>2</sup> in numbers not greater than N contribute another 5....
 
 ```java
 public int trailingZeroes(int n) {
@@ -238,15 +241,15 @@ public int trailingZeroes(int n) {
 }
 ```
 
-如果统计的是 N! 的二进制表示中最低位 1 的位置，只要统计有多少个 2 即可，该题目出自 [编程之美：2.2](#) 。和求解有多少个 5 一样，2 的个数为 N/2 + N/2<sup>2</sup> + N/2<sup>3</sup> + ...
+If you count the position of the lowest 1 in the binary representation of N!, you only need to count how many 2s there are. This question comes from [The Beauty of Programming: 2.2](#). Just like solving how many 5's there are, the number of 2's is N/2 + N/2<sup>2</sup> + N/2<sup>3</sup> + ...
 
-## 字符串加法减法
+## String addition and subtraction
 
-### 1. 二进制加法
+### 1. Binary addition
 
 67\. Add Binary (Easy)
 
-[Leetcode](https://leetcode.com/problems/add-binary/description/) / [力扣](https://leetcode-cn.com/problems/add-binary/description/)
+[Leetcode](https://leetcode.com/problems/add-binary/description/) / [Leetcode](https://leetcode-cn.com/problems/add-binary/description/)
 
 ```html
 a = "11"
@@ -259,7 +262,7 @@ public String addBinary(String a, String b) {
     int i = a.length() - 1, j = b.length() - 1, carry = 0;
     StringBuilder str = new StringBuilder();
     while (carry == 1 || i >= 0 || j >= 0) {
-        if (i >= 0 && a.charAt(i--) == '1') {
+if (i >= 0 && a.charAt(i--) == '1') {
             carry++;
         }
         if (j >= 0 && b.charAt(j--) == '1') {
@@ -272,18 +275,19 @@ public String addBinary(String a, String b) {
 }
 ```
 
-### 2. 字符串加法
+### 2. String addition
 
 415\. Add Strings (Easy)
 
-[Leetcode](https://leetcode.com/problems/add-strings/description/) / [力扣](https://leetcode-cn.com/problems/add-strings/description/)
+[Leetcode](https://leetcode.com/problems/add-strings/description/) / [Leetcode](https://leetcode-cn.com/problems/add-strings/description/)
 
-字符串的值为非负整数。
+The value of a string is a non-negative integer.
 
 ```java
 public String addStrings(String num1, String num2) {
     StringBuilder str = new StringBuilder();
-    int carry = 0, i = num1.length() - 1, j = num2.length() - 1;
+    int carry = 0, i = num1.length() - 1, j =
+num2.length() - 1;
     while (carry == 1 || i >= 0 || j >= 0) {
         int x = i < 0 ? 0 : num1.charAt(i--) - '0';
         int y = j < 0 ? 0 : num2.charAt(j--) - '0';
@@ -294,13 +298,13 @@ public String addStrings(String num1, String num2) {
 }
 ```
 
-## 相遇问题
+## Encounter problem
 
-### 1. 改变数组元素使所有的数组元素都相等
+### 1. Change the array elements to make all array elements equal
 
 462\. Minimum Moves to Equal Array Elements II (Medium)
 
-[Leetcode](https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/description/) / [力扣](https://leetcode-cn.com/problems/minimum-moves-to-equal-array-elements-ii/description/)
+[Leetcode](https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/description/) / [Leetcode](https://leetcode-cn.com/problems/minimum-moves-to-equal-array-elements-ii/description/)
 
 ```html
 Input:
@@ -312,20 +316,20 @@ Output:
 Explanation:
 Only two moves are needed (remember each move increments or decrements one element):
 
-[1,2,3]  =>  [2,2,3]  =>  [2,2,2]
+[1,2,3] => [2,2,3] => [2,2,2]
 ```
 
-每次可以对一个数组元素加一或者减一，求最小的改变次数。
+Each time you can add one or subtract one to an array element, find the minimum number of changes.
 
-这是个典型的相遇问题，移动距离最小的方式是所有元素都移动到中位数。理由如下：
+This is a typical encounter problem. The way to move the smallest distance is to move all elements to the median. The reasons are as follows:
 
-设 m 为中位数。a 和 b 是 m 两边的两个元素，且 b \> a。要使 a 和 b 相等，它们总共移动的次数为 b - a，这个值等于 (b - m) + (m - a)，也就是把这两个数移动到中位数的移动次数。
+Let m be the median. a and b are two elements on either side of m, and b \> a. To make a and b equal, they need to move a total of times b - a, which is equal to (b - m) + (m - a), which is the number of moves to move the two numbers to the median.
 
-设数组长度为 N，则可以找到 N/2 对 a 和 b 的组合，使它们都移动到 m 的位置。
+Assuming that the length of the array is N, you can find N/2 combinations of a and b so that they both move to the position of m.
 
-**解法 1**  
+**Solution 1**
 
-先排序，时间复杂度：O(NlogN)
+Sort first, time complexity: O(NlogN)
 
 ```java
 public int minMoves2(int[] nums) {
@@ -341,9 +345,9 @@ public int minMoves2(int[] nums) {
 }
 ```
 
-**解法 2**  
+**Solution 2**
 
-使用快速选择找到中位数，时间复杂度 O(N)
+Find the median using quick selection, time complexity O(N)
 
 ```java
 public int minMoves2(int[] nums) {
@@ -392,15 +396,17 @@ private void swap(int[] nums, int i, int j) {
 }
 ```
 
-## 多数投票问题
+## Majority voting question
 
-### 1. 数组中出现次数多于 n / 2 的元素
+### 1. Elements that appear more than n / 2 times in the array
 
 169\. Majority Element (Easy)
 
-[Leetcode](https://leetcode.com/problems/majority-element/description/) / [力扣](https://leetcode-cn.com/problems/majority-element/description/)
+[Leetcode](https://leetcode.com/problems/majority-element/description/) / [Leetcode](https://leetcode-cn.com/
+problems
+/majority-element/description/)
 
-先对数组排序，最中间那个数出现次数一定多于 n / 2。
+First sort the array, the number in the middle must appear more than n / 2.
 
 ```java
 public int majorityElement(int[] nums) {
@@ -409,7 +415,7 @@ public int majorityElement(int[] nums) {
 }
 ```
 
-可以利用 Boyer-Moore Majority Vote Algorithm 来解决这个问题，使得时间复杂度为 O(N)。可以这么理解该算法：使用 cnt 来统计一个元素出现的次数，当遍历到的元素和统计元素不相等时，令 cnt--。如果前面查找了 i 个元素，且 cnt == 0，说明前 i 个元素没有 majority，或者有 majority，但是出现的次数少于 i / 2，因为如果多于 i / 2 的话 cnt 就一定不会为 0。此时剩下的 n - i 个元素中，majority 的数目依然多于 (n - i) / 2，因此继续查找就能找出 majority。
+You can use the Boyer-Moore Majority Vote Algorithm to solve this problem, making the time complexity O(N). The algorithm can be understood this way: use cnt to count the number of occurrences of an element. When the traversed elements are not equal to the counted elements, let cnt--. If i elements are found earlier and cnt == 0, it means that the first i elements do not have a majority, or there is a majority, but the number of occurrences is less than i / 2, because if there are more than i / 2, cnt will definitely not be 0. At this time, among the remaining n - i elements, the number of majorities is still more than (n - i) / 2, so continuing to search can find the majority.
 
 ```java
 public int majorityElement(int[] nums) {
@@ -422,24 +428,24 @@ public int majorityElement(int[] nums) {
 }
 ```
 
-## 其它
+## Others
 
-### 1. 平方数
+### 1. Square number
 
 367\. Valid Perfect Square (Easy)
 
-[Leetcode](https://leetcode.com/problems/valid-perfect-square/description/) / [力扣](https://leetcode-cn.com/problems/valid-perfect-square/description/)
+[Leetcode](https://leetcode.com/problems/valid-perfect-square/description/) / [Leetcode](https://leetcode-cn.com/problems/valid-perfect-square/description/)
 
 ```html
 Input: 16
 Returns: True
 ```
 
-平方序列：1,4,9,16,..
+Square sequence: 1,4,9,16,..
 
-间隔：3,5,7,...
+Interval: 3,5,7,...
 
-间隔为等差数列，使用这个特性可以得到从 1 开始的平方序列。
+The interval is an arithmetic sequence. Using this feature, you can get a sequence of squares starting from 1.
 
 ```java
 public boolean isPerfectSquare(int num) {
@@ -452,11 +458,11 @@ public boolean isPerfectSquare(int num) {
 }
 ```
 
-### 2. 3 的 n 次方
+### 2. 3 to the nth power
 
 326\. Power of Three (Easy)
 
-[Leetcode](https://leetcode.com/problems/power-of-three/description/) / [力扣](https://leetcode-cn.com/problems/power-of-three/description/)
+[Leetcode](https://leetcode.com/problems/power-of-three/description/) / [Leetcode](https://leetcode-cn.com/problems/power-of-three/description/)
 
 ```java
 public boolean isPowerOfThree(int n) {
@@ -464,19 +470,19 @@ public boolean isPowerOfThree(int n) {
 }
 ```
 
-### 3. 乘积数组
+### 3. Product array
 
 238\. Product of Array Except Self (Medium)
 
-[Leetcode](https://leetcode.com/problems/product-of-array-except-self/description/) / [力扣](https://leetcode-cn.com/problems/product-of-array-except-self/description/)
+[Leetcode](https://leetcode.com/problems/product-of-array-except-self/description/) / [Leetcode](https://leetcode-cn.com/problems/product-of-array-except-self/description/)
 
 ```html
 For example, given [1,2,3,4], return [24,12,8,6].
 ```
 
-给定一个数组，创建一个新数组，新数组的每个元素为原始数组中除了该位置上的元素之外所有元素的乘积。
+Given an array, create a new array where each element of the new array is the product of all elements in the original array except the element at that position.
 
-要求时间复杂度为 O(N)，并且不能使用除法。
+The required time complexity is O(N), and division cannot be used.
 
 ```java
 public int[] productExceptSelf(int[] nums) {
@@ -497,11 +503,12 @@ public int[] productExceptSelf(int[] nums) {
 }
 ```
 
-### 4. 找出数组中的乘积最大的三个数
+###
+4. Find the three numbers with the largest product in the array
 
 628\. Maximum Product of Three Numbers (Easy)
 
-[Leetcode](https://leetcode.com/problems/maximum-product-of-three-numbers/description/) / [力扣](https://leetcode-cn.com/problems/maximum-product-of-three-numbers/description/)
+[Leetcode](https://leetcode.com/problems/maximum-product-of-three-numbers/description/) / [Leetcode](https://leetcode-cn.com/problems/maximum-product-of-three-numbers/description/)
 
 ```html
 Input: [1,2,3,4]
@@ -523,7 +530,8 @@ public int maximumProduct(int[] nums) {
             max3 = n;
         }
 
-        if (n < min1) {
+        i
+f (n < min1) {
             min2 = min1;
             min1 = n;
         } else if (n < min2) {

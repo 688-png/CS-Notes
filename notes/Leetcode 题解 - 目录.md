@@ -1,36 +1,36 @@
-# Leetcode 题解
+# Leetcode problem solution
 
-## 前言
+## Preface
 
-本文从 Leetcode 中精选大概 200 左右的题目，去除了某些繁杂但是没有多少算法思想的题目，同时保留了面试中经常被问到的经典题目。
+This article selects about 200 questions from Leetcode, removing some complicated questions without much algorithmic thinking, while retaining classic questions that are often asked in interviews.
 
-## 算法思想
+## Algorithmic Thoughts
 
-- [双指针](Leetcode%20题解%20-%20双指针.md)
-- [排序](Leetcode%20题解%20-%20排序.md)
-- [贪心思想](Leetcode%20题解%20-%20贪心思想.md)
-- [二分查找](Leetcode%20题解%20-%20二分查找.md)
-- [分治](Leetcode%20题解%20-%20分治.md)
-- [搜索](Leetcode%20题解%20-%20搜索.md)
-- [动态规划](Leetcode%20题解%20-%20动态规划.md)
-- [数学](Leetcode%20题解%20-%20数学.md)
+- [Double pointers](Leetcode%20 problem solution%20-%20double pointers.md)
+- [Sort](Leetcode%20Solution%20-%20Sort.md)
+- [Greedy Thoughts](Leetcode%20Question Solution%20-%20Greedy Thoughts.md)
+- [Binary search](Leetcode%20 solution%20-%20Binary search.md)
+- [Divide and Conquer](Leetcode%20Problem Solution%20-%20Divide and Conquer.md)
+- [Search](Leetcode%20Question Solution%20-%20Search.md)
+- [Dynamic Programming](Leetcode%20Question Solution%20-%20Dynamic Programming.md)
+- [Mathematics](Leetcode%20Question Solution%20-%20Mathematics.md)
 
-## 数据结构相关
+## Data structure related
 
-- [链表](Leetcode%20题解%20-%20链表.md)
-- [树](Leetcode%20题解%20-%20树.md)
-- [栈和队列](Leetcode%20题解%20-%20栈和队列.md)
-- [哈希表](Leetcode%20题解%20-%20哈希表.md)
-- [字符串](Leetcode%20题解%20-%20字符串.md)
-- [数组与矩阵](Leetcode%20题解%20-%20数组与矩阵.md)
-- [图](Leetcode%20题解%20-%20图.md)
-- [位运算](Leetcode%20题解%20-%20位运算.md)
+- [Linked List](Leetcode%20Question Solution%20-%20Linked List.md)
+- [Tree](Leetcode%20 problem solution%20-%20 tree.md)
+- [Stack and Queue](Leetcode%20Question Solution%20-%20Stack and Queue.md)
+- [Hash Table](Leetcode%20Question Solution%20-%20Hash Table.md)
+- [String](Leetcode%20Question Solution%20-%20String.md)
+- [Arrays and Matrices](Leetcode%20 problem solution%20-%20Arrays and matrices.md)
+- [Picture](Leetcode%20Question Solution%20-%20Picture.md)
+- [Bit operation](Leetcode%20 problem solution%20-%20 bit operation.md)
 
-## 参考资料
+## References
 
 - Leetcode
-- Weiss M A, 冯舜玺. 数据结构与算法分析——C 语言描述[J]. 2004.
+- Weiss M A, Feng Shunxi. Data structure and algorithm analysis-C language description[J]. 2004.
 - Sedgewick R. Algorithms[M]. Pearson Education India, 1988.
-- 何海涛, 软件工程师. 剑指 Offer: 名企面试官精讲典型编程题[M]. 电子工业出版社, 2014.
-- 《编程之美》小组. 编程之美[M]. 电子工业出版社, 2008.
-- 左程云. 程序员代码面试指南[M]. 电子工业出版社, 2015.
+- He Haitao, software engineer. Jianzhi Offer: Interviewers from famous companies explain typical programming questions in detail[M]. Electronic Industry Press, 2014.
+- "The Beauty of Programming" Group. The Beauty of Programming[M]. Electronic Industry Press, 2008.
+- Zuo Chengyun. Programmer Code Interview Guide[M]. Electronic Industry Press, 2015.

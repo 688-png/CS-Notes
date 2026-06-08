@@ -1,20 +1,20 @@
-# Leetcode 题解 - 二分查找
+# Leetcode problem solution - binary search
 <!-- GFM-TOC -->
-* [Leetcode 题解 - 二分查找](#leetcode-题解---二分查找)
-    * [1. 求开方](#1-求开方)
-    * [2. 大于给定元素的最小元素](#2-大于给定元素的最小元素)
-    * [3. 有序数组的 Single Element](#3-有序数组的-single-element)
-    * [4. 第一个错误的版本](#4-第一个错误的版本)
-    * [5. 旋转数组的最小数字](#5-旋转数组的最小数字)
-    * [6. 查找区间](#6-查找区间)
+* [Leetcode problem solution - binary search](#leetcode-problem solution---binary search)
+    * [1. Find the square root](#1-Find the square root)
+    * [2. The smallest element that is greater than the given element] (#2-The smallest element that is greater than the given element)
+    * [3. Single Element of ordered array](#3-single-element of ordered array)
+    * [4. First wrong version](#4-First wrong version)
+    * [5. Minimum number of rotated array](#5-Minimum number of rotated array)
+    * [6. Search interval](#6-Search interval)
 <!-- GFM-TOC -->
 
 
-**正常实现**  
+**Normal implementation**
 
 ```text
-Input : [1,2,3,4,5]
-key : 3
+Input: [1,2,3,4,5]
+key: 3
 return the index : 2
 ```
 
@@ -35,29 +35,29 @@ public int binarySearch(int[] nums, int key) {
 }
 ```
 
-**时间复杂度**  
+**Time Complexity**
 
-二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度为 O(logN)。
+Binary search is also called halving search, which can halve the search interval every time. The algorithm time complexity of this halving feature is O(logN).
 
-**m 计算**  
+**m calculation**
 
-有两种计算中值 m 的方式：
+There are two ways to calculate the median m:
 
 - m = (l + h) / 2
 - m = l + (h - l) / 2
 
-l + h 可能出现加法溢出，也就是说加法的结果大于整型能够表示的范围。但是 l 和 h 都为正数，因此 h - l 不会出现加法溢出问题。所以，最好使用第二种计算法方法。
+l + h may cause addition overflow, which means that the result of addition is larger than the range that the integer can represent. But l and h are both positive numbers, so h - l does not have an additive overflow problem. Therefore, it is better to use the second calculation method.
 
-**未成功查找的返回值**  
+**Return value of unsuccessful search**
 
-循环退出时如果仍然没有查找到 key，那么表示查找失败。可以有两种返回值：
+If the key is still not found when the loop exits, it means that the search failed. There can be two return values:
 
-- -1：以一个错误码表示没有查找到 key
-- l：将 key 插入到 nums 中的正确位置
+- -1: An error code indicates that the key was not found.
+- l: Insert key into the correct position in nums
 
-**变种**  
+**Variant**
 
-二分查找可以有很多变种，实现变种要注意边界值的判断。例如在一个有重复元素的数组中查找 key 的最左位置的实现如下：
+Binary search can have many variants. When implementing variants, attention should be paid to the judgment of boundary values. For example, the implementation of finding the leftmost position of key in an array with repeated elements is as follows:
 
 ```java
 public int binarySearch(int[] nums, int key) {
@@ -74,33 +74,34 @@ public int binarySearch(int[] nums, int key) {
 }
 ```
 
-该实现和正常实现有以下不同：
+This implementation differs from the normal implementation in the following ways:
 
-- h 的赋值表达式为 h = m
-- 循环条件为 l \< h
-- 最后返回 l 而不是 -1
+- The assignment expression of h is h = m
+- The loop condition is l \< h
+- Finally returns l instead of -1
 
-在 nums[m] \>= key 的情况下，可以推导出最左 key 位于 [l, m] 区间中，这是一个闭区间。h 的赋值表达式为 h = m，因为 m 位置也可能是解。
+In the case of nums[m] \>= key, it can be deduced that the leftmost key is located in the [l, m] interval, which is a closed interval. The assignment expression for h is h = m, since position m is also a possible solution.
 
-在 h 的赋值表达式为 h = m 的情况下，如果循环条件为 l \<= h，那么会出现循环无法退出的情况，因此循环条件只能是 l \< h。以下演示了循环条件为 l \<= h 时循环无法退出的情况：
+When the assignment expression of h is h = m, if the loop condition is l \<= h, then the loop cannot exit, so the loop condition can only be l \< h. The following demonst
+rates the situation where the loop cannot exit when the loop condition is l \<= h:
 
 ```text
 nums = {0, 1, 2}, key = 1
-l   m   h
-0   1   2  nums[m] >= key
-0   0   1  nums[m] < key
-1   1   1  nums[m] >= key
-1   1   1  nums[m] >= key
+l m h
+0 1 2 nums[m] >= key
+0 0 1 nums[m] < key
+1 1 1 nums[m] >= key
+1 1 1 nums[m] >= key
 ...
 ```
 
-当循环体退出时，不表示没有查找到 key，因此最后返回的结果不应该为 -1。为了验证有没有查找到，需要在调用端判断一下返回位置上的值和 key 是否相等。
+When the loop body exits, it does not mean that the key is not found, so the final returned result should not be -1. In order to verify whether it has been found, it is necessary to determine whether the value at the return position and the key are equal on the calling side.
 
-## 1. 求开方
+## 1. Find the square root
 
 69\. Sqrt(x) (Easy)
 
-[Leetcode](https://leetcode.com/problems/sqrtx/description/) / [力扣](https://leetcode-cn.com/problems/sqrtx/description/)
+[Leetcode](https://leetcode.com/problems/sqrtx/description/) / [Leetcode](https://leetcode-cn.com/problems/sqrtx/description/)
 
 ```html
 Input: 4
@@ -111,9 +112,9 @@ Output: 2
 Explanation: The square root of 8 is 2.82842..., and since we want to return an integer, the decimal part will be truncated.
 ```
 
-一个数 x 的开方 sqrt 一定在 0 \~ x 之间，并且满足 sqrt == x / sqrt。可以利用二分查找在 0 \~ x 之间查找 sqrt。
+The square root sqrt of a number x must be between 0 \~ x, and satisfy sqrt == x / sqrt. You can use binary search to find sqrt between 0 \~ x.
 
-对于 x = 8，它的开方是 2.82842...，最后应该返回 2 而不是 3。在循环条件为 l \<= h 并且循环退出时，h 总是比 l 小 1，也就是说 h = 2，l = 3，因此最后的返回值应该为 h 而不是 l。
+For x = 8, its square root is 2.82842..., which should return 2 instead of 3. When the loop condition is l \<= h and the loop exits, h is always 1 less than l, that is, h = 2, l = 3, so the final return value should be h instead of l.
 
 ```java
 public int mySqrt(int x) {
@@ -136,11 +137,12 @@ public int mySqrt(int x) {
 }
 ```
 
-## 2. 大于给定元素的最小元素
+## 2. The smallest element greater than the given element
 
 744\. Find Smallest Letter Greater Than Target (Easy)
 
-[Leetcode](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/) / [力扣](https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/description/)
+[Leetcode](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/) / [Leetcode](https://leetcode-cn.com/problems/find-smallest-lett
+er-greater-than-target/description/)
 
 ```html
 Input:
@@ -154,7 +156,7 @@ target = "k"
 Output: "c"
 ```
 
-题目描述：给定一个有序的字符数组 letters 和一个字符 target，要求找出 letters 中大于 target 的最小字符，如果找不到就返回第 1 个字符。
+Question description: Given an ordered character array letters and a character target, it is required to find the smallest character in letters that is greater than target. If it is not found, return the first character.
 
 ```java
 public char nextGreatestLetter(char[] letters, char target) {
@@ -172,26 +174,27 @@ public char nextGreatestLetter(char[] letters, char target) {
 }
 ```
 
-## 3. 有序数组的 Single Element
+## 3. Single Element of ordered array
 
 540\. Single Element in a Sorted Array (Medium)
 
-[Leetcode](https://leetcode.com/problems/single-element-in-a-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/single-element-in-a-sorted-array/description/)
+[Leetcode](https://leetcode.com/problems/single-element-in-a-sorted-array/description/) / [Leetcode](https://leetcode-cn.com/problems/single-element-in-a-sorted-array/description/)
 
 ```html
 Input: [1, 1, 2, 3, 3, 4, 4, 8, 8]
 Output: 2
 ```
 
-题目描述：一个有序数组只有一个数不出现两次，找出这个数。
+Question description: In an ordered array, only one number does
+not appear twice. Find this number.
 
-要求以 O(logN) 时间复杂度进行求解，因此不能遍历数组并进行异或操作来求解，这么做的时间复杂度为 O(N)。
+It requires O(logN) time complexity to solve, so it cannot be solved by traversing the array and performing an XOR operation. The time complexity of doing so is O(N).
 
-令 index 为 Single Element 在数组中的位置。在 index 之后，数组中原来存在的成对状态被改变。如果 m 为偶数，并且 m + 1 \< index，那么 nums[m] == nums[m + 1]；m + 1 \>= index，那么 nums[m] != nums[m + 1]。
+Let index be the position of the Single Element in the array. After index, the state of the pairs originally existing in the array is changed. If m is an even number, and m + 1 \< index, then nums[m] == nums[m + 1]; m + 1 \>= index, then nums[m] != nums[m + 1].
 
-从上面的规律可以知道，如果 nums[m] == nums[m + 1]，那么 index 所在的数组位置为 [m + 2, h]，此时令 l = m + 2；如果 nums[m] != nums[m + 1]，那么 index 所在的数组位置为 [l, m]，此时令 h = m。
+From the above rules, we can know that if nums[m] == nums[m + 1], then the array position where index is located is [m + 2, h], then let l = m + 2; if nums[m] != nums[m + 1], then the array position where index is located is [l, m], and then let h = m.
 
-因为 h 的赋值表达式为 h = m，那么循环条件也就只能使用 l \< h 这种形式。
+Because the assignment expression of h is h = m, the loop condition can only use the form l \< h.
 
 ```java
 public int singleNonDuplicate(int[] nums) {
@@ -199,7 +202,7 @@ public int singleNonDuplicate(int[] nums) {
     while (l < h) {
         int m = l + (h - l) / 2;
         if (m % 2 == 1) {
-            m--;   // 保证 l/h/m 都在偶数位，使得查找区间大小一直都是奇数
+            m--; // Ensure that l/h/m are all in even numbers, so that the search interval size is always an odd number
         }
         if (nums[m] == nums[m + 1]) {
             l = m + 2;
@@ -211,17 +214,17 @@ public int singleNonDuplicate(int[] nums) {
 }
 ```
 
-## 4. 第一个错误的版本
+## 4. The first wrong version
 
 278\. First Bad Version (Easy)
 
-[Leetcode](https://leetcode.com/problems/first-bad-version/description/) / [力扣](https://leetcode-cn.com/problems/first-bad-version/description/)
+[Leetcode](https://leetcode.com/problems/first-bad-version/description/) / [Leetcode](https://leetcode-cn.com/problems/first-bad-version/description/)
 
-题目描述：给定一个元素 n 代表有 [1, 2, ..., n] 版本，在第 x 位置开始出现错误版本，导致后面的版本都错误。可以调用 isBadVersion(int x) 知道某个版本是否错误，要求找到第一个错误的版本。
+Problem description: Given an element n, it represents [1, 2, ..., n] versions. An incorrect version starts to appear at the x-th position, causing all subsequent versions to be incorrect. You can call isBadVersion(int x) to know if a version is wrong, asking to find the first wrong version.
 
-如果第 m 个版本出错，则表示第一个错误的版本在 [l, m] 之间，令 h = m；否则第一个错误的版本在 [m + 1, h] 之间，令 l = m + 1。
+If the mth version is wrong, it means that the first wrong version is between [l, m], let h = m; otherwise, the first wrong version is between [m + 1, h], let l = m + 1.
 
-因为 h 的赋值表达式为 h = m，因此循环条件为 l \< h。
+Because the assignment expression of h is h = m, the loop condition is l \< h.
 
 ```java
 public int firstBadVersion(int n) {
@@ -238,11 +241,11 @@ public int firstBadVersion(int n) {
 }
 ```
 
-## 5. 旋转数组的最小数字
+## 5. Minimum number of rotated array
 
 153\. Find Minimum in Rotated Sorted Array (Medium)
 
-[Leetcode](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/) / [力扣](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/description/)
+[Leetcode](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/) / [Leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/description/)
 
 ```html
 Input: [3,4,5,1,2],
@@ -264,11 +267,13 @@ public int findMin(int[] nums) {
 }
 ```
 
-## 6. 查找区间
+## 6. Find the interval
 
-34\. Find First and Last Position of Element in Sorted Array
+34\. Find First and Last Positi
+on of Element in Sorted Array
 
-[Leetcode](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) / [力扣](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+[Leetcode](https://leetcode.com/problems/find-fir
+st-and-last-position-of-element-in-sorted-array/) / [Leetcode](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
 ```html
 Input: nums = [5,7,7,8,8,10], target = 8
@@ -278,9 +283,9 @@ Input: nums = [5,7,7,8,8,10], target = 6
 Output: [-1,-1]
 ```
 
-题目描述：给定一个有序数组 nums 和一个目标 target，要求找到 target 在 nums 中的第一个位置和最后一个位置。
+Problem description: Given an ordered array nums and a target target, it is required to find the first and last position of target in nums.
 
-可以用二分查找找出第一个位置和最后一个位置，但是寻找的方法有所不同，需要实现两个二分查找。我们将寻找  target 最后一个位置，转换成寻找 target+1 第一个位置，再往前移动一个位置。这样我们只需要实现一个二分查找代码即可。
+You can use binary search to find the first position and the last position, but the search method is different and you need to implement two binary searches. We will convert the search for the last position of target into the search for the first position of target+1, and then move forward one position. In this way we only need to implement a binary search code.
 
 ```java
 public int[] searchRange(int[] nums, int target) {
@@ -294,7 +299,7 @@ public int[] searchRange(int[] nums, int target) {
 }
 
 private int findFirst(int[] nums, int target) {
-    int l = 0, h = nums.length; // 注意 h 的初始值
+    int l = 0, h = nums.length; // Note the initial value of h
     while (l < h) {
         int m = l + (h - l) / 2;
         if (nums[m] >= target) {
@@ -307,10 +312,10 @@ private int findFirst(int[] nums, int target) {
 }
 ```
 
-在寻找第一个位置的二分查找代码中，需要注意 h 的取值为 nums.length，而不是 nums.length - 1。先看以下示例：
+In the binary search code that finds the first position, it is important to note that the value of h is nums.length, not nums.length - 1. Let’s look at the following example first:
 
 ```
 nums = [2,2], target = 2
 ```
 
-如果 h 的取值为 nums.length - 1，那么 last = findFirst(nums, target + 1) - 1 = 1 - 1 = 0。这是因为 findLeft 只会返回 [0, nums.length - 1] 范围的值，对于 findFirst([2,2], 3) ，我们希望返回 3 插入 nums 中的位置，也就是数组最后一个位置再往后一个位置，即 nums.length。所以我们需要将 h 取值为 nums.length，从而使得 findFirst返回的区间更大，能够覆盖 target 大于 nums 最后一个元素的情况。
+If the value of h is nums.length - 1, then last = findFirst(nums, target + 1) - 1 = 1 - 1 = 0. This is because findLeft will only return values ​​in the range [0, nums.length - 1]. For findFirst([2,2], 3), we want to return the position where 3 is inserted into nums, which is one position after the last position of the array, that is, nums.length. So we need to set the value of h to nums.length, so that the range returned by findFirst is larger and can cover the situation where target is greater than the last element of nums.

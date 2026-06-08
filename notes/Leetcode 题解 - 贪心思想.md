@@ -1,41 +1,42 @@
-# Leetcode 题解 - 贪心思想
+# Leetcode problem solution - greedy thinking
 <!-- GFM-TOC -->
-* [Leetcode 题解 - 贪心思想](#leetcode-题解---贪心思想)
-    * [1. 分配饼干](#1-分配饼干)
-    * [2. 不重叠的区间个数](#2-不重叠的区间个数)
-    * [3. 投飞镖刺破气球](#3-投飞镖刺破气球)
-    * [4. 根据身高和序号重组队列](#4-根据身高和序号重组队列)
-    * [5. 买卖股票最大的收益](#5-买卖股票最大的收益)
-    * [6. 买卖股票的最大收益 II](#6-买卖股票的最大收益-ii)
-    * [7. 种植花朵](#7-种植花朵)
-    * [8. 判断是否为子序列](#8-判断是否为子序列)
-    * [9. 修改一个数成为非递减数组](#9-修改一个数成为非递减数组)
-    * [10. 子数组最大的和](#10-子数组最大的和)
-    * [11. 分隔字符串使同种字符出现在一起](#11-分隔字符串使同种字符出现在一起)
+* [Leetcode problem solution-greedy thinking](#leetcode-problem solution---greedy thinking)
+    * [1. Distribute cookies](#1-Distribute cookies)
+    * [2. Number of non-overlapping intervals] (#2-Number of non-overlapping intervals)
+    * [3. Throw darts to puncture the balloon](#3-Throw darts to puncture the balloon)
+    * [4. Reorganize the queue based on height and serial number] (#4-Reorganize the queue based on height and serial number)
+    * [5. The biggest profit from buying and selling stocks](#5-The biggest profit from buying and selling stocks)
+    * [6. The maximum profit from buying and selling stocks II](#6-The maximum profit from buying and selling stocks-ii)
+    * [7. Plant flowers](#7-Plant flowers)
+    * [8. Determine whether it is a subsequence] (#8-Judge whether it is a subsequence)
+    * [9. Modify a number to become a non-decreasing array] (#9-Modify a number to become a non-decreasing array)
+    * [10. Maximum sum of subarrays] (#10-Maximum sum of subarrays)
+    * [11. Separate strings so that characters of the same type appear together] (#11-Separate strings so characters of the same type appear together)
 <!-- GFM-TOC -->
 
 
-保证每次操作都是局部最优的，并且最后得到的结果是全局最优的。
+It is guaranteed that each operation is locally optimal and the final result is globally optimal.
 
-## 1. 分配饼干
+## 1. Distribute cookies
 
 455\. Assign Cookies (Easy)
 
-[Leetcode](https://leetcode.com/problems/assign-cookies/description/) / [力扣](https://leetcode-cn.com/problems/assign-cookies/description/)
+[Leetcode](https://leetcode.com/problems/assign-cookies/description/) / [Leetcode](https://leetcode-cn.com/problems/assign-cookies/description/)
 
 ```html
 Input: grid[1,3], size[1,2,4]
 Output: 2
 ```
 
-题目描述：每个孩子都有一个满足度 grid，每个饼干都有一个大小 size，只有饼干的大小大于等于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。
+Title description: Each child has a satisfaction grid, and each cookie has a size. Only when the size of the cookie is greater than or equal to a child's satisfaction, the child will be satisfied. Find the maximum number of children that can be satisfied.
 
-1. 给一个孩子的饼干应当尽量小并且又能满足该孩子，这样大饼干才能拿来给满足度比较大的孩子。
-2. 因为满足度最小的孩子最容易得到满足，所以先满足满足度最小的孩子。
+1. The biscuits given to one child should be as small as possible and satisfy the child, so that the larger biscuits can be given to the more satisfied child.
+2. Because the child with the smallest degree of satisfaction is the easiest to be satisfied, the child with the smallest degree of satisfaction is satisfied first.
 
-在以上的解法中，我们只在每次分配时饼干时选择一种看起来是当前最优的分配方法，但无法保证这种局部最优的分配方法最后能得到全局最优解。我们假设能得到全局最优解，并使用反证法进行证明，即假设存在一种比我们使用的贪心策略更优的最优策略。如果不存在这种最优策略，表示贪心策略就是最优策略，得到的解也就是全局最优解。
+In the above solution, we only choose an allocation method that seems to be the current optimal every time we allocate cookies, but there is no guarantee that this local optimal allocation method will eventually obtain the global optimal solution. We assume that the global optimal solution can be obtained and prove it by proof by contradiction, that is, we assume that there is an optimal strategy that is better than the greedy strategy we use. If there is no such optimal strategy, it means that the greedy strategy is the optimal strategy, and the solution obtained is the global optimal solution.
 
-证明：假设在某次选择中，贪心策略选择给当前满足度最小的孩子分配第 m 个饼干，第 m 个饼干为可以满足该孩子的最小饼干。假设存在一种最优策略，可以给该孩子分配第 n 个饼干，并且 m \< n。我们可以发现，经过这一轮分配，贪心策略分配后剩下的饼干一定有一个比最优策略来得大。因此在后续的分配中，贪心策略一定能满足更多的孩子。也就是说不存在比贪心策略更优的策略，即贪心策略就是最优策略。
+Proof: Suppose that in a certain selection, the greedy strategy chooses to allocate the m-th cookie to the child with the smallest current satisfaction, and the m-th cookie is the smallest cookie that can satisfy the child. Suppose t
+here is an optimal policy that assigns the n-th cookie to the child, and m \< n. We can find that after this round of allocation, one of the remaining cookies after the greedy strategy allocation must be larger than the optimal strategy. Therefore, in subsequent allocations, the greedy strategy will definitely satisfy more children. In other words, there is no strategy better than the greedy strategy, that is, the greedy strategy is the optimal strategy.
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/e69537d2-a016-4676-b169-9ea17eeb9037.gif" width="430px"> </div><br>
 
@@ -55,11 +56,11 @@ public int findContentChildren(int[] grid, int[] size) {
 }
 ```
 
-## 2. 不重叠的区间个数
+## 2. Number of non-overlapping intervals
 
 435\. Non-overlapping Intervals (Medium)
 
-[Leetcode](https://leetcode.com/problems/non-overlapping-intervals/description/) / [力扣](https://leetcode-cn.com/problems/non-overlapping-intervals/description/)
+[Leetcode](https://leetcode.com/problems/non-overlapping-intervals/description/) / [Leetcode](https://leetcode-cn.com/problems/non-overlapping-intervals/description/)
 
 ```html
 Input: [ [1,2], [1,2], [1,2] ]
@@ -77,17 +78,17 @@ Output: 0
 Explanation: You don't need to remove any of the intervals since they're already non-overlapping.
 ```
 
-题目描述：计算让一组区间不重叠所需要移除的区间个数。
+Problem description: Calculate the number of intervals that need to be removed to make a set of intervals non-overlapping.
 
-先计算最多能组成的不重叠区间个数，然后用区间总个数减去不重叠区间的个数。
+First calculate the maximum number of non-overlapping intervals that can be formed, and then subtract the number of non-overlapping intervals from the total number of intervals.
 
-在每次选择中，区间的结尾最为重要，选择的区间结尾越小，留给后面的区间的空间越大，那么后面能够选择的区间个数也就越大。
+In each choice, the end of the interval is the most important. The smaller the end of the selected interval, the greater the space left for the subsequent intervals, and the greater the number of intervals that can be selected later.
 
-按区间的结尾进行排序，每次选择结尾最小，并且和前一个区间不重叠的区间。
+Sort by the end of the interval, each time selecting the interval with the smallest end and no overlap with the previous interval.
 
 ```java
 public int eraseOverlapIntervals(int[][] intervals) {
-    if (intervals.length == 0) {
+    if (intervals. length == 0) {
         return 0;
     }
     Arrays.sort(intervals, Comparator.comparingInt(o -> o[1]));
@@ -104,24 +105,24 @@ public int eraseOverlapIntervals(int[][] intervals) {
 }
 ```
 
-使用 lambda 表示式创建 Comparator 会导致算法运行时间过长，如果注重运行时间，可以修改为普通创建 Comparator 语句：
+Using lambda expressions to create a Comparator will cause the algorithm to run too long. If you focus on running time, you can modify it to create a Comparator statement normally:
 
 ```java
-Arrays.sort(intervals, new Comparator<int[]>() {
+Arrays.sort(intervals, new Comp
+arator<int[]>() {
      @Override
      public int compare(int[] o1, int[] o2) {
          return (o1[1] < o2[1]) ? -1 : ((o1[1] == o2[1]) ? 0 : 1);
      }
 });
 ```
+Avoid using `return o1[1] - o2[1];` when implementing the compare() function to prevent overflow.
 
-实现 compare() 函数时避免使用 `return o1[1] - o2[1];` 这种减法操作，防止溢出。
-
-## 3. 投飞镖刺破气球
+## 3. Throw darts to pop balloons
 
 452\. Minimum Number of Arrows to Burst Balloons (Medium)
 
-[Leetcode](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/) / [力扣](https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/description/)
+[Leetcode](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/) / [Leetcode](https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/description/)
 
 ```
 Input:
@@ -131,13 +132,13 @@ Output:
 2
 ```
 
-题目描述：气球在一个水平数轴上摆放，可以重叠，飞镖垂直投向坐标轴，使得路径上的气球都被刺破。求解最小的投飞镖次数使所有气球都被刺破。
+Description of the problem: Balloons are placed on a horizontal axis and can overlap. The darts are thrown vertically towards the axis, causing all the balloons on the path to be punctured. Find the minimum number of dart throws so that all balloons are punctured.
 
-也是计算不重叠的区间个数，不过和 Non-overlapping Intervals 的区别在于，[1, 2] 和 [2, 3] 在本题中算是重叠区间。
+It also calculates the number of non-overlapping intervals, but the difference from Non-overlapping Intervals is that [1, 2] and [2, 3] are considered overlapping intervals in this question.
 
 ```java
 public int findMinArrowShots(int[][] points) {
-    if (points.length == 0) {
+    if (points. length == 0) {
         return 0;
     }
     Arrays.sort(points, Comparator.comparingInt(o -> o[1]));
@@ -153,11 +154,11 @@ public int findMinArrowShots(int[][] points) {
 }
 ```
 
-## 4. 根据身高和序号重组队列
+## 4. Reorganize the queue according to height and serial number
 
 406\. Queue Reconstruction by Height(Medium)
 
-[Leetcode](https://leetcode.com/problems/queue-reconstruction-by-height/description/) / [力扣](https://leetcode-cn.com/problems/queue-reconstruction-by-height/description/)
+[Leetcode](https://leetcode.com/problems/queue-reconstruction-by-height/description/) / [Leetcode](https://leetcode-cn.com/problems/queue-reconstruction-by-height/description/)
 
 ```html
 Input:
@@ -167,11 +168,11 @@ Output:
 [[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
 ```
 
-题目描述：一个学生用两个分量 (h, k) 描述，h 表示身高，k 表示排在前面的有 k 个学生的身高比他高或者和他一样高。
+Problem description: A student is described by two components (h, k), h represents height, and k represents that there are k students in front who are taller than him or as tall as him.
 
-为了使插入操作不影响后续的操作，身高较高的学生应该先做插入操作，否则身高较小的学生原先正确插入的第 k 个位置可能会变成第 k+1 个位置。
+In order to prevent the insertion operation from affecting subsequent operations, taller students should perform the insertion operation first, otherwise the k-th position originally correctly inserted by smaller students may become the k+1-th position.
 
-身高 h 降序、个数 k 值升序，然后将某个学生插入队列的第 k 个位置中。
+The height h is in descending order, the number k is in ascending order, and then a student is inserted into the k-th position of the queue.
 
 ```java
 public int[][] reconstructQueue(int[][] people) {
@@ -187,15 +188,16 @@ public int[][] reconstructQueue(int[][] people) {
 }
 ```
 
-## 5. 买卖股票最大的收益
+## 5. The biggest profit from buying and selling stocks
 
 121\. Best Time to Buy and Sell Stock (Easy)
 
-[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/description/)
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/) / [Leetcode](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/description/)
 
-题目描述：一次股票交易包含买入和卖出，只进行一次交易，求最大收益。
+Question des
+cription: A stock transaction includes buying and selling. Only one transaction is performed to find the maximum profit.
 
-只要记录前面的最小价格，将这个最小价格作为买入价格，然后将当前的价格作为售出价格，查看当前收益是不是最大收益。
+Just record the previous minimum price, use this minimum price as the buying price, and then use the current price as the selling price to see if the current profit is the maximum profit.
 
 ```java
 public int maxProfit(int[] prices) {
@@ -212,15 +214,16 @@ public int maxProfit(int[] prices) {
 ```
 
 
-## 6. 买卖股票的最大收益 II
+## 6. Maximum returns from buying and selling stocks II
 
 122\. Best Time to Buy and Sell Stock II (Easy)
 
-[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/) / [力扣](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/description/)
+[Leetcode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/) / [Leetcode](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/description/)
 
-题目描述：可以进行多次交易，多次交易之间不能交叉进行，可以进行多次交易。
+Description of the topic: Multiple transactions can be carried out. Multiple transactions cannot be crossed. Multiple transactions can be carried out.
 
-对于 [a, b, c, d]，如果有 a \<= b \<= c \<= d ，那么最大收益为 d - a。而 d - a = (d - c) + (c - b) + (b - a) ，因此当访问到一个 prices[i] 且 prices[i] - prices[i-1] \> 0，那么就把 prices[i] - prices[i-1] 添加到收益中。
+For [a, b, c, d], if there is a \<= b \<= c \<=
+d , then the maximum benefit is d - a. And d - a = (d - c) + (c - b) + (b - a) , so when a prices[i] is accessed and prices[i] - prices[i-1] \> 0, then prices[i] - prices[i-1] are added to the income.
 
 ```java
 public int maxProfit(int[] prices) {
@@ -235,18 +238,18 @@ public int maxProfit(int[] prices) {
 ```
 
 
-## 7. 种植花朵
+## 7. Plant flowers
 
 605\. Can Place Flowers (Easy)
 
-[Leetcode](https://leetcode.com/problems/can-place-flowers/description/) / [力扣](https://leetcode-cn.com/problems/can-place-flowers/description/)
+[Leetcode](https://leetcode.com/problems/can-place-flowers/description/) / [Leetcode](https://leetcode-cn.com/problems/can-place-flowers/description/)
 
 ```html
 Input: flowerbed = [1,0,0,0,1], n = 1
 Output: True
 ```
 
-题目描述：flowerbed 数组中 1 表示已经种下了花朵。花朵之间至少需要一个单位的间隔，求解是否能种下 n 朵花。
+Title description: 1 in the flowerbed array indicates that flowers have been planted. There needs to be at least one unit of separation between flowers. Find out whether n flowers can be planted.
 
 ```java
 public boolean canPlaceFlowers(int[] flowerbed, int n) {
@@ -267,11 +270,11 @@ public boolean canPlaceFlowers(int[] flowerbed, int n) {
 }
 ```
 
-## 8. 判断是否为子序列
+## 8. Determine whether it is a subsequence
 
 392\. Is Subsequence (Medium)
 
-[Leetcode](https://leetcode.com/problems/is-subsequence/description/) / [力扣](https://leetcode-cn.com/problems/is-subsequence/description/)
+[Leetcode](https://leetcode.com/problems/is-subsequence/description/) / [Leetcode](https://leetcode-cn.com/problems/is-subsequence/description/)
 
 ```html
 s = "abc", t = "ahbgdc"
@@ -287,15 +290,15 @@ public boolean isSubsequence(String s, String t) {
             return false;
         }
     }
-    return true;
+return true;
 }
 ```
 
-## 9. 修改一个数成为非递减数组
+## 9. Modify a number into a non-decreasing array
 
 665\. Non-decreasing Array (Easy)
 
-[Leetcode](https://leetcode.com/problems/non-decreasing-array/description/) / [力扣](https://leetcode-cn.com/problems/non-decreasing-array/description/)
+[Leetcode](https://leetcode.com/problems/non-decreasing-array/description/) / [Leetcode](https://leetcode-cn.com/problems/non-decreasing-array/description/)
 
 ```html
 Input: [4,2,3]
@@ -303,9 +306,9 @@ Output: True
 Explanation: You could modify the first 4 to 1 to get a non-decreasing array.
 ```
 
-题目描述：判断一个数组是否能只修改一个数就成为非递减数组。
+Problem description: Determine whether an array can become a non-decreasing array by modifying only one number.
 
-在出现 nums[i] \< nums[i - 1] 时，需要考虑的是应该修改数组的哪个数，使得本次修改能使 i 之前的数组成为非递减数组，并且   **不影响后续的操作**  。优先考虑令 nums[i - 1] = nums[i]，因为如果修改 nums[i] = nums[i - 1] 的话，那么 nums[i] 这个数会变大，就有可能比 nums[i + 1] 大，从而影响了后续操作。还有一个比较特别的情况就是 nums[i] \< nums[i - 2]，修改 nums[i - 1] = nums[i] 不能使数组成为非递减数组，只能修改 nums[i] = nums[i - 1]。
+When nums[i] \< nums[i - 1] appears, what needs to be considered is which number in the array should be modified so that this modification can make the array before i a non-decreasing array and **does not affect subsequent operations**. Priority is given to setting nums[i - 1] = nums[i], because if nums[i] = nums[i - 1] is modified, then the number nums[i] will become larger, and may be larger than nums[i + 1], thus affecting subsequent operations. Another special case is nums[i] \< nums[i - 2]. Modifying nums[i - 1] = nums[i] cannot make the array a non-decreasing array. You can only modify nums[i] = nums[i - 1].
 
 ```java
 public boolean checkPossibility(int[] nums) {
@@ -327,15 +330,16 @@ public boolean checkPossibility(int[] nums) {
 
 
 
-## 10. 子数组最大的和
+## 10. Maximum sum of subarrays
 
 53\. Maximum Subarray (Easy)
 
-[Leetcode](https://leetcode.com/problems/maximum-subarray/description/) / [力扣](https://leetcode-cn.com/problems/maximum-subarray/description/)
+[Leetcode](https://leetcode.com/problems/maximum-subarray/description/) / [Leetcode](https://leetcode-cn.com/problems/maximum-subarray/description/)
 
 ```html
 For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
-the contiguous subarray [4,-1,2,1] has the largest sum = 6.
+the contiguous subarray [4,-1,2,1] has
+the largest sum = 6.
 ```
 
 ```java
@@ -376,7 +380,8 @@ public List<Integer> partitionLabels(String S) {
     }
     List<Integer> partitions = new ArrayList<>();
     int firstIndex = 0;
-    while (firstIndex < S.length()) {
+    while (firstIndex < S
+.length()) {
         int lastIndex = firstIndex;
         for (int i = firstIndex; i < S.length() && i <= lastIndex; i++) {
             int index = lastIndexsOfChar[char2Index(S.charAt(i))];

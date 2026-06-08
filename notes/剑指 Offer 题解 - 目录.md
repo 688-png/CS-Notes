@@ -1,126 +1,129 @@
-# 剑指 Offer 题解
+# sword refers to Offer solution
 
-## 前言
+## Preface
 
-题目来自《何海涛. 剑指 Offer[M]. 电子工业出版社, 2012.》，刷题网站推荐：
+The title comes from "He Haitao. Sword Points Offer[M]. Electronic Industry Press, 2012.". Recommended websites for writing questions:
 
-- [牛客网](https://www.nowcoder.com/ta/coding-interviews?from=cyc_github)
+- [Niuke.com](https://www.nowcoder.com/ta/coding-interviews?from=cyc_github)
 - [Leetcode](https://leetcode-cn.com/problemset/lcof/)
 
-## 数组与矩阵
+## Arrays and matrices
 
-- [3. 数组中重复的数字](3.%20数组中重复的数字.md)
-- [4. 二维数组中的查找](4.%20二维数组中的查找.md)
-- [5. 替换空格](5.%20替换空格.md)
-- [29. 顺时针打印矩阵](29.%20顺时针打印矩阵.md)
-- [50. 第一个只出现一次的字符位置](50.%20第一个只出现一次的字符位置.md)
+- [3. Repeated numbers in the array](3.%20Duplicate numbers in the array.md)
+- [4. Search in two-dimensional array](4.%20 Search in two-dimensional array.md)
+- [5. Replace spaces](5.%20Replace spaces.md)
+- [29. Print matrix clockwise] (29.%20 Print matrix clockwise.md)
+- [50. The first character position that only appears once] (50.%20The first character position that only appears once.md)
 
-## 栈队列堆
+## stack queue heap
 
-- [9. 用两个栈实现队列](9.%20用两个栈实现队列.md)
-- [30. 包含 min 函数的栈](30.%20包含%20min%20函数的栈.md)
-- [31. 栈的压入、弹出序列](31.%20栈的压入、弹出序列.md)
-- [40. 最小的 K 个数](40.%20最小的%20K%20个数.md)
-- [41.1 数据流中的中位数](41.1%20数据流中的中位数.md)
-- [41.2 字符流中第一个不重复的字符](41.2%20字符流中第一个不重复的字符.md)
-- [59. 滑动窗口的最大值](59.%20滑动窗口的最大值.md)
+- [9. Use two stacks to implement the queue](9.%20Use two stacks to implement the queue.md)
+- [30. Stack containing min function](30.%20Stack containing %20min%20 function.md)
+- [31. Stack push and pop sequence] (31.%20 Stack push and pop sequence.md)
+- [40. Minimum K number](40.%20Minimum%20K%20 number.md)
+- [41.1 Median in Data Stream](41.1%20 Median in Data Stream.md)
+- [41.2 The first non-repeating character in the character stream] (41.2%20 The first non-repeating character in the character stream.md)
+- [59. Maximum value of sliding window] (59.%20 Maximum value of sliding window.md)
 
-## 双指针
+## Double pointer
 
-- [57.1 和为 S 的两个数字](57.1%20和为%20S%20的两个数字.md)
-- [57.2 和为 S 的连续正数序列](57.2%20和为%20S%20的连续正数序列.md)
-- [58.1 翻转单词顺序列](58.1%20翻转单词顺序列.md)
-- [58.2 左旋转字符串](58.2%20左旋转字符串.md)
+- [57.1 and two numbers that are S] (57.1%20 and two numbers that are %20S%20.md)
+- [57.2 A sequence of consecutive positive numbers whose sum is S] (57.2 A sequence of consecutive positive numbers whose sum is %20S%20.md)
+- [58.1 Flip the word order column](58.1%20 Flip the word order column.md)
+- [58.2 left-rotated string](58.2%20 left-rotated string.md)
 
-## 链表
+## Linked list
 
-- [6. 从尾到头打印链表](6.%20从尾到头打印链表.md)
-- [18.1 在 O(1) 时间内删除链表节点](18.1%20在%20O(1)%20时间内删除链表节点.md)
-- [18.2 删除链表中重复的结点](18.2%20删除链表中重复的结点.md)
-- [22. 链表中倒数第 K 个结点](22.%20链表中倒数第%20K%20个结点.md)
-- [23. 链表中环的入口结点](23.%20链表中环的入口结点.md)
-- [24. 反转链表](24.%20反转链表.md)
-- [25. 合并两个排序的链表](25.%20合并两个排序的链表.md)
-- [35. 复杂链表的复制](35.%20复杂链表的复制.md)
-- [52. 两个链表的第一个公共结点](52.%20两个链表的第一个公共结点.md)
+- [6. Print the linked list from the end to the head] (6.%20 Print the linked list from the end to the head.md)
+- [18.1 Delete linked list nodes in O(1) time](18.1%20Delete linked list nodes in %20O(1)%20 time.md)
+- [18.2 Delete duplicate nodes in the linked list] (18.2%20 Delete duplicate nodes in the linked list.md)
+- [22. The Kth node from the bottom in the linked list] (22.%20K%20th node from the bottom in the linked list.md)
+- [23. Entry node of the ring in the linked list] (23.%20 Entry node of the ring in the linked list.md)
+- [24. Reverse linked list](24.%20Reverse linked list.md)
+- [25. Merge two sorted linked lists](25.%20Merge two sorted linked lists.md)
+- [35. Copy of complex linked list] (35.%20 Copy of complex linked list.md)
+- [52. The first common node of the two linked lists] (52.%20The first common node of the two linked lists.md)
 
-## 树
+## tree
 
-- [7. 重建二叉树](7.%20重建二叉树.md)
-- [8. 二叉树的下一个结点](8.%20二叉树的下一个结点.md)
-- [26. 树的子结构](26.%20树的子结构.md)
-- [27. 二叉树的镜像](27.%20二叉树的镜像.md)
-- [28. 对称的二叉树](28.%20对称的二叉树.md)
-- [32.1 从上往下打印二叉树](32.1%20从上往下打印二叉树.md)
-- [32.2 把二叉树打印成多行](32.2%20把二叉树打印成多行.md)
-- [32.3 按之字形顺序打印二叉树](32.3%20按之字形顺序打印二叉树.md)
-- [33. 二叉搜索树的后序遍历序列](33.%20二叉搜索树的后序遍历序列.md)
-- [34. 二叉树中和为某一值的路径](34.%20二叉树中和为某一值的路径.md)
-- [36. 二叉搜索树与双向链表](36.%20二叉搜索树与双向链表.md)
-- [37. 序列化二叉树](37.%20序列化二叉树.md)
-- [54. 二叉查找树的第 K 个结点](54.%20二叉查找树的第%20K%20个结点.md)
-- [55.1 二叉树的深度](55.1%20二叉树的深度.md)
-- [55.2 平衡二叉树](55.2%20平衡二叉树.md)
-- [68. 树中两个节点的最低公共祖先](68.%20树中两个节点的最低公共祖先.md)
+- [7. Rebuild binary tree](7.%20Rebuild binary tree.md)
+- [8. The next node of the binary tree] (8.%20 The next node of the binary tree.md)
+- [26. Substructure of tree](26.%20Substructure of tree.md)
+- [27. Mirror of binary tree] (27.%20 Mirror of binary tree.md)
+- [28. Symmetric Binary Tree](28.%20 Symmetric Binary Tree.md)
+- [32.1 Print binary tree from top to bottom](32.1%20 Pr
+int binary tree from top to bottom.md)
+- [32.2 Print binary trees into multiple lines](32.2%20 Print binary trees into multiple lines.md)
+- [32.3 Print binary trees in zigzag order] (32.3%20 Print binary trees in zigzag order.md)
+- [33. Post-order traversal sequence of binary search tree] (33.%20 Post-order traversal sequence of binary search tree.md)
+- [34. The path that sums to a certain value in the binary tree] (34.%20 The path that sums to a certain value in the binary tree.md)
+- [36. Binary search tree and doubly linked list](36.%20Binary search tree and doubly linked list.md)
+- [37. Serialized Binary Tree](37.%20Serialized Binary Tree.md)
+- [54. The Kth node of the binary search tree] (54.%20The %20K%20th node of the binary search tree.md)
+- [55.1 Depth of Binary Tree](55.1%20 Depth of Binary Tree.md)
+- [55.2 Balanced Binary Tree](55.2%20 Balanced Binary Tree.md)
+- [68. The lowest common ancestor of two nodes in the tree] (68.%20 The lowest common ancestor of two nodes in the tree.md)
 
-## 贪心思想
+## Greedy Thoughts
 
-- [14. 剪绳子](14.%20剪绳子.md)
-- [63. 股票的最大利润](63.%20股票的最大利润.md)
+- [14. Cut the rope](14.%20Cut the rope.md)
+- [63. The maximum profit of stocks] (63.%20 The maximum profit of stocks.md)
 
-## 二分查找
+## Binary search
 
-- [11. 旋转数组的最小数字](11.%20旋转数组的最小数字.md)
-- [53. 数字在排序数组中出现的次数](53.%20数字在排序数组中出现的次数.md)
+- [11. Minimum number of rotated array] (11.%20 Minimum number of rotated array.md)
+- [53. The number of times a number appears in the sorted array] (53.%20The number of times a number appears in the sorted array.md)
 
-## 分治
+## divide and conquer
 
-- [16. 数值的整数次方](16.%20数值的整数次方.md)
+- [16. The integer power of the value](16.%20The integer power of the value.md)
 
-## 搜索
+## Search
 
-- [12. 矩阵中的路径](12.%20矩阵中的路径.md)
-- [13. 机器人的运动范围](13.%20机器人的运动范围.md)
-- [38. 字符串的排列](38.%20字符串的排列.md)
+- [12. Path in matrix](12.%20 Path in matrix.md)
+- [13. Robot's motion range](13.%20Robot's motion range.md)
+- [38. Arrangement of strings](38.%20 Arrangement of strings.md)
 
-## 排序
+## Sort
 
-- [21. 调整数组顺序使奇数位于偶数前面](21.%20调整数组顺序使奇数位于偶数前面.md)
-- [45. 把数组排成最小的数](45.%20把数组排成最小的数.md)
-- [51. 数组中的逆序对](51.%20数组中的逆序对.md)
+- [21. Adjust the order of the array so that the odd numbers are in front of the even numbers] (21.%20Adjust the order of the array so that the odd numbers are in front of the even numbers.md)
+- [45. Arrange the array into the smallest number] (45.%20 Arrange the array into the smallest number.md)
+- [51. Reverse-order pairs in array] (51.%20 Reverse-order pairs in array.md)
 
-## 动态规划
+## Dynamic programming
 
-- [10.1 斐波那契数列](10.1%20斐波那契数列.md)
-- [10.2 矩形覆盖](10.2%20矩形覆盖.md)
-- [10.3 跳台阶](10.3%20跳台阶.md)
-- [10.4 变态跳台阶](10.4%20变态跳台阶.md)
-- [42. 连续子数组的最大和](42.%20连续子数组的最大和.md)
-- [47. 礼物的最大价值](47.%20礼物的最大价值.md)
-- [48. 最长不含重复字符的子字符串](48.%20最长不含重复字符的子字符串.md)
-- [49. 丑数](49.%20丑数.md)
-- [60. n 个骰子的点数](60.%20n%20个骰子的点数.md)
-- [66. 构建乘积数组](66.%20构建乘积数组.md)
+- [10.1 Fibonacci Sequence](10.1%20 Fibonacci Sequence.md)
+- [10.2 Rectangular Coverage](10.2%20 Rectangular Coverage.md)
+- [10.3 Jumping steps](10.3%20 Jumping steps.md)
+- [10.4 Abnormal Jumping Steps](10.4%20 Abnormal Jumping Steps.md)
+- [42. Maximum sum of consecutive subarrays] (42.%20 Maximum sum of consecutive subarrays.md)
+- [47. Maximum value of gift](47.%20 Maximum value of gift.md)
+- [48. The longest substring without repeating characters] (48.%20 The longest substring without repeating characters.md)
+- [49. Ugly number](49.%20ugly number.md)
+- [60. Points of n dice](60.%20n%Points of 20 dice.md)
+- [66. Construct product array](66.%20Construct product array.md)
 
-## 数学
+## Mathematics
 
-- [39. 数组中出现次数超过一半的数字](39.%20数组中出现次数超过一半的数字.md)
-- [62. 圆圈中最后剩下的数](62.%20圆圈中最后剩下的数.md)
-- [43. 从 1 到 n 整数中 1 出现的次数](43.%20从%201%20到%20n%20整数中%201%20出现的次数.md)
+- [39. Numbers that appear more than half the time in the array] (39.%20 Numbers that appear more than half the time in the array.md)
+- [62. The last remaining number in the circle] (62.%20 The last remaining number
+in the circle.md)
+- [43. The number of occurrences of 1 in integers from 1 to n] (43.%20The number of occurrences of %201%20 in integers from %201%20 to %20n%20.md)
 
-## 位运算
+## Bit operations
 
-- [15. 二进制中 1 的个数](15.%20二进制中%201%20的个数.md)
-- [56. 数组中只出现一次的数字](56.%20数组中只出现一次的数字.md)
+- [15. The number of 1’s in binary](15.%20The number of %201%20 in binary.md)
+- [56. Numbers that appear only once in the array] (56.%20 Numbers that appear only once in the array.md)
 
-## 其它
+## Others
 
-- [17. 打印从 1 到最大的 n 位数](17.%20打印从%201%20到最大的%20n%20位数.md)
-- [19. 正则表达式匹配](19.%20正则表达式匹配.md)
-- [20. 表示数值的字符串](20.%20表示数值的字符串.md)
-- [44. 数字序列中的某一位数字](44.%20数字序列中的某一位数字.md)
-- [46. 把数字翻译成字符串](46.%20把数字翻译成字符串.md)
-- [61. 扑克牌顺子](61.%20扑克牌顺子.md)
-- [64. 求 1+2+3+...+n](64.%20求%201+2+3+...+n.md)
-- [65. 不用加减乘除做加法](65.%20不用加减乘除做加法.md)
-- [67. 把字符串转换成整数](67.%20把字符串转换成整数.md)
+- [17. Print from 1 to the largest n digits] (17.%20Print from %201%20 to the largest %20n%20 digits.md)
+- [19. Regular expression matching](19.%20regular expression matching.md)
+- [20. A string representing a numerical value](20.%2
+0 is a string representing a numerical value.md)
+- [44. A certain digit in the numerical sequence] (44.%20 A certain digit in the numerical sequence.md)
+- [46. Translate numbers into strings](46.%20Translate numbers into strings.md)
+- [61. Poker Straight](61.%20 Poker Straight.md)
+- [64. Find 1+2+3+...+n](64.%20 Find%201+2+3+...+n.md)
+- [65. Addition without addition, subtraction, multiplication and division] (65.%20 Addition without addition, subtraction, multiplication and division.md)
+- [67. Convert string to integer](67.%20Convert string to integer.md)

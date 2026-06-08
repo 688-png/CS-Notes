@@ -1,69 +1,69 @@
-# Leetcode 题解 - 字符串
+# Leetcode problem solution - string
 <!-- GFM-TOC -->
-* [Leetcode 题解 - 字符串](#leetcode-题解---字符串)
-    * [1. 字符串循环移位包含](#1-字符串循环移位包含)
-    * [2. 字符串循环移位](#2-字符串循环移位)
-    * [3. 字符串中单词的翻转](#3-字符串中单词的翻转)
-    * [4. 两个字符串包含的字符是否完全相同](#4-两个字符串包含的字符是否完全相同)
-    * [5. 计算一组字符集合可以组成的回文字符串的最大长度](#5-计算一组字符集合可以组成的回文字符串的最大长度)
-    * [6. 字符串同构](#6-字符串同构)
-    * [7. 回文子字符串个数](#7-回文子字符串个数)
-    * [8. 判断一个整数是否是回文数](#8-判断一个整数是否是回文数)
-    * [9. 统计二进制字符串中连续 1 和连续 0 数量相同的子字符串个数](#9-统计二进制字符串中连续-1-和连续-0-数量相同的子字符串个数)
+* [Leetcode solution - string](#leetcode-solution---string)
+    * [1. String rotation includes] (#1-String rotation includes)
+    * [2. String circular shift] (#2-String circular shift)
+    * [3. Flip of words in string] (#3- Flip of words in string)
+    * [4. Whether the characters contained in the two strings are exactly the same] (#4-whether the characters contained in the two strings are exactly the same)
+    * [5. Calculate the maximum length of a palindrome string that can be formed by a set of characters] (#5-Calculate the maximum length of a palindrome string that can be formed by a set of characters)
+    * [6. String isomorphism](#6-String isomorphism)
+    * [7. Number of palindrome substrings] (#7-Number of palindrome substrings)
+    * [8. Determine whether an integer is a palindrome] (#8-Determine whether an integer is a palindrome)
+    * [9. Count the number of substrings with the same number of consecutive 1s and consecutive 0s in a binary string] (#9-Count the number of substrings with the same number of consecutive 1s and consecutive 0s in a binary string)
 <!-- GFM-TOC -->
 
 
-## 1. 字符串循环移位包含
+## 1. String circular shift includes
 
-[编程之美 3.1](#)
+[The Beauty of Programming 3.1](#)
 
 ```html
 s1 = AABCD, s2 = CDAA
 Return : true
 ```
 
-给定两个字符串 s1 和 s2，要求判定 s2 是否能够被 s1 做循环移位得到的字符串包含。
+Given two strings s1 and s2, it is required to determine whether s2 can be contained by the string obtained by circular shift of s1.
 
-s1 进行循环移位的结果是 s1s1 的子字符串，因此只要判断 s2 是否是 s1s1 的子字符串即可。
+The result of the circular shift of s1 is a substring of s1s1, so you only need to determine whether s2 is a substring of s1s1.
 
-## 2. 字符串循环移位
+## 2. String circular shift
 
-[编程之美 2.17](#)
+[The Beauty of Programming 2.17](#)
 
 ```html
 s = "abcd123" k = 3
 Return "123abcd"
 ```
 
-将字符串向右循环移动 k 位。
+Rotate the string k bits to the right.
 
-将 abcd123 中的 abcd 和 123 单独翻转，得到 dcba321，然后对整个字符串进行翻转，得到 123abcd。
+Flip abcd and 123 individually in abcd123 to get dcba321, then flip the entire string to get 123abcd.
 
-## 3. 字符串中单词的翻转
+## 3. Flip of words in string
 
-[程序员代码面试指南](#)
+[Programmer Code Interview Guide](#)
 
 ```html
 s = "I am a student"
 Return "student a am I"
 ```
 
-将每个单词翻转，然后将整个字符串翻转。
+Flip each word, then flip the entire string.
 
-## 4. 两个字符串包含的字符是否完全相同
+## 4. Whether the characters contained in the two strings are exactly the same
 
 242\. Valid Anagram (Easy)
 
-[Leetcode](https://leetcode.com/problems/valid-anagram/description/) / [力扣](https://leetcode-cn.com/problems/valid-anagram/description/)
+[Leetcode](https://leetcode.com/problems/valid-anagram/description/) / [Leetcode](https://leetcode-cn.com/problems/valid-anagram/description/)
 
 ```html
 s = "anagram", t = "nagaram", return true.
 s = "rat", t = "car", return false.
 ```
 
-可以用 HashMap 来映射字符与出现次数，然后比较两个字符串出现的字符数量是否相同。
+You can use HashMap to map characters and occurrence times, and then compare whether the number of characters appearing in two strings is the same.
 
-由于本题的字符串只包含 26 个小写字符，因此可以使用长度为 26 的整型数组对字符串出现的字符进行统计，不再使用 HashMap。
+Since the string in this question only contains 26 lowercase characters, you can use an integer array with a length of 26 to count the characters that appear in the string, instead of using HashMap.
 
 ```java
 public boolean isAnagram(String s, String t) {
@@ -79,25 +79,26 @@ public boolean isAnagram(String s, String t) {
             return false;
         }
     }
-    return true;
+    return tru
+e;
 }
 ```
 
-## 5. 计算一组字符集合可以组成的回文字符串的最大长度
+## 5. Calculate the maximum length of a palindrome string that can be composed of a set of characters
 
 409\. Longest Palindrome (Easy)
 
-[Leetcode](https://leetcode.com/problems/longest-palindrome/description/) / [力扣](https://leetcode-cn.com/problems/longest-palindrome/description/)
+[Leetcode](https://leetcode.com/problems/longest-palindrome/description/) / [Leetcode](https://leetcode-cn.com/problems/longest-palindrome/description/)
 
 ```html
-Input : "abccccdd"
-Output : 7
-Explanation : One longest palindrome that can be built is "dccaccd", whose length is 7.
+Input: "abccccdd"
+Output: 7
+Explanation: One longest palindrome that can be built is "dccaccd", whose length is 7.
 ```
 
-使用长度为 256 的整型数组来统计每个字符出现的个数，每个字符有偶数个可以用来构成回文字符串。
+Use an integer array with a length of 256 to count the number of occurrences of each character. An even number of each character can be used to form a palindrome string.
 
-因为回文字符串最中间的那个字符可以单独出现，所以如果有单独的字符就把它放到最中间。
+Because the middle character of the palindrome string can appear alone, if there is a single character, put it in the middle.
 
 ```java
 public int longestPalindrome(String s) {
@@ -110,17 +111,17 @@ public int longestPalindrome(String s) {
         palindrome += (cnt / 2) * 2;
     }
     if (palindrome < s.length()) {
-        palindrome++;   // 这个条件下 s 中一定有单个未使用的字符存在，可以把这个字符放到回文的最中间
+        palindrome++; // Under this condition, there must be a single unused character in s. This character can be placed in the middle of the palindrome.
     }
     return palindrome;
 }
 ```
 
-## 6. 字符串同构
+## 6. String isomorphism
 
 205\. Isomorphic Strings (Easy)
 
-[Leetcode](https://leetcode.com/problems/isomorphic-strings/description/) / [力扣](https://leetcode-cn.com/problems/isomorphic-strings/description/)
+[Leetcode](https://leetcode.com/problems/isomorphic-strings/description/) / [Leetcode](https://leetcode-cn.com/problems/isomorphic-strings/description/)
 
 ```html
 Given "egg", "add", return true.
@@ -128,13 +129,14 @@ Given "foo", "bar", return false.
 Given "paper", "title", return true.
 ```
 
-记录一个字符上次出现的位置，如果两个字符串中的字符上次出现的位置一样，那么就属于同构。
+Record the position where a character last appeared. If the characters in two strings last appeared in the same position, they are isomorphic.
 
 ```java
 public boolean isIsomorphic(String s, String t) {
     int[] preIndexOfS = new int[256];
     int[] preIndexOfT = new int[256];
-    for (int i = 0; i < s.length(); i++) {
+    for (int i =
+0; i < s.length(); i++) {
         char sc = s.charAt(i), tc = t.charAt(i);
         if (preIndexOfS[sc] != preIndexOfT[tc]) {
             return false;
@@ -146,11 +148,11 @@ public boolean isIsomorphic(String s, String t) {
 }
 ```
 
-## 7. 回文子字符串个数
+## 7. Number of palindrome substrings
 
 647\. Palindromic Substrings (Medium)
 
-[Leetcode](https://leetcode.com/problems/palindromic-substrings/description/) / [力扣](https://leetcode-cn.com/problems/palindromic-substrings/description/)
+[Leetcode](https://leetcode.com/problems/palindromic-substrings/description/) / [Leetcode](https://leetcode-cn.com/problems/palindromic-substrings/description/)
 
 ```html
 Input: "aaa"
@@ -158,15 +160,15 @@ Output: 6
 Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
 ```
 
-从字符串的某一位开始，尝试着去扩展子字符串。
+Starting from a certain bit of the string, try to expand the substring.
 
 ```java
 private int cnt = 0;
 
 public int countSubstrings(String s) {
     for (int i = 0; i < s.length(); i++) {
-        extendSubstrings(s, i, i);     // 奇数长度
-        extendSubstrings(s, i, i + 1); // 偶数长度
+        extendSubstrings(s, i, i); // odd length
+        extendSubstrings(s, i, i + 1); // even length
     }
     return cnt;
 }
@@ -180,15 +182,16 @@ private void extendSubstrings(String s, int start, int end) {
 }
 ```
 
-## 8. 判断一个整数是否是回文数
+## 8. Determine whether an integer is a palindrome number
 
-9\. Palindrome Number (Easy)
+9\. Pal
+indrome Number (Easy)
 
-[Leetcode](https://leetcode.com/problems/palindrome-number/description/) / [力扣](https://leetcode-cn.com/problems/palindrome-number/description/)
+[Leetcode](https://leetcode.com/problems/palindrome-number/description/) / [Leetcode](https://leetcode-cn.com/problems/palindrome-number/description/)
 
-要求不能使用额外空间，也就不能将整数转换为字符串进行判断。
+It is required that no extra space can be used, so the integer cannot be converted into a string for judgment.
 
-将整数分成左右两部分，右边那部分需要转置，然后判断这两部分是否相等。
+Divide the integer into left and right parts, transpose the right part, and then determine whether the two parts are equal.
 
 ```java
 public boolean isPalindrome(int x) {
@@ -207,11 +210,11 @@ public boolean isPalindrome(int x) {
 }
 ```
 
-## 9. 统计二进制字符串中连续 1 和连续 0 数量相同的子字符串个数
+## 9. Count the number of substrings with the same number of consecutive 1s and consecutive 0s in a binary string
 
 696\. Count Binary Substrings (Easy)
 
-[Leetcode](https://leetcode.com/problems/count-binary-substrings/description/) / [力扣](https://leetcode-cn.com/problems/count-binary-substrings/description/)
+[Leetcode](https://leetcode.com/problems/count-binary-substrings/description/) / [Leetcode](https://leetcode-cn.com/problems/count-binary-substrings/description/)
 
 ```html
 Input: "00110011"

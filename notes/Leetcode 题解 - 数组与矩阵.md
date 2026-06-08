@@ -1,26 +1,26 @@
-# Leetcode 题解 - 数组与矩阵
+# Leetcode problem solutions - arrays and matrices
 <!-- GFM-TOC -->
-* [Leetcode 题解 - 数组与矩阵](#leetcode-题解---数组与矩阵)
-    * [1. 把数组中的 0 移到末尾](#1-把数组中的-0-移到末尾)
-    * [2. 改变矩阵维度](#2-改变矩阵维度)
-    * [3. 找出数组中最长的连续 1](#3-找出数组中最长的连续-1)
-    * [4. 有序矩阵查找](#4-有序矩阵查找)
-    * [5. 有序矩阵的 Kth Element](#5-有序矩阵的-kth-element)
-    * [6. 一个数组元素在 [1, n] 之间，其中一个数被替换为另一个数，找出重复的数和丢失的数](#6-一个数组元素在-[1-n]-之间，其中一个数被替换为另一个数，找出重复的数和丢失的数)
-    * [7. 找出数组中重复的数，数组值在 [1, n] 之间](#7-找出数组中重复的数，数组值在-[1-n]-之间)
-    * [8. 数组相邻差值的个数](#8-数组相邻差值的个数)
-    * [9. 数组的度](#9-数组的度)
-    * [10. 对角元素相等的矩阵](#10-对角元素相等的矩阵)
-    * [11. 嵌套数组](#11-嵌套数组)
-    * [12. 分隔数组](#12-分隔数组)
+* [Leetcode problem solution - arrays and matrices](#leetcode-problem solution---arrays and matrices)
+    * [1. Move 0 in the array to the end] (#1-Move -0- in the array to the end)
+    * [2. Change matrix dimensions](#2-Change matrix dimensions)
+    * [3. Find the longest consecutive 1 in the array](#3-Find the longest consecutive 1 in the array)
+    * [4. Ordered Matrix Search](#4-Ordered Matrix Search)
+    * [5. Kth Element of ordered matrix](#5-kth-element of ordered matrix)
+    * [6. An array element is between [1, n], one number is replaced with another number, find the duplicate numbers and missing numbers] (#6-An array element is between -[1-n]-, one number is replaced with another number, find the duplicate numbers and missing numbers)
+    * [7. Find the repeated numbers in the array, the array value is between [1, n]] (#7-Find the repeated numbers in the array, the array value is between -[1-n]-)
+    * [8. The number of adjacent differences in the array] (#8-The number of adjacent differences in the array)
+    * [9. Degree of array](#9-Degree of array)
+    * [10. Matrix with equal diagonal elements] (#10-Matrix with equal diagonal elements)
+    * [11. Nested array](#11-Nested array)
+    * [12. Separated array](#12-Separated array)
 <!-- GFM-TOC -->
 
 
-## 1. 把数组中的 0 移到末尾
+## 1. Move 0 in the array to the end
 
 283\. Move Zeroes (Easy)
 
-[Leetcode](https://leetcode.com/problems/move-zeroes/description/) / [力扣](https://leetcode-cn.com/problems/move-zeroes/description/)
+[Leetcode](https://leetcode.com/problems/move-zeroes/description/) / [Leetcode](https://leetcode-cn.com/problems/move-zeroes/description/)
 
 ```html
 For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
@@ -40,11 +40,11 @@ public void moveZeroes(int[] nums) {
 }
 ```
 
-## 2. 改变矩阵维度
+## 2. Change matrix dimensions
 
 566\. Reshape the Matrix (Easy)
 
-[Leetcode](https://leetcode.com/problems/reshape-the-matrix/description/) / [力扣](https://leetcode-cn.com/problems/reshape-the-matrix/description/)
+[Leetcode](https://leetcode.com/problems/reshape-the-matrix/description/) / [Leetcode](https://leetcode-cn.com/problems/reshape-the-matrix/description/)
 
 ```html
 Input:
@@ -78,11 +78,12 @@ public int[][] matrixReshape(int[][] nums, int r, int c) {
 }
 ```
 
-## 3. 找出数组中最长的连续 1
+## 3. Find the longest consecutive 1 in the array
 
 485\. Max Consecutive Ones (Easy)
 
-[Leetcode](https://leetcode.com/problems/max-consecutive-ones/description/) / [力扣](https://leetcode-cn.com/problems/max-consecutive-ones/description/)
+[Leetcode](https://leetcode.com/problems/max-consecutive-ones/description/) / [Leetcode](https://leetcode-cn.com/problems/max-consecutive-ones/d
+escription/)
 
 ```java
 public int findMaxConsecutiveOnes(int[] nums) {
@@ -95,15 +96,15 @@ public int findMaxConsecutiveOnes(int[] nums) {
 }
 ```
 
-## 4. 有序矩阵查找
+## 4. Ordered matrix search
 
 240\. Search a 2D Matrix II (Medium)
 
-[Leetcode](https://leetcode.com/problems/search-a-2d-matrix-ii/description/) / [力扣](https://leetcode-cn.com/problems/search-a-2d-matrix-ii/description/)
+[Leetcode](https://leetcode.com/problems/search-a-2d-matrix-ii/description/) / [Leetcode](https://leetcode-cn.com/problems/search-a-2d-matrix-ii/description/)
 
 ```html
 [
-   [ 1,  5,  9],
+   [1, 5, 9],
    [10, 11, 13],
    [12, 13, 15]
 ]
@@ -116,7 +117,8 @@ public boolean searchMatrix(int[][] matrix, int target) {
     int row = 0, col = n - 1;
     while (row < m && col >= 0) {
         if (target == matrix[row][col]) return true;
-        else if (target < matrix[row][col]) col--;
+        els
+e if (target < matrix[row][col]) col--;
         else row++;
     }
     return false;
@@ -207,9 +209,10 @@ Input: nums = [1,2,2,4]
 Output: [2,3]
 ```
 
-最直接的方法是先对数组进行排序，这种方法时间复杂度为 O(NlogN)。本题可以以 O(N) 的时间复杂度、O(1) 空间复杂度来求解。
+最直接的方法是先对数组进行排序，这种方法时间复
+The complexity is O(NlogN). This problem can be solved with O(N) time complexity and O(1) space complexity.
 
-主要思想是通过交换数组元素，使得数组上的元素在正确的位置上。
+The main idea is to swap the array elements so that the elements on the array are in the correct position.
 
 ```java
 public int[] findErrorNums(int[] nums) {
@@ -233,133 +236,136 @@ private void swap(int[] nums, int i, int j) {
 }
 ```
 
-## 7. 找出数组中重复的数，数组值在 [1, n] 之间
+## 7. Find the repeated numbers in the array, the array value is between [1, n]
 
 287\. Find the Duplicate Number (Medium)
 
-[Leetcode](https://leetcode.com/problems/find-the-duplicate-number/description/) / [力扣](https://leetcode-cn.com/problems/find-the-duplicate-number/description/)
+[Leetcode](https://leetcode.com/problems/find-the-duplicate-number/description/) / [Leetcode](https://leetcode-cn.com/problems/find-the-duplicate-number/description/)
 
-要求不能修改数组，也不能使用额外的空间。
+It is required that the array cannot be modified and additional space cannot be used.
 
-二分查找解法：
+Binary search solution:
 
-```java
+``
+`java
 public int findDuplicate(int[] nums) {
-     int l = 1, h = nums.length - 1;
-     while (l <= h) {
-         int mid = l + (h - l) / 2;
+     int l = 1 , h = nums . length -- 1 ;
+     while ( l <= h ) {
+         int mid = l+(h-l)/2;
          int cnt = 0;
-         for (int i = 0; i < nums.length; i++) {
-             if (nums[i] <= mid) cnt++;
-         }
-         if (cnt > mid) h = mid - 1;
+         for ( int i = 0 ; i < nums . length ; i ++ ) {
+             if ( nums [ i ] <= mid ) cnt ++ ;
+         } }
+         if ( cnt > mid ) h = mid -- 1 ;
          else l = mid + 1;
-     }
+     } }
      return l;
-}
+} }
 ```
 
-双指针解法，类似于有环链表中找出环的入口：
+If you want to build, you can have a snowball fight:
 
 ```java
 public int findDuplicate(int[] nums) {
     int slow = nums[0], fast = nums[nums[0]];
-    while (slow != fast) {
-        slow = nums[slow];
+    while ( slow ! = fast ) {
+        slow = nums [ slow ] ;
         fast = nums[nums[fast]];
-    }
+    } }
     fast = 0;
-    while (slow != fast) {
-        slow = nums[slow];
+    while ( slow ! = fast ) {
+        slow = nums [ slow ] ;
         fast = nums[fast];
-    }
-    return slow;
-}
+    } }
+    return slow ;
+} }
 ```
 
-## 8. 数组相邻差值的个数
+## 8. Remove snowflakes
 
-667\. Beautiful Arrangement II (Medium)
+667\.Beautiful Arrangement II (Medium)
 
-[Leetcode](https://leetcode.com/problems/beautiful-arrangement-ii/description/) / [力扣](https://leetcode-cn.com/problems/beautiful-arrangement-ii/description/)
+[Leetcode](https://leetcode.com/problems/beautiful-arrangement-ii/description/) / [January](https://leetcode-cn.com/problems/beautiful-arrangement-ii/description/)
 
 ```html
-Input: n = 3, k = 2
+Input: n = 3, k =
 Output: [1, 3, 2]
-Explanation: The [1, 3, 2] has three different positive integers ranging from 1 to 3, and the [2, 1] has exactly 2 distinct integers: 1 and 2.
+Explanation: The [1, 3, 2] has three different positive integers ranging from 1 to 3, and the [2, 1] has exactly 2 distinct integers: 1 and
 ```
 
-题目描述：数组元素为 1\~n 的整数，要求构建数组，使得相邻元素的差值不相同的个数为 k。
+snowflake: snowflake 1\~n Finally, take a look at the bedroom, a snowflake snowflake and a snowflake for a k.
 
-让前 k+1 个元素构建出 k 个不相同的差值，序列为：1 k+1 2 k 3 k-1 ... k/2 k/2+1.
+Give k+1 a fraction of k a fraction of a fraction:1 k+1 2 k 3 k-1 ... k/2 k/2+1.
 
 ```java
-public int[] constructArray(int n, int k) {
+public int [ ] constructArray ( int n , int k ) {
     int[] ret = new int[n];
-    ret[0] = 1;
+    ret [ 0 ] = 1 ;
     for (int i = 1, interval = k; i <= k; i++, interval--) {
-        ret[i] = i % 2 == 1 ? ret[i - 1] + interval : ret[i - 1] - interval;
-    }
-    for (int i = k + 1; i < n; i++) {
-        ret[i] = i + 1;
-    }
+        ret [ i ] = i % 2 == 1 ? ret[i - 1] + interval : ret[i - 1] - interval;
+    } }
+    for ( int i = k + 1 ; i < n ; i ++ ) {
+        ret [ i ] = i + 1 ;
+    } }
     return ret;
-}
+} }
 ```
 
-## 9. 数组的度
+## 9. Configuration
 
 697\. Degree of an Array (Easy)
 
-[Leetcode](https://leetcode.com/problems/degree-of-an-array/description/) / [力扣](https://leetcode-cn.com/problems/degree-of-an-array/description/)
+[Leetcode](https://leetcode.com/problems/degree-of-an-array/description/) / [January](https://leetcode-cn.com/problems/degree-of-an-array/description/)
 
 ```html
 Input: [1,2,2,3,1,4,2]
 Output: 6
 ```
 
-题目描述：数组的度定义为元素出现的最高频率，例如上面的数组度为 3。要求找到一个最小的子数组，这个子数组的度和原数组一样。
+Small-scale firefighting: a snowflake based on a snowflake, a snowflake 3. Make sure you have a snowflake, build a snowflake and a snowflake.
 
 ```java
-public int findShortestSubArray(int[] nums) {
+public int findSh
+ortestSubArray(int[] nums) {
     Map<Integer, Integer> numsCnt = new HashMap<>();
     Map<Integer, Integer> numsLastIndex = new HashMap<>();
     Map<Integer, Integer> numsFirstIndex = new HashMap<>();
-    for (int i = 0; i < nums.length; i++) {
-        int num = nums[i];
+    for ( int i = 0 ; i < nums . length ; i ++ ) {
+        int num = nums [ i ] ;
         numsCnt.put(num, numsCnt.getOrDefault(num, 0) + 1);
         numsLastIndex.put(num, i);
         if (!numsFirstIndex.containsKey(num)) {
             numsFirstIndex.put(num, i);
-        }
-    }
+        } }
+    } }
     int maxCnt = 0;
-    for (int num : nums) {
-        maxCnt = Math.max(maxCnt, numsCnt.get(num));
-    }
+    for ( int num : nums ) {
+        maxCnt = Math . max ( maxCnt , numsCnt . get ( num ) ) ;
+    } }
     int ret = nums.length;
-    for (int i = 0; i < nums.length; i++) {
-        int num = nums[i];
-        int cnt = numsCnt.get(num);
-        if (cnt != maxCnt) continue;
-        ret = Math.min(ret, numsLastIndex.get(num) - numsFirstIndex.get(num) + 1);
-    }
-    return ret;
-}
+    for ( int i = 0 ; i < nums . length ; i ++ ) {
+        int num = nums [ i ] ;
+        int cnt = numsCnt . get ( num ) ;
+        if ( cnt ! = maxCnt ) continue ;
+        right = Math.min(right, numsLastIndex.get(num) - numsFirstIndex.get(num) + 1);
+    } }
+    return ret ;
+} }
 ```
 
-## 10. 对角元素相等的矩阵
+## 10. Configure the smoothness of the snowflake
 
 766\. Toeplitz Matrix (Easy)
 
-[Leetcode](https://leetcode.com/problems/toeplitz-matrix/description/) / [力扣](https://leetcode-cn.com/problems/toeplitz-matrix/description/)
+[Leetcode](https://leetcode.com/problems/toeplitz-matrix/description/)
 
 ```html
 1234
 5123
 9512
 
-In the above grid, the diagonals are "[9]", "[5, 5]", "[1, 1, 1]", "[2, 2, 2]", "[3, 3]", "[4]", and in each diagonal all elements are the same, so the answer is True.
+In the above grid, the diagonals are "[9]", "[5, 5]", "[1,
+1, 1]", "[2, 2, 2]", "[3, 3]", "[4]", and in each diagonal all elements are the same, so the answer is True.
 ```
 
 ```java
@@ -438,7 +444,7 @@ We can split into two chunks, such as [1, 0], [2, 3, 4].
 However, splitting into [1, 0], [2], [3], [4] is the highest number of chunks possible.
 ```
 
-题目描述：分隔数组，使得对每部分排序后数组就为有序。
+Title description: Separate an array so that the array is ordered after each part is sorted.
 
 ```java
 public int maxChunksToSorted(int[] arr) {

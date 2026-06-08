@@ -1,33 +1,33 @@
-# 目的
+# Purpose
 
-考虑到有部分读者的网络环境较差，有时候在线访问速度很慢，导致阅读体验不佳。另外，PDF 等格式的离线版本相比于网页在线版本更方便做笔记。因此提供离线阅读版本给大家下载。
+Considering that some readers have poor network environment, sometimes online access speed is very slow, resulting in poor reading experience. In addition, offline versions in PDF and other formats are more convenient for taking notes than online versions on web pages. Therefore, an offline reading version is provided for everyone to download.
 
-# 内容
+# content
 
-有三种格式的离线版本：PDF、Markdown 和 HTML 。
+There are offline versions in three formats: PDF, Markdown, and HTML.
 
 ## PDF
 
-优点是方便做笔记；缺点是不能显示 GIF 图片（所以“剑指 Offer 题解”不建议使用 PDF 进行阅读），以及显示效果不佳。
+The advantage is that it is convenient for taking notes; the disadvantage is that it cannot display GIF images (so it is not recommended to use PDF for reading in "Sword Pointer Offer Solution"), and the display effect is not good.
 
 ![](download-pdf.png)
 
 ## Markdown
 
-优点是能很好地显示 GIF 图片，显示效果也很好；缺点是由于将所有内容整合在同一个文件中，导致实时渲染有点卡顿。
+The advantage is that it can display GIF images very well and the display effect is also very good; the disadvantage is that the real-time rendering is a bit laggy due to the integration of all content in the same file.
 
 ![](download-markdown.png)
 
-## HTML
+##HTML
 
-优点是和 Markdown 的显示效果几乎一致，同时不需要 Markdown 的实时渲染，因此浏览速度更快；缺点是目录功能还不是很完善。
+The advantage is that the display effect is almost the same as Markdown, and it does not require real-time rendering of Markdown, so the browsing speed is faster; the disadvantage is that the directory function is not yet perfect.
 
-如果想在安卓手机端阅读，推荐使用这种格式，将 html 文件和图片文件都复制到手机上，用浏览器打开 html 文件并存成书签，以后就可以快速地离线阅读。
+If you want to read on an Android phone, it is recommended to use this format. Copy both the html file and the image file to the phone, open the html file with a browser and save it as a bookmark, so that you can quickly read it offline later.
 
 ![](download-html.png)
 
-# 如何下载
+# How to download
 
-离线版本由公众号 **CyC2018** 发布，最新版本也会在上面及时发布，在后台回复 **CyC** 即可获取下载链接。
+The offline version is released by the public account **CyC2018**. The latest version will also be released in a timely manner. You can get the download link by replying to **CyC** in the background.
 
-<div align="center"><img width="350px" src="公众号二维码-2.png"></img></div>
+<div align="center"><img width="350px" src="Public account QR code-2.png"></img></div>
